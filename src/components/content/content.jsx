@@ -212,7 +212,8 @@ class Content extends React.Component {
               	{/* <Route path= '/dashboard/' title="Dashboard V2" render ={props => 
                 <DashboardV2 {...props} user={user} />
               }/> */}
-              <Redirect from="/" exact to='/dashboard/' /> 
+
+             <Redirect from="/" exact to='/dashboard/' /> 
          
         
               {/* <Route path='/dashboard/' title="Dashboard Clinic" component={DashboardV2}   /> */}
