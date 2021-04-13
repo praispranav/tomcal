@@ -4,12 +4,12 @@ import React, { useState } from "react";
 
 const Filter = ({ statusOptions, priorityOptions, onfilter, ...props }) => {
   statusOptions = [
-    { value: "select", label: "Select" },
+    { value: "", label: "Select" },
     { value: "showall", label: "Show All" },
     ...statusOptions,
   ];
   priorityOptions = [
-    { value: "select", label: "Select" },
+    { value: "", label: "Select" },
     { value: "showall", label: "Show All" },
     ...priorityOptions,
   ];

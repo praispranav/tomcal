@@ -2,6 +2,7 @@ import "bootstrap";
 import filter from "lodash/filter";
 import isEmpty from "lodash/isEmpty";
 import map from "lodash/map";
+import size from "lodash/size";
 import React, { useEffect, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import DateRange from "../../components/kanban/DateRangePicker";
@@ -95,13 +96,21 @@ function KanBanBoard(props) {
     if (title === "priority" && !isEmpty(value)) {
       switch (value) {
         case "urgent": {
+
           const filteredvalue = map(filterColumn, ([col1, col]) => {
             let { items, ...rest } = col;
             items = filter(items, ({ priority }) => priority === "urgent");
-
+            
             return [col1, { items, ...rest }];
           });
-          setFilterColumns(filteredvalue);
+          // setFilterColumns(filteredvalue);
+          
+          const removeEmptyItems = filter(
+            filteredvalue,
+            ([col1, col]) => size(col.items) !== 0
+          );
+          setFilterColumns(removeEmptyItems);
+
           break;
         }
         case "low": {
@@ -111,7 +120,12 @@ function KanBanBoard(props) {
 
             return [col1, { items, ...rest }];
           });
-          setFilterColumns(filteredvalue);
+          const removeEmptyItems = filter(
+            filteredvalue,
+            ([col1, col]) => size(col.items) !== 0
+          );
+          setFilterColumns(removeEmptyItems);
+
           break;
         }
         case "normal": {
@@ -120,7 +134,11 @@ function KanBanBoard(props) {
             items = filter(items, ({ priority }) => priority === "normal");
             return [col1, { items, ...rest }];
           });
-          setFilterColumns(filteredvalue);
+          const removeEmptyItems = filter(
+            filteredvalue,
+            ([col1, col]) => size(col.items) !== 0
+          );
+          setFilterColumns(removeEmptyItems);
           break;
         }
         case "high": {
@@ -130,7 +148,11 @@ function KanBanBoard(props) {
 
             return [col1, { items, ...rest }];
           });
-          setFilterColumns(filteredvalue);
+          const removeEmptyItems = filter(
+            filteredvalue,
+            ([col1, col]) => size(col.items) !== 0
+          );
+          setFilterColumns(removeEmptyItems);
           break;
         }
         case "select": {
@@ -165,7 +187,11 @@ function KanBanBoard(props) {
 
             return [col1, { items, ...rest }];
           });
-          setFilterColumns(filteredvalue);
+          const removeEmptyItems = filter(
+            filteredvalue,
+            ([col1, col]) => size(col.items) !== 0
+          );
+          setFilterColumns(removeEmptyItems);
           break;
         }
         case "onhold": {
@@ -175,7 +201,11 @@ function KanBanBoard(props) {
 
             return [col1, { items, ...rest }];
           });
-          setFilterColumns(filteredvalue);
+          const removeEmptyItems = filter(
+            filteredvalue,
+            ([col1, col]) => size(col.items) !== 0
+          );
+          setFilterColumns(removeEmptyItems);
           break;
         }
         case "reopen": {
@@ -184,7 +214,11 @@ function KanBanBoard(props) {
             items = filter(items, ({ status }) => status === "reopen");
             return [col1, { items, ...rest }];
           });
-          setFilterColumns(filteredvalue);
+          const removeEmptyItems = filter(
+            filteredvalue,
+            ([col1, col]) => size(col.items) !== 0
+          );
+          setFilterColumns(removeEmptyItems);
           break;
         }
         case "closed": {
@@ -194,7 +228,11 @@ function KanBanBoard(props) {
 
             return [col1, { items, ...rest }];
           });
-          setFilterColumns(filteredvalue);
+          const removeEmptyItems = filter(
+            filteredvalue,
+            ([col1, col]) => size(col.items) !== 0
+          );
+          setFilterColumns(removeEmptyItems);
           break;
         }
         case "select": {
