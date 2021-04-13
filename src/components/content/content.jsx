@@ -8,7 +8,6 @@ import { Redirect } from "react-router";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProtectedRoute from "./../../common/ProtectedRoute";
-////////////////////////////////////////////////////////////////////
 import YourDrive from "./../../pages/drive/yourdrive.js";
 import TCMSession from "./../../pages/clinic/add_tcmsession.js";
 import DashboardV2 from "./../../pages/dashboard/dashboard-v2.js";
@@ -113,7 +112,7 @@ import DoctorTableData from "./../../pages/clinic/doctors.js";
 // import BTreatmentTableData from './../../pages/clinic/btreatments.js';
 
 import KanBanBoard from "./../../pages/kanban/kanban.js";
-import NewKanBanBoard from "./../../pages/clinic/grid-tickets.js";
+// import NewKanBanBoard from "./../../pages/clinic/grid-tickets.js";
 import FormPlugins from "./../../pages/form/form-plugins";
 import Logout from "./../../common/logout";
 
@@ -324,7 +323,7 @@ class Content extends React.Component {
 								<Route
 									path="/clinic/tickets"
 									title="NewKanBanBoard"
-									component={NewKanBanBoard}
+									// component={NewKanBanBoard}
 								/>
 
 								<Route
