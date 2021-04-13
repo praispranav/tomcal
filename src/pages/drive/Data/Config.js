@@ -1,3 +1,3 @@
 export default { 
-    "serverPath": "http://itransportindex.com:3131/admin"
+    "serverPath": "http://itransportindex.com:4500/admin"
 }

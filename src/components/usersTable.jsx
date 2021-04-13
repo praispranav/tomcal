@@ -10,7 +10,7 @@ class UsersTable extends Component {
 			label: "avatar",
 			content: (user) => (
 				<span className="icon-img sm-r-5">
-					<img src={user.imageSrc} alt="" />
+					<img style={{width: "500px",height: "100px"}} src={user.imageSrc} alt="" />
 				</span>
 			),
 		},
