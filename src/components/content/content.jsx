@@ -12,7 +12,7 @@ import ProtectedRoute from "./../../common/ProtectedRoute";
 import YourDrive from './../../pages/drive/yourdrive.js';
 import TCMSession from './../../pages/clinic/add_tcmsession.js';
 import DashboardV2 from './../../pages/dashboard/dashboard-v2.js';
-//import DashboardV3 from './../../pages/dashboard/dashboard-v3.js';
+
 import EmailInbox from './../../pages/email/email-inbox.js';
 import EmailCompose from './../../pages/email/email-compose.js';
 import EmailDetail from './../../pages/email/email-detail.js';
@@ -71,7 +71,7 @@ import ExtraError from './../../pages/extra/extra-error.js';
 import Profile from './../../pages/user/profile.js';
 import ExtraScrumBoard from './../../pages/extra/extra-scrum-board.js';
 import ExtraCookieAcceptanceBanner from './../../pages/extra/extra-cookie-acceptance-banner.js';
-//import LoginV1 from './../../pages/user/login-v1.js';
+
 import LoginV2 from '../../pages/user/login.js';
 import RegisterV3 from './../../pages/register.js';
 import User from './../../pages/clinic/user.js';
@@ -113,7 +113,7 @@ import DoctorTableData from './../../pages/clinic/doctors.js';
 // import BTreatmentTableData from './../../pages/clinic/btreatments.js';
 
 import KanBanBoard from './../../pages/kanban/kanban.js';
-import NewKanBanBoard from './../../pages/clinic/grid-tickets.js';
+import NewKanBanBoard from './../../pages/kanban/grid-tickets.js';
 import FormPlugins from './../../pages/form/form-plugins';
 import Logout from './../../common/logout';
 
