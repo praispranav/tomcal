@@ -7,7 +7,7 @@ class PatientsTable extends Component {
   columns = [
     //   {path: '_id', label: 'Id'},
     {label: 'Username',   path: 'patients.username' } ,
-    {key:'avatar', label: 'avatar',content: user=>(<span className="icon-img"><img src={user.patients.imageSrc} alt="" /></span>) } ,
+    {key:'avatar', label: 'avatar',content: user=>(<span className="icon-img sm-r-5"><img style={{width: "15px",height: "15px"}}  src={user.patients.imageSrc} alt="" /></span>) } ,
     {label: 'firstname',   path: 'patients.contactName.first' } ,   
     {label: 'initials',   path: 'patients.contactName.initials' } ,   	  
     {label: 'lastname',   path: 'patients.contactName.last' } ,   	  

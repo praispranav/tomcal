@@ -6,7 +6,7 @@ const x= <h1></h1>;
 class DoctorsTable extends Component {
   columns = [
     //   {path: '_id', label: 'Id'},
-    {key:'avatar', label: 'avatar',content: user=>(<span className="icon-img sm-r-10"><img src={user.doctors.imageSrc} alt="" /></span>) } ,	
+    {key:'avatar', label: 'avatar',content: user=>(<span className="icon-img sm-r-5"><img style={{width: "15px",height: "15px"}} src={user.doctors.imageSrc} alt="" /></span>) } ,	
     {label: 'Doctorname',   path: 'doctors.username' } ,
     {label: 'Firstname',   path: 'doctors.contactName.first' } ,   
     {label: 'Initials',   path: 'doctors.contactName.initials' } ,   	  
