@@ -47,7 +47,7 @@ class UsersTable extends Component {
 			content: (user) => (
 				<span className="icon-img sm-r-5">
 					<img
-						style={{ width: "30px", height: "30px", borderRadius: "50%" }}
+						style={{ width: "20px", height: "20px", borderRadius: "50%" }}
 						src={user.imageSrc}
 						alt=""
 					/>
@@ -73,24 +73,6 @@ class UsersTable extends Component {
 		{ label: "Phone", path: "phone" },
 		{ label: "Skype", path: "skype" },
 
-		{
-			key: "edit",
-			label: "",
-			content: (user) => (
-				<Link to={`/clinic/users/${user._id}`}>
-					<i className="far fa-lg fa-fw m-r-10 fa-edit"></i>
-				</Link>
-			),
-		},
-		{
-			key: "delete",
-			label: "",
-			content: (user) => (
-				<a onClick={() => this.props.onDelete(user)}>
-					<i className="fas fa-lg fa-fw m-r-10 fa-trash"></i>
-				</a>
-			),
-		},
 	];
 
 	render() {

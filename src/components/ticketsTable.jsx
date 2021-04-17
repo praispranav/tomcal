@@ -1,50 +1,94 @@
-import React,{Component} from "react";
-import Table from './../common/table';
-import { Link, withRouter } from 'react-router-dom';
+import React, { Component } from "react";
+import Table from "./../common/table";
+import { Link, withRouter } from "react-router-dom";
 
+class UsersTable extends Component {
+	// constructor(props) {
+	// 	super(props);
+	// 	this.state = {
+	// 		values: [],
+	// 	};
+	// }
 
-class TicketsTable extends Component {
-  columns = [
-    //   {path: '_id', ticket: 'Id'},
-	
-    {ticket: 'Owner',   path: 'username' } ,
-    {ticket: 'Name',   path: 'name' } ,   
-    {ticket: 'Participants',   path: 'participants' } ,   
-    {ticket: 'Narrative',   path: 'narrative' } ,   	  
-    {ticket: 'Category',   path: 'category' } ,
-    {ticket: 'Priority',   path: 'priority' } ,   
-    {ticket: 'Businessname',   path: 'businessName' } ,
-    {ticket: 'TicketNo',   path: 'ticketNo' } ,   
-    {ticket: 'CreatedOn',   path: 'createdOn' } ,   
-    {ticket: 'Deadline',   path: 'deadline' } ,   	
-    {ticket: 'Department',   path: 'department' } ,   	  
-    {ticket: 'Sub-Department',   path: 'subDepartment' } ,   	  	
-    {ticket: 'Locations',   path: 'locations' } ,   	  		
-    {ticket: 'Field',   path: 'field' } ,   	  
-    {ticket: 'Tags',   path: 'tags' } ,   	  
-    {ticket: 'Reference',   path: 'ticketReference' } ,   		
-    {ticket: 'Sharinglink',   path: 'sharingLink' } ,   	  		
-    {ticket: 'AssignedTo',   path: 'assignedTo' } ,   	  
-    {ticket: 'SharedTo',   path: 'sharedTo' } ,   	  	
-    {ticket: 'Note',   path: 'note' } ,   	  	  
-    
-    {key:'edit',ticket: '',content: ticket => <Link to={`/clinic/tickets/${ticket._id}`}><i className="far fa-lg fa-fw m-r-10 fa-edit"></i></Link>},
-    {key:'delete',ticket: '',content: ticket=>(<a onClick={() => this.props.onDelete(ticket)}><i className="fas fa-lg fa-fw m-r-10 fa-trash"></i></a> )}
-   
-    ];
-   
-    render(){ 
-       //console.log(this.columns) ;
-        const {tickets,onSort,sortColumn} = this.props;
-        return (
-       <Table columns={this.columns}
-       sortColumn={sortColumn} 
-       onSort={onSort}
-       data={tickets}
-       />
-        );
-    }
+	columns = [
+		//   {path: '_id', label: 'Id'},
+		{
+			key: "checkbox",
+			label: (
+				<input
+					type="check"
+					style={{
+						width: "15px",
+						height: "15px",
+						marginTop: "0.4rem",
+						borderRadius: 0,
+					}}
+				/>
+			),
+			content: (user) => (
+				<span className="icon-img sm-r-5" style={{ marginTop: "15px" }}>
+					<input
+						type="checkbox"
+						style={{
+							width: "15px",
+							height: "15px",
+							marginTop: "0.4rem",
+							borderRadius: 0,
+						}}
+						onChange={this.props.handleCheckboxChange}
+						value={user._id}
+					/>
+				</span>
+			),
+		},
+		{
+			key: "avatar",
+			label: "avatar",
+			content: (user) => (
+				<span className="icon-img sm-r-5">
+					<img
+						style={{ width: "30px", height: "30px", borderRadius: "50%" }}
+						src={user.imageSrc}
+						alt=""
+					/>
+				</span>
+			),
+		},
+		{label: 'Owner',   path: 'username' } ,
+		{label: 'Name',   path: 'name' } ,   
+		{label: 'Participants',   path: 'participants' } ,   
+		{label: 'Narrative',   path: 'narrative' } ,   	  
+		{label: 'Category',   path: 'category' } ,
+		{label: 'Priority',   path: 'priority' } ,   
+		{label: 'Businessname',   path: 'businessName' } ,
+		{label: 'TicketNo',   path: 'ticketNo' } ,   
+		{label: 'CreatedOn',   path: 'createdOn' } ,   
+		{label: 'Deadline',   path: 'deadline' } ,   	
+		{label: 'Department',   path: 'department' } ,   	  
+		{label: 'Sub-Department',   path: 'subDepartment' } ,   	  	
+		{label: 'Locations',   path: 'locations' } ,   	  		
+		{label: 'Field',   path: 'field' } ,   	  
+		{label: 'Tags',   path: 'tags' } ,   	  
+		{label: 'Reference',   path: 'ticketReference' } ,   		
+		{label: 'Sharinglink',   path: 'sharingLink' } ,   	  		
+		{label: 'AssignedTo',   path: 'assignedTo' } ,   	  
+		{label: 'SharedTo',   path: 'sharedTo' } ,   	  	
+		{label: 'Note',   path: 'note' } ,   	  	  
+
+	];
+
+	render() {
+		//console.log(this.columns) ;
+		const { users, onSort, sortColumn } = this.props;
+		return (
+			<Table
+				columns={this.columns}
+				sortColumn={sortColumn}
+				onSort={onSort}
+				data={users}
+			/>
+		);
+	}
 }
 
-
-export default TicketsTable;
+export default UsersTable;
