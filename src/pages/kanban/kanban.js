@@ -269,7 +269,7 @@ function KanBanBoard(props) {
 
   const [statusOptions, setStatusOptions] = useState([
     { value: "open", label: "Open" },
-    { value: "onhold", label: "on-Hold" },
+    { value: "onhold", label: "On-Hold" },
     { value: "closed", label: "Closed" },
     { value: "reopen", label: "Re-open" },
   ]);
