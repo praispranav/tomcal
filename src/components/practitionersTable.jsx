@@ -1,63 +1,102 @@
-import React,{Component} from "react";
-import Table from './../common/table';
+import React, { Component } from "react";
+import Table from "./../common/table";
+import { Link, withRouter } from "react-router-dom";
 
+class PractitionersTable extends Component {
+	// constructor(props) {
+	// 	super(props);
+	// 	this.state = {
+	// 		values: [],
+	// 	};
+	// }
 
-const x= <h1></h1>;
-class UsersTable extends Component {
-  columns = [
-    //   {path: '_id', label: 'Id'},
-    {label: 'Username',   path: 'login' } ,
-    {key:'avatar', label: 'avatar',content: user=>(<span className="icon-img"><img src={user.imageSrc} alt="" /></span>) } ,
-    {label: 'firstname',   path: 'firstName' } ,   
-    {label: 'initials',   path: 'initials' } ,   	  
-    {label: 'lastname',   path: 'lastName' } ,   	  
-    {label: 'DOB',   path: 'dateBirth' } ,   	  
-    {label: 'gender',   path: 'gender' } ,   	  
-    {label: 'address1',   path: 'address1' } ,   
-    {label: 'address2',   path: 'address2' } ,   
-    {label: 'address3',   path: 'address3' } ,           
-    {label: 'zip',   path: 'zip' } ,   	  
-    {label: 'city',   path: 'city' } ,   	      
-    {label: 'state',   path: 'state' } ,   	          
-    {label: 'country',   path: 'country' } ,   	  	  
-    {label: 'website',   path: 'website' } , 
-    {label: 'Linkedin',   path: 'linkedin' } ,       
-    {label: 'mobile',   path: 'mobile' } ,   	  
-    {label: 'phone',   path: 'phone' } ,   	  
-    {label: 'skype',   path: 'skype' } , 
-    {label: 'Nailsalon',   path: 'nailSalon' } ,   
-    {label: 'primInsuranceNo',   path: 'primInsuranceNo' } ,   	  
-    {label: 'primInsurance',   path: 'primInsurance' } ,   	  
-    {label: 'primInsuranceValidTill',   path: 'primInsuranceValidTill' } , 
-    {label: 'secInsuranceNo',   path: 'secInsuranceNo' } ,   	  
-    {label: 'secInsurance',   path: 'secInsurance' } ,   	  
-    {label: 'secInsuranceValidTill',   path: 'secInsuranceValidTill' } , 
-    {label: 'idPaper',   path: 'idPaper' } ,   	  
-    {label: 'idPaperValidTill',   path: 'idPaperValidTill' } , 
-    {label: 'Skills',   path: 'skills' } ,     
+	columns = [
+		//   {path: '_id', practitioner: 'Id'},
+		{
+			key: "checkbox",
+			practitioner: (
+				<input
+					type="check"
+					style={{
+						width: "15px",
+						height: "15px",
+						marginTop: "0.4rem",
+						borderRadius: 0,
+					}}
+				/>
+			),
+			content: (practitioner) => (
+				<span className="icon-img sm-r-5" style={{ marginTop: "15px" }}>
+					<input
+						type="checkbox"
+						style={{
+							width: "15px",
+							height: "15px",
+							marginTop: "0.4rem",
+							borderRadius: 0,
+						}}
+						onChange={this.props.handleCheckboxChange}
+						value={practitioner._id}
+					/>
+				</span>
+			),
+		},
+		{
+			key: "avatar",
+			practitioner: "avatar",
+			content: (user) => (
+				<span className="icon-img sm-r-5">
+					<img
+						style={{ width: "30px", height: "30px", borderRadius: "50%" }}
+						src={user.imageSrc}
+						alt=""
+					/>
+				</span>
+			),
+		},
+		{label: 'Username',   path: 'login' } ,
+		{label: 'firstname',   path: 'firstName' } ,   
+		{label: 'initials',   path: 'initials' } ,   	  
+		{label: 'lastname',   path: 'lastName' } ,   	  
+		{label: 'DOB',   path: 'dateBirth' } ,   	  
+		{label: 'gender',   path: 'gender' } ,   	  
+		{label: 'address1',   path: 'address1' } ,   
+		{label: 'address2',   path: 'address2' } ,   
+		{label: 'address3',   path: 'address3' } ,           
+		{label: 'zip',   path: 'zip' } ,   	  
+		{label: 'city',   path: 'city' } ,   	      
+		{label: 'state',   path: 'state' } ,   	          
+		{label: 'country',   path: 'country' } ,   	  	  
+		{label: 'website',   path: 'website' } , 
+		{label: 'Linkedin',   path: 'linkedin' } ,       
+		{label: 'mobile',   path: 'mobile' } ,   	  
+		{label: 'phone',   path: 'phone' } ,   	  
+		{label: 'skype',   path: 'skype' } , 
+		{label: 'Nailsalon',   path: 'nailSalon' } ,   
+		{label: 'primInsuranceNo',   path: 'primInsuranceNo' } ,   	  
+		{label: 'primInsurance',   path: 'primInsurance' } ,   	  
+		{label: 'primInsuranceValidTill',   path: 'primInsuranceValidTill' } , 
+		{label: 'secInsuranceNo',   path: 'secInsuranceNo' } ,   	  
+		{label: 'secInsurance',   path: 'secInsurance' } ,   	  
+		{label: 'secInsuranceValidTill',   path: 'secInsuranceValidTill' } , 
+		{label: 'idPaper',   path: 'idPaper' } ,   	  
+		{label: 'idPaperValidTill',   path: 'idPaperValidTill' } , 
+		{label: 'Skills',   path: 'skills' } ,     
+    
+	];
 
-    //   { key: 'actions' , label: 'Actions', content: user =>( <button
-    //   onClick={() => this.props.onDelete(user)} className="btn btn-danger btn-sm" >
-    //   Delete
-    // </button>)
-    // }
-    {key:'edit',label: '',content: user=>(<a onClick={() => this.props.onDelete(user)}><i className="far fa-lg fa-fw m-r-10 fa-edit"></i></a>)},
-    {key:'delete',label: '',content: user=>(<a onClick={() => this.props.onDelete(user)}><i className="fas fa-lg fa-fw m-r-10 fa-trash"></i></a> )}
-   
-    ];
-   
-    render(){ 
-       //console.log(this.columns) ;
-        const {users,onSort,sortColumn} = this.props;
-        return (
-       <Table columns={this.columns}
-       sortColumn={sortColumn} 
-       onSort={onSort}
-       data={users}
-       />
-        );
-    }
+	render() {
+		//console.log(this.columns) ;
+		const { practitioners, onSort, sortColumn } = this.props;
+		return (
+			<Table
+				columns={this.columns}
+				sortColumn={sortColumn}
+				onSort={onSort}
+				data={practitioners}
+			/>
+		);
+	}
 }
 
-
-export default UsersTable;
+export default PractitionersTable;
