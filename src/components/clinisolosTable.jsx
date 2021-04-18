@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Table from "./../common/table";
 import { Link, withRouter } from "react-router-dom";
 
-class DoctorsTable extends Component {
+class ClinicsolosTable extends Component {
 	// constructor(props) {
 	// 	super(props);
 	// 	this.state = {
@@ -25,7 +25,7 @@ class DoctorsTable extends Component {
 					}}
 				/>
 			),
-			content: (doctor) => (
+			content: (clinicsolo) => (
 				<span className="icon-img sm-r-5" style={{ marginTop: "15px" }}>
 					<input
 						type="checkbox"
@@ -36,7 +36,7 @@ class DoctorsTable extends Component {
 							borderRadius: 0,
 						}}
 						onChange={this.props.handleCheckboxChange}
-						value={doctor._id}
+						value={clinicsolo._id}
 					/>
 				</span>
 			),
@@ -54,39 +54,37 @@ class DoctorsTable extends Component {
 				</span>
 			),
 		},
-		{key:'avatar', label: 'avatar',content: user=>(<span className="icon-img sm-r-5"><img style={{width: "15px",height: "15px"}} src={user.doctors.imageSrc} alt="" /></span>) } ,	
-		{label: 'Doctorname',   path: 'doctors.username' } ,
-		{label: 'Firstname',   path: 'doctors.contactName.first' } ,   
-		{label: 'Initials',   path: 'doctors.contactName.initials' } ,   	  
-		{label: 'Lastname',   path: 'doctors.contactName.last' } ,   	  
-		{label: 'DOB',   path: 'doctors.dateBirth' } ,   	  
-		{label: 'Gender',   path: 'doctors.gender' } ,   	  
-		{label: 'Address1',   path: 'doctors.address1' } ,   
-		{label: 'Address2',   path: 'doctors.address2' } ,   
-		{label: 'Address3',   path: 'doctors.address3' } ,           
-		{label: 'Zip',   path: 'doctors.zip' } ,   	  
-		{label: 'City',   path: 'doctors.city' } ,   	      
-		{label: 'State',   path: 'doctors.state' } ,   	          
-		{label: 'Country',   path: 'doctors.country' } ,   	  	  
+		{label: 'Username',   path: 'clinics.username' } ,	
+		{label: 'email',   path: 'clinics.email' } ,   
+		{label: 'ClinicNo',   path: 'clinicSoloNo' } ,   
+		{label: 'Clinic',   path: 'companyInfo.businessName' } ,       
+		{label: 'Firstname',   path: 'clinics.contactName.first' } ,   
+		{label: 'initials',   path: 'clinics.contactName.initials' } ,   	  
+		{label: 'Lastname',   path: 'clinics.contactName.last' } ,   	  
+		{label: 'DOB',   path: 'clinics.dateBirth' } ,   	  
+		{label: 'gender',   path: 'clinics.gender' } ,   	  
+		{label: 'Address 1',   path: 'clinics.address1' } ,   
+		{label: 'Address 2',   path: 'clinics.address2' } ,   
+		{label: 'Address 3',   path: 'clinics.address3' } ,           
+		{label: 'zip',   path: 'clinics.zip' } ,   	  
+		{label: 'city',   path: 'clinics.city' } ,   	      
+		{label: 'state',   path: 'clinics.state' } ,   	          
+		{label: 'Country',   path: 'clinics.country' } ,   	  	  
+		{label: 'website',   path: 'website' } ,   
 		{label: 'Linkedin',   path: 'linkedin' } ,       
-		{label: 'Mobile',   path: 'mobile' } ,   	  
-		{label: 'Phone',   path: 'phone' } ,   	  
-		{label: 'Skype',   path: 'skype' } , 
+		{label: 'mobile',   path: 'clinics.mobile' } ,   	  
+		{label: 'phone',   path: 'clinics.phone' } ,   	  
+		{label: 'skype',   path: 'clinics.skype' } , 
 		{label: 'IBAN',   path: 'IBAN' } ,   
 		{label: 'Bank',   path: 'bank' } ,   
 		{label: 'Branch Bank',   path: 'branchOfBank' } ,   
-		{label: 'Clinic',   path: 'clinicSolo' } ,   
-		{label: 'Prim. InsuranceNo',   path: 'primInsuranceNo' } ,   	  
-		{label: 'Prim. Insurance',   path: 'primInsurance' } ,   	  
-		{label: 'Prim. Insurance Valid Till',   path: 'primInsuranceValidTill' } , 
-		{label: 'Sec. InsuranceNo',   path: 'secInsuranceNo' } ,   	  
-		{label: 'Sec. Insurance',   path: 'secInsurance' } ,   	  
-		{label: 'Sec. Insurance Valid Till',   path: 'secInsuranceValidTill' } , 
-		{label: 'ID-Paper',   path: 'idPaper' } ,   	  
-		{label: 'ID-Paper Valid Till',   path: 'idPaperValidTill' } , 
+		// {label: 'subscription',   path: 'subscription' } ,   	  
+		// {label: 'subscriptionEndDate',   path: 'subscriptionEndDate' } ,   	  
 		{label: 'HIPIO No',   path: 'healthcareProviderIdentifierOrganisation' } ,   	  
 		{label: 'HIPII No',   path: 'healthcareProviderIdentifierIndividual' } ,   	  
-		{label: 'Treatments',   path: 'treatments' } ,   	  	
+		{label: 'ChamberCommerce No',   path: 'chamberCommerceNo' } ,   
+		{label: 'TaxPayerNo',   path: 'taxPayerNo' } ,   
+		{label: 'treatments',   path: 'treatments' } ,   
 		{label: 'LicenseNo',   path: 'licenseNo' } ,   	  
 		{label: 'License Valid Till',   path: 'licenseValidTill' } ,   	      
 		{label: 'OrganizationA Name',   path: 'organizationAName' } ,   	          
@@ -97,16 +95,16 @@ class DoctorsTable extends Component {
 
 	render() {
 		//console.log(this.columns) ;
-		const { doctors, onSort, sortColumn } = this.props;
+		const { clinicsolos, onSort, sortColumn } = this.props;
 		return (
 			<Table
 				columns={this.columns}
 				sortColumn={sortColumn}
 				onSort={onSort}
-				data={doctors}
+				data={clinicsolos}
 			/>
 		);
 	}
 }
 
-export default DoctorsTable;
+export default ClinicsolosTable;

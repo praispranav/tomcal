@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Table from "./../common/table";
 import { Link, withRouter } from "react-router-dom";
 
-class MedicalfilesTable extends Component {
+class KanbansTable extends Component {
 	// constructor(props) {
 	// 	super(props);
 	// 	this.state = {
@@ -25,7 +25,7 @@ class MedicalfilesTable extends Component {
 					}}
 				/>
 			),
-			content: (medicalfile) => (
+			content: (kanban) => (
 				<span className="icon-img sm-r-5" style={{ marginTop: "15px" }}>
 					<input
 						type="checkbox"
@@ -36,7 +36,7 @@ class MedicalfilesTable extends Component {
 							borderRadius: 0,
 						}}
 						onChange={this.props.handleCheckboxChange}
-						value={medicalfile._id}
+						value={kanban._id}
 					/>
 				</span>
 			),
@@ -54,29 +54,28 @@ class MedicalfilesTable extends Component {
 				</span>
 			),
 		},
-		{ label: "username", path: "username" },
-		{ label: "Firstname", path: "contactName.first" },
-		{ label: "initials", path: "contactName.initials" },
-		{ label: "Lastname", path: "contactName.last" },
-		{ label: "Complaint", path: "chiefComplaint" },
-		{ label: "Date", path: "date" },
-		{ label: "Session", path: "session" },
-		{ label: "Doctor", path: "doctor" },
-		{ label: "View More Sessions", path: "session" },
+		{label: 'Owner',   path: 'username' } ,
+		{label: 'Name',   path: 'name' } ,   
+		{label: 'Participants',   path: 'participants' } ,   
+		{label: 'Department',   path: 'department' } ,   	  
+		{label: 'Field',   path: 'field' } ,   	  
+		{label: 'Tags',   path: 'tags' } ,   	  
+		{label: 'Narrative',   path: 'narrative' } ,   	  
+		{label: 'Note',   path: 'note' } ,   	  	  
 	];
 
 	render() {
 		//console.log(this.columns) ;
-		const { medicalfiles, onSort, sortColumn } = this.props;
+		const { kanbans, onSort, sortColumn } = this.props;
 		return (
 			<Table
 				columns={this.columns}
 				sortColumn={sortColumn}
 				onSort={onSort}
-				data={medicalfiles}
+				data={kanbans}
 			/>
 		);
 	}
 }
 
-export default MedicalfilesTable;
+export default KanbansTable;

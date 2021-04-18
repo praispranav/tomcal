@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Table from "./../common/table";
 import { Link, withRouter } from "react-router-dom";
 
-class UsersTable extends Component {
+class TicketsTable extends Component {
 	// constructor(props) {
 	// 	super(props);
 	// 	this.state = {
@@ -25,7 +25,7 @@ class UsersTable extends Component {
 					}}
 				/>
 			),
-			content: (user) => (
+			content: (ticket) => (
 				<span className="icon-img sm-r-5" style={{ marginTop: "15px" }}>
 					<input
 						type="checkbox"
@@ -36,7 +36,7 @@ class UsersTable extends Component {
 							borderRadius: 0,
 						}}
 						onChange={this.props.handleCheckboxChange}
-						value={user._id}
+						value={ticket._id}
 					/>
 				</span>
 			),
@@ -54,7 +54,7 @@ class UsersTable extends Component {
 				</span>
 			),
 		},
-		{label: 'Owner',   path: 'username' } ,
+		{label: 'Owner',   path: 'ticketname' } ,
 		{label: 'Name',   path: 'name' } ,   
 		{label: 'Participants',   path: 'participants' } ,   
 		{label: 'Narrative',   path: 'narrative' } ,   	  
@@ -79,16 +79,16 @@ class UsersTable extends Component {
 
 	render() {
 		//console.log(this.columns) ;
-		const { users, onSort, sortColumn } = this.props;
+		const { tickets, onSort, sortColumn } = this.props;
 		return (
 			<Table
 				columns={this.columns}
 				sortColumn={sortColumn}
 				onSort={onSort}
-				data={users}
+				data={tickets}
 			/>
 		);
 	}
 }
 
-export default UsersTable;
+export default TicketsTable;
