@@ -73,8 +73,6 @@ class Ticket extends Form {
 				sharingLink  : '',	  
 				assignedTo   : '',	  
 				sharedTo   	 : '',	  
-				review       : '',	  
-				note     	 : '',	  
 				status   	 : '',	  				
 			},
             selectedFile: null,
@@ -155,7 +153,6 @@ class Ticket extends Form {
 	
 		  const { data: ticket } = await getTicket(ticketId);
 
-			 ticket.ticketNo = ticket.ticketNo;		  
 			 ticket.username = ticket.username;		  
 			 ticket.name = ticket.name;
 			 ticket.lastName = ticket.contactName.last;
@@ -165,18 +162,16 @@ class Ticket extends Form {
 			 ticket.priority = ticket.priority;
 			 ticket.field = ticket.field;
 			 ticket.tag = ticket.tag;
-			 ticket.documentNo = ticket.documentNo;			 
 			 ticket.department = ticket.department;
 			 ticket.subDepartment = ticket.subDepartment;
 			 ticket.locations   = ticket.locations;
 			 ticket.createdOn = ticket.creadOn;
 			 ticket.deadline = ticket.deadline;
-			 ticket.ticketReference  = ticket.ticketReference;
-			 ticket.sharingLink = ticket.sharingLink;
-			 ticket.assignedTo = ticket.membership.assignedTo;
-			 ticket.sharedTo = ticket.sharedTo;
-			 ticket.review = ticket.review;			 
-			 ticket.note = ticket.note;			 			 
+			 ticket.licenseNo  = ticket.professionalInfo.licenseNo;
+			 ticket.licenseValidTill = ticket.professionalInfo.licenseValidTill;
+			 ticket.organizationAName = ticket.membership.organizationAName;
+			 ticket.organizationAMemberNo = ticket.membership.organizationAMemberNo;
+			 ticket.organizationBName = ticket.membership.organizationBName;
 			 ticket.status = ticket.status;
 
 		  this.setState({ data: this.mapToViewModel(ticket) });
@@ -202,6 +197,9 @@ schema = Joi.object({
 		narrative: Joi.string().optional(),
 		priority: Joi.string().optional(),
 		category: Joi.string().optional(),
+		message: Joi.string().optional(),		
+		commentParent: Joi.string().optional(),		
+		reply: Joi.string().optional(),
 		department: Joi.string().optional(),		
 		subDepartment: Joi.string().optional(),				
 		createdOn: Joi.date().optional(),
@@ -212,11 +210,10 @@ schema = Joi.object({
 		field: Joi.string().optional(),
 		tags: Joi.string().optional(),
 		ticketReference: Joi.string().optional(),
+		action: Joi.string().optional(),
 		sharingLink: Joi.string().optional(),
 		assignedTo: Joi.string().optional(),
 		sharedTo: Joi.string().optional(),
-		review: Joi.string().optional(),
-		note: Joi.string().optional(),		
 		status: Joi.string().optional(),			
 	});
 
@@ -292,12 +289,11 @@ schema = Joi.object({
             documentNo  : ticket.documentNo,
             field       : ticket.field,
             tags		: ticket.tags,			
+            action      : ticket.action,
             ticketReference: ticket.ticketReference,
             sharingLink : ticket.sharingLink,
             assignedTo  : ticket.assignedTo,
             sharedTo    : ticket.sharedTo,
-            review      : ticket.review,			
-            note        : ticket.note,			
             status      : ticket.status,     
 		};
 	  }
