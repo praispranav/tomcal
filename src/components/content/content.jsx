@@ -93,7 +93,7 @@ import Patient from './../../pages/clinic/patient.js';
 import UserTableData from './../../pages/clinic/users.js';
 import Doctor from './../../pages/clinic/doctor.js';
 import DoctorTableData from './../../pages/clinic/doctors.js';
-import NewKanBanBoard from './../../pages/clinic/grid-tickets.js';
+import NewKanBanBoard from './../../pages/kanban/grid-tickets.js';
 //import Label from './../../pages/label/label.js';
 //import LabelTableData from './../../pages/label/labels.js';
 // import Accountant from './../../pages/clinic/accountant.js';
