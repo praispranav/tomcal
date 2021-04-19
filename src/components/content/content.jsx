@@ -93,7 +93,7 @@ import Patient from './../../pages/clinic/patient.js';
 import UserTableData from './../../pages/clinic/users.js';
 import Doctor from './../../pages/clinic/doctor.js';
 import DoctorTableData from './../../pages/clinic/doctors.js';
-import NewKanBanBoard from './../../pages/kanban/grid-tickets.js';
+//import NewKanBanBoard from './../../pages/kanban/grid-tickets.js';
 //import Label from './../../pages/label/label.js';
 //import LabelTableData from './../../pages/label/labels.js';
 // import Accountant from './../../pages/clinic/accountant.js';
@@ -268,7 +268,7 @@ class Content extends React.Component {
             
               <Route path= '/scheduler2' title="Scheduler2" component={SchedulerfCal}   />
               <Route path= '/kanban/kanban' title="KanBanBoard" component={KanBanBoard}   />
-              <Route path= '/clinic/tickets' title="NewKanBanBoard" component={NewKanBanBoard}   />
+              {/* <Route path= '/clinic/tickets' title="NewKanBanBoard" component={NewKanBanBoard}   /> */}
             
               <Route path= '/clinic/add_tcmsession' title="TCM Session" component={TCMSession}   />
               <Route path= '/email/inbox' title="Email Inbox" component={EmailInbox}   />
