@@ -1,5 +1,3 @@
-/* eslint-disable max-classes-per-file */
-/* eslint-disable react/no-unused-state */
 import * as React from 'react';
 import Paper from '@material-ui/core/Paper';
 import { ViewState, GroupingState, IntegratedGrouping, IntegratedEditing,EditingState } from '@devexpress/dx-react-scheduler';
@@ -55,8 +53,6 @@ import {getDoctors,getDoctor} from './../../services/doctors';
 import {getPatients,getPatient} from './../../services/patients';
 import {getRandomColor,dateCheck} from './../../utils/event-utils';
 import moment from 'moment';
-
-
 
 
 
@@ -135,7 +131,7 @@ const styles = theme => ({
 
 });
 
-/* eslint-disable-next-line react/no-multi-comp */
+
 class SchedulerCal extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -147,7 +143,6 @@ class SchedulerCal extends React.PureComponent {
       }, {
         resourceName: 'doctors',
       }],
-      //currentDate: '2017-04-28',
       currentDate: new Date(),
       confirmationVisible: false,
       editingFormVisible: false,
@@ -207,26 +202,7 @@ class SchedulerCal extends React.PureComponent {
 
 
 
- 
-  // updateResource(id, itemAttributes) {
-  //   const index = this.state.resources.findIndex(x=> x.id === id);
-  //   if (index === -1)  {}
-  //   else{
-  //      this.setState({
-  //       resources: [
-  //          ...this.state.resources.slice(0,index),
-  //          Object.assign({}, this.state.resources[index], itemAttributes),
-  //          ...this.state.resources.slice(index+1)
-  //       ]
-  //     });
-  //   }
-     
-  // }
-
   
- 
-
-
   async populateCalendarEvents() {
 		const { data: appointments } = await http.get(apiUrl+"/appointments");
 
@@ -250,64 +226,6 @@ class SchedulerCal extends React.PureComponent {
 		})) }
 		);
 	}
-/*     async populateCalendarResources() {
-		const { data: doctors } = await http.get(apiUrl+"/appointments");
-  
-		console.log(doctors);
-
-    const Doctors = doctors.map((doctor)=>({
-			id: doctor.doctorNo._id,
-			title:doctor.doctorUser.contactName.first+" "+doctor.doctorUser.contactName.last,
-      color:doctor.color
-		}));
-    console.log(this.state.resources);
-   
-    // const resources = [...this.state.resources];
-    // for (let i in resources) {
-    //   if (i === 0) {
-    //     resources[i].instances = Object.assign({},Doctors);
-    //      break; //Stop this loop, we found it!
-    //   }
-    // }
-    
-    //this.setState({resources:this.updateResource(0,{instances: Doctors})});
-
-
-
-   const resources = [...this.state.resources];
-   const  result = resources.map(el => el.fieldName === 'doctors' ? {...el, instances: Doctors} : el);
-
-   this.setState({resources:result});
-
-	
-	}
-
-  async populateCalendarClinics() {
-		const { data: clinics } = await http.get(apiUrl+"/appointments");
-  
-    const Clinics =  clinics.map((clinic)=>({
-			id: clinic.clinicNo._id,
-			text: clinic.clinicNo.companyInfo.businessName,
-    
-		}));
-    // const resources = [...this.state.resources];
-    // for (let i in resources) {
-    //   if (i === 1) {
-    //     resources[i].instances =  Object.assign({},Clinics);
-    //      break; 
-    //   }
-    // }
-
-
-     //this.setState({resources:this.updateResource(1,{instances: Clinics})});
-  
-
-     const resources = [...this.state.resources];
-     const  result = resources.map(el => el.fieldName === 'clinicId' ? {...el, instances: Clinics} : el);
- 
-     this.setState({resources:result});
-
-	} */
 
 
   async populateCalendarResources() {
@@ -348,7 +266,7 @@ class SchedulerCal extends React.PureComponent {
 
   async componentDidMount() {
  
-    //await this.populateCalendarClinics();
+    await this.populateCalendarClinics();
     await this.populateCalendarEvents();
     await this.populateCalendarResources();
 }
@@ -424,18 +342,7 @@ class SchedulerCal extends React.PureComponent {
   }
 
 
-  mapToViewModel(appointment) {
-    return {
-      //id: appointment._id,
-      start: appointment.start,
-      end: appointment.end,
-      title: appointment.complaint,
-      patientNo: appointment.patientNo,
-      clinicNo: appointment.clinicNo,
-      doctorNo: appointment.doctorNo,
-      note: appointment.note,		  
-    };
-  }
+
 
 
   render() {
@@ -458,7 +365,7 @@ class SchedulerCal extends React.PureComponent {
           height={660}
         >
           <ViewState
-            //currentDate={currentDate}
+            currentDate={currentDate}
           />
           <EditingState
             onCommitChanges={this.commitChanges}
@@ -468,14 +375,11 @@ class SchedulerCal extends React.PureComponent {
           <GroupingState
             grouping={grouping}
           />
-          
           <DayView
-            startDayHour={9}
-            endDayHour={15}
+            startDayHour={1}
+            endDayHour={23}
             intervalCount={2}
           />
-
-       
           <Appointments />
           <Resources
             data={resources}
@@ -488,8 +392,6 @@ class SchedulerCal extends React.PureComponent {
             showCloseButton
             showDeleteButton
           />
-          {/* <Toolbar />
-          <ViewSwitcher /> */}
           <AppointmentForm
             overlayComponent={this.appointmentForm}
             visible={editingFormVisible}
