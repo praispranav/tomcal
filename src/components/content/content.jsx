@@ -84,6 +84,7 @@ import ClinicSoloTableData from "./../../pages/clinic/clinicsolos.js";
 import PatientTableData from "./../../pages/clinic/patients.js";
 import Patient from "./../../pages/clinic/patient.js";
 import UserTableData from "./../../pages/clinic/users.js";
+import TicketsTableData from "./../../pages/clinic/tickets.js";
 import Doctor from "./../../pages/clinic/doctor.js";
 import DoctorTableData from "./../../pages/clinic/doctors.js";
 //import Label from './../../pages/label/label.js';
@@ -183,11 +184,7 @@ class Content extends React.Component {
 		const { user } = this.state;
 		return (
 			<PageSettings.Consumer>
-				{({
-					pageContentFullWidth,
-					pageContentClass,
-					pageContentInverseMode,
-				}) => (
+				{({ pageContentFullWidth, pageContentClass, pageContentInverseMode }) => (
 					<div
 						className={
 							"content " +
@@ -225,33 +222,26 @@ class Content extends React.Component {
 									path="/user/login"
 									title="Login"
 									render={(props) => {
-										if (this.state.user)
-											return <Redirect to="/dashboard" />;
+										if (this.state.user) return <Redirect to="/dashboard" />;
 										return <LoginV2 {...props} />;
 									}}
 								/>
 
-								<Route
-									path="/logout"
-									title="Logout"
-									component={Logout}
-								/>
-								<Route
-									path="/register"
-									title="Register"
-									component={RegisterV3}
-								/>
+								<Route path="/logout" title="Logout" component={Logout} />
+								<Route path="/register" title="Register" component={RegisterV3} />
 
-								<ProtectedRoute
-									path="/clinic/users/:id"
-									title="User"
-									component={User}
-								/>
+								<ProtectedRoute path="/clinic/users/:id" title="User" component={User} />
 
 								<ProtectedRoute
 									path="/clinic/users"
 									title="Users"
 									component={UserTableData}
+								/>
+
+								<ProtectedRoute
+									path="/clinic/tickets"
+									title="Users"
+									component={TicketsTableData}
 								/>
 
 								{/* <Route path= '/clinic/users/:id' title="User" render ={props => {
@@ -295,67 +285,31 @@ class Content extends React.Component {
 									component={DoctorTableData}
 								/>
 
-								<Route
-									path="/clinic/yourdrive/"
-									title="Your Drive"
-									component={YourDrive}
-								/>
-								<Route
-									path="/calendar"
-									title="Calendar"
-									component={Calendar}
-								/>
-								<Route
-									path="/scheduler"
-									title="Scheduler"
-									component={SchedulerCal}
-								/>
-								<Route
-									path="/scheduler2"
-									title="Scheduler2"
-									component={SchedulerfCal}
-								/>
-								<Route
-									path="/kanban/kanban"
-									title="KanBanBoard"
-									component={KanBanBoard}
-								/>
-								<Route
+								<Route path="/clinic/yourdrive/" title="Your Drive" component={YourDrive} />
+								<Route path="/calendar" title="Calendar" component={Calendar} />
+								<Route path="/scheduler" title="Scheduler" component={SchedulerCal} />
+								<Route path="/scheduler2" title="Scheduler2" component={SchedulerfCal} />
+								<Route path="/kanban/kanban" title="KanBanBoard" component={KanBanBoard} />
+								{/* <Route
 									path="/clinic/tickets"
 									title="NewKanBanBoard"
-									// component={NewKanBanBoard}
-								/>
+									component={TicketsTableData}
+								/> */}
 
 								<Route
 									path="/clinic/add_tcmsession"
 									title="TCM Session"
 									component={TCMSession}
 								/>
-								<Route
-									path="/email/inbox"
-									title="Email Inbox"
-									component={EmailInbox}
-								/>
+								<Route path="/email/inbox" title="Email Inbox" component={EmailInbox} />
 								<Route
 									path="/email/compose"
 									title="Email Compose"
 									component={EmailCompose}
 								/>
-								<Route
-									path="/email/detail"
-									title="Email Detail"
-									component={EmailDetail}
-								/>
-								<Route
-									path="/widgets"
-									title="Widgets"
-									component={Widgets}
-								/>
-								<Route
-									path="/ui/general"
-									title="UI General"
-									component={UIGeneral}
-								/>
+								<Route path="/email/detail" title="Email Detail" component={EmailDetail} />
+								<Route path="/widgets" title="Widgets" component={Widgets} />
+								<Route path="/ui/general" title="UI General" component={UIGeneral} />
 								<Route
 									path="/ui/typography"
 									title="UI Typography"
@@ -381,26 +335,14 @@ class Content extends React.Component {
 									title="UI Media Object"
 									component={UIMediaObject}
 								/>
-								<Route
-									path="/ui/buttons"
-									title="UI Buttons"
-									component={UIButtons}
-								/>
-								<Route
-									path="/ui/icons"
-									title="UIIcons"
-									component={UIIcons}
-								/>
+								<Route path="/ui/buttons" title="UI Buttons" component={UIButtons} />
+								<Route path="/ui/icons" title="UIIcons" component={UIIcons} />
 								<Route
 									path="/ui/simple-line-icons"
 									title="UISimpleLineIcons"
 									component={UISimpleLineIcons}
 								/>
-								<Route
-									path="/ui/ionicons"
-									title="UIIonicons"
-									component={UIIonicons}
-								/>
+								<Route path="/ui/ionicons" title="UIIonicons" component={UIIonicons} />
 								<Route
 									path="/ui/language-bar-icon"
 									title="UILanguageBarIcon"
@@ -411,36 +353,16 @@ class Content extends React.Component {
 									title="UISocialButtons"
 									component={UISocialButtons}
 								/>
-								<Route
-									path="/bootstrap-4"
-									title="Bootstrap4"
-									component={Bootstrap4}
-								/>
+								<Route path="/bootstrap-4" title="Bootstrap4" component={Bootstrap4} />
 								<Route
 									path="/form/elements"
 									title="FormElements"
 									component={FormElements}
 								/>
-								<Route
-									path="/form/wizards"
-									title="FormWizards"
-									component={FormWizards}
-								/>
-								<Route
-									path="/form/form"
-									title="FormPlugins"
-									component={FormPlugins}
-								/>
-								<Route
-									path="/table/basic"
-									title="TableBasic"
-									component={TableBasic}
-								/>
-								<Route
-									path="/table/data"
-									title="TableData"
-									component={TableData}
-								/>
+								<Route path="/form/wizards" title="FormWizards" component={FormWizards} />
+								<Route path="/form/form" title="FormPlugins" component={FormPlugins} />
+								<Route path="/table/basic" title="TableBasic" component={TableBasic} />
+								<Route path="/table/data" title="TableData" component={TableData} />
 								<Route
 									path="/pos/customer-order"
 									title="PosCustomerOrder"
@@ -466,28 +388,12 @@ class Content extends React.Component {
 									title="PosMenuStock"
 									component={PosMenuStock}
 								/>
-								<Route
-									path="/chart/js"
-									title="ChartJS"
-									component={ChartJS}
-								/>
-								<Route
-									path="/chart/d3"
-									title="ChartD3"
-									component={ChartD3}
-								/>
-								<Route
-									path="/chart/apex"
-									title="ChartApex"
-									component={ChartApex}
-								/>
+								<Route path="/chart/js" title="ChartJS" component={ChartJS} />
+								<Route path="/chart/d3" title="ChartD3" component={ChartD3} />
+								<Route path="/chart/apex" title="ChartApex" component={ChartApex} />
 
 								<Route path="/map" title="Map" component={Map} />
-								<Route
-									path="/gallery"
-									title="Gallery"
-									component={Gallery}
-								/>
+								<Route path="/gallery" title="Gallery" component={Gallery} />
 								<Route
 									path="/page-option/with-footer"
 									title="PageWithFooter"
@@ -583,11 +489,7 @@ class Content extends React.Component {
 									title="Extra Invoice"
 									component={ExtraInvoice}
 								/>
-								<Route
-									path="/user/profile"
-									title="Extra Profile"
-									component={Profile}
-								/>
+								<Route path="/user/profile" title="Extra Profile" component={Profile} />
 								<Route
 									path="/extra/scrum-board"
 									title="Extra Scrum Board"
