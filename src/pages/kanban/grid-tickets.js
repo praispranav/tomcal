@@ -178,6 +178,7 @@ function KanBanBoard(props) {
       // } else {
       //   setFilterColumns(columns);
       // }
+    }
 else if (title === "category" && !isEmpty(value)) {
       switch (value) {
         case "open": {

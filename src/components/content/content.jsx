@@ -1,21 +1,18 @@
 import React from "react";
 import { Route, withRouter, Switch } from "react-router-dom";
-//import routes from './../../config/page-route.jsx';
 import { PageSettings } from "./../../config/page-settings.js";
-import auth from "./../../services/authservice";
-import { getUser } from "./../../services/users";
 import { Redirect } from "react-router";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+///
 import configureStore from "./../../store/configureStore";
 import { Provider } from "react-redux";
-
+///
 import ProtectedRoute from "./../../common/ProtectedRoute";
 ////////////////////////////////////////////////////////////////////
 import YourDrive from "./../../pages/drive/yourdrive.js";
 import TCMSession from "./../../pages/clinic/add_tcmsession.js";
 import DashboardV2 from "./../../pages/dashboard/dashboard-v2.js";
-//import DashboardV3 from './../../pages/dashboard/dashboard-v3.js';
 import EmailInbox from "./../../pages/email/email-inbox.js";
 import EmailCompose from "./../../pages/email/email-compose.js";
 import EmailDetail from "./../../pages/email/email-detail.js";
@@ -74,7 +71,6 @@ import ExtraError from "./../../pages/extra/extra-error.js";
 import Profile from "./../../pages/user/profile.js";
 import ExtraScrumBoard from "./../../pages/extra/extra-scrum-board.js";
 import ExtraCookieAcceptanceBanner from "./../../pages/extra/extra-cookie-acceptance-banner.js";
-//import LoginV1 from './../../pages/user/login-v1.js';
 import LoginV2 from "../../pages/user/login.js";
 import RegisterV3 from "./../../pages/register.js";
 import User from "./../../pages/clinic/user.js";
@@ -137,12 +133,6 @@ class Content extends React.Component {
 		super(props);
 
 		this.state = {
-			// user:{
-			//  firstName: '',
-			//  lastName : '',
-			//  username: '',
-			//  imageSrc: ''
-			// }
 		};
 	}
 
@@ -167,23 +157,7 @@ class Content extends React.Component {
 	//   });
 	// }
 
-	mapToViewModel(user) {
-		return {
-			_id: user._id,
-			username: user.username,
-			password: user.password,
-			profile: user.profile,
-			email: user.email,
-			//dateBirth: new Date(user.dateBirth),
-			firstName: user.contactName.first,
-			lastName: user.contactName.last,
-			initials: user.contactName.initials,
-			country: user.country,
-			gender: user.gender,
-			prefix: user.prefix,
-			imageSrc: user.imageSrc,
-		};
-	}
+
 
 	render() {
 		const { user } = this.state;
@@ -202,21 +176,10 @@ class Content extends React.Component {
 							<Switch>
 								<ToastContainer />
 
-								{/* <Route path= '/dashboard/' title="Dashboard V2" render ={props => {
-                if(!this.state.user) return <Redirect to="/user/login" />;
-                return <DashboardV2 {...props} />;
-              }}/>  */}
-
 								<ProtectedRoute path="/dashboard/" title="Clinic Dashboard" component={DashboardV2} />
 
-								{/* <Route path= '/dashboard/' title="Dashboard V2" render ={props => 
-                <DashboardV2 {...props} user={user} />
-              }/> */}
 								<Redirect from="/" exact to="/dashboard/" />
 
-								{/* <Route path='/dashboard/' title="Dashboard Clinic" component={DashboardV2}   /> */}
-
-								{/* <Route path= '/user/login' title="Login" component={LoginV2}   /> */}
 								<Route
 									path="/user/login"
 									title="Login"
@@ -234,16 +197,6 @@ class Content extends React.Component {
 								<ProtectedRoute path="/clinic/users" title="Users" component={UserTableData} />
 
 								<ProtectedRoute path="/clinic/tickets" title="Tickets" component={TicketsTableData} />
-
-								{/* <Route path= '/clinic/users/:id' title="User" render ={props => {
-                if(!this.state.user) return <Redirect to="/user/login" />;
-                return <User {...props} />;
-              }}/>
-              
-                <Route path= '/clinic/users' title="Users" render ={props => {
-                if(!this.state.user) return <Redirect to="/user/login" />;
-                return <UserTableData {...props} />;
-              }}/> */}
 
 								<ProtectedRoute path="/clinic/clinicsolos/:id" title="ClinicSolo" component={ClinicSolo} />
 								<ProtectedRoute
