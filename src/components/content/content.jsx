@@ -233,7 +233,7 @@ class Content extends React.Component {
 
 								<ProtectedRoute path="/clinic/users" title="Users" component={UserTableData} />
 
-								<ProtectedRoute path="/clinic/tickets" title="Users" component={TicketsTableData} />
+								<ProtectedRoute path="/clinic/tickets" title="Tickets" component={TicketsTableData} />
 
 								{/* <Route path= '/clinic/users/:id' title="User" render ={props => {
                 if(!this.state.user) return <Redirect to="/user/login" />;
@@ -272,11 +272,7 @@ class Content extends React.Component {
 								<Route path="/scheduler" title="Scheduler" component={SchedulerCal} />
 								<Route path="/scheduler2" title="Scheduler2" component={SchedulerfCal} />
 								<Route path="/kanban/kanban" title="KanBanBoard" component={KanBanBoard} />
-								{/* <Route
-									path="/clinic/tickets"
-									title="NewKanBanBoard"
-									component={TicketsTableData}
-								/> */}
+								{/* <Route path="/clinic/tickets" title="NewKanBanBoard" component={TicketsTableData} /> */}
 
 								<Route path="/clinic/add_tcmsession" title="TCM Session" component={TCMSession} />
 								<Route path="/email/inbox" title="Email Inbox" component={EmailInbox} />

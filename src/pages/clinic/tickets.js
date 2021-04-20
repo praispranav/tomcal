@@ -33,7 +33,7 @@ class TicketsTableData extends Component {
 			checkedUsers: [],
 			toggleModal: false,
 			ticketData: {
-				tickedNO: this.makeTicketID(),
+				ticketNO: this.makeTicketNO(),
 				name: "",
 				status: "active",
 				participants: "",
@@ -63,7 +63,7 @@ class TicketsTableData extends Component {
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
-	makeTicketID() {
+	makeTicketNO() {
 		var text = "TK-";
 		var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 		for (var i = 0; i <= 5; i++) text += possible.charAt(Math.floor(Math.random() * possible.length));
@@ -163,28 +163,28 @@ class TicketsTableData extends Component {
 							</button>
 							<button className="btn btn-default active m-r-5 m-b-5" title="edit" style={btnStyles}>
 								{" "}
-								<Link
+								{/* <Link
 									to={
 										this.state.checkedUsers ? `/clinic/users/${this.state.checkedUsers[0]}` : "/clinic/users/"
 									}
-								>
-									<img style={iconStyles} src={editIcon} />
-								</Link>{" "}
+								> */}
+								<img style={iconStyles} src={editIcon} />
+								{/* </Link>{" "} */}
 							</button>
 							<button
 								className="btn btn-default active m-r-5 m-b-5"
 								title="delete"
 								style={btnStyles}
-								onClick={() => this.handleMassDelete(this.state.checkedUsers)}
+								// onClick={() => this.handleMassDelete(this.state.checkedUsers)}
 							>
 								{" "}
 								<img style={{ width: "25px", height: "25px" }} src={deleteIcon} />
 							</button>
 							<button className="btn btn-default active m-r-5 m-b-5" title="csv" style={btnStyles}>
 								{" "}
-								<Link to="/clinic/users/">
-									<img style={iconStyles} src={csvIcon} />
-								</Link>{" "}
+								{/* <Link to="/clinic/users/"> */}
+								<img style={iconStyles} src={csvIcon} />
+								{/* </Link>{" "} */}
 							</button>
 						</div>
 
