@@ -162,7 +162,7 @@ class UserTableData extends Component {
 	render() {
 		const { length: count } = this.state.users;
 		const { pageSize, currentPage, sortColumn, searchQuery } = this.state;
-		if (count === 0) return "<p>No data available</p>";
+		//if (count === 0) return "<p>No data available</p>";
 
 		const { data: users } = this.getDataPgnation();
 

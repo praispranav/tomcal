@@ -7,7 +7,11 @@ import { getUser } from "./../../services/users";
 import { Redirect } from "react-router";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import configureStore from "./../../store/configureStore";
+import { Provider } from "react-redux";
+
 import ProtectedRoute from "./../../common/ProtectedRoute";
+////////////////////////////////////////////////////////////////////
 import YourDrive from "./../../pages/drive/yourdrive.js";
 import TCMSession from "./../../pages/clinic/add_tcmsession.js";
 import DashboardV2 from "./../../pages/dashboard/dashboard-v2.js";
@@ -77,7 +81,7 @@ import User from "./../../pages/clinic/user.js";
 import ClinicSolo from "./../../pages/clinic/clinicsolo.js";
 import ClinicSoloTableData from "./../../pages/clinic/clinicsolos.js";
 //import Appointment from './../../pages/clinic/appointment.js';
-//import AppointmentTableData from './../../pages/clinic/appointments.js';
+import AppointmentTableData from "./../../pages/clinic/appointments.js";
 //import ReqForAppointment from './../../pages/clinic/reqforappointment.js';
 //import ReqForAppointmentTableData from './../../pages/clinic/reqforappointments.js';
 //import Patient from './../../pages/clinic/patient.js';
@@ -112,10 +116,9 @@ import DoctorTableData from "./../../pages/clinic/doctors.js";
 // import BTreatment from './../../pages/clinic/btreatment.js';
 // import BTreatmentTableData from './../../pages/clinic/btreatments.js';
 
-import KanBanBoard from "./../../pages/kanban/kanban.js";
-// import NewKanBanBoard from "./../../pages/clinic/grid-tickets.js";
 import FormPlugins from "./../../pages/form/form-plugins";
 import Logout from "./../../common/logout";
+import KanBanBoard from "./../../pages/kanban/kanban.js";
 
 function setTitle(path, routeArray) {
 	var pageTitle;
@@ -126,6 +129,8 @@ function setTitle(path, routeArray) {
 	}
 	document.title = pageTitle ? pageTitle : "TCMFiles | Users";
 }
+
+const store = configureStore();
 
 class Content extends React.Component {
 	constructor(props) {
@@ -194,21 +199,15 @@ class Content extends React.Component {
 						}
 					>
 						<React.Fragment>
-							<ToastContainer />
-
 							<Switch>
-								{/* <Route exact path="/">{user ? <Redirect to="/dashboard" /> : <DashboardV2 />}</Route>  */}
+								<ToastContainer />
 
 								{/* <Route path= '/dashboard/' title="Dashboard V2" render ={props => {
                 if(!this.state.user) return <Redirect to="/user/login" />;
                 return <DashboardV2 {...props} />;
               }}/>  */}
 
-								<ProtectedRoute
-									path="/dashboard/"
-									title="Clinic Dashboard"
-									component={DashboardV2}
-								/>
+								<ProtectedRoute path="/dashboard/" title="Clinic Dashboard" component={DashboardV2} />
 
 								{/* <Route path= '/dashboard/' title="Dashboard V2" render ={props => 
                 <DashboardV2 {...props} user={user} />
@@ -232,17 +231,9 @@ class Content extends React.Component {
 
 								<ProtectedRoute path="/clinic/users/:id" title="User" component={User} />
 
-								<ProtectedRoute
-									path="/clinic/users"
-									title="Users"
-									component={UserTableData}
-								/>
+								<ProtectedRoute path="/clinic/users" title="Users" component={UserTableData} />
 
-								<ProtectedRoute
-									path="/clinic/tickets"
-									title="Users"
-									component={TicketsTableData}
-								/>
+								<ProtectedRoute path="/clinic/tickets" title="Users" component={TicketsTableData} />
 
 								{/* <Route path= '/clinic/users/:id' title="User" render ={props => {
                 if(!this.state.user) return <Redirect to="/user/login" />;
@@ -254,36 +245,27 @@ class Content extends React.Component {
                 return <UserTableData {...props} />;
               }}/> */}
 
-								<ProtectedRoute
-									path="/clinic/clinicsolos/:id"
-									title="ClinicSolo"
-									component={ClinicSolo}
-								/>
+								<ProtectedRoute path="/clinic/clinicsolos/:id" title="ClinicSolo" component={ClinicSolo} />
 								<ProtectedRoute
 									path="/clinic/clinicsolos"
 									title="ClinicSolos"
 									component={ClinicSoloTableData}
 								/>
+								<ProtectedRoute path="/clinic/patients/:id" title="Patient" component={Patient} />
+								<ProtectedRoute path="/clinic/patients" title="Patients" component={PatientTableData} />
+								<ProtectedRoute path="/clinic/doctors/:id" title="Doctor" component={Doctor} />
+								<ProtectedRoute path="/clinic/doctors" title="Doctors" component={DoctorTableData} />
+
+								<ProtectedRoute path="/clinic/clinicsolos/:id" title="ClinicSolo" component={ClinicSolo} />
 								<ProtectedRoute
-									path="/clinic/patients/:id"
-									title="Patient"
-									component={Patient}
+									path="/clinic/clinicsolos"
+									title="ClinicSolos"
+									component={ClinicSoloTableData}
 								/>
-								<ProtectedRoute
-									path="/clinic/patients"
-									title="Patients"
-									component={PatientTableData}
-								/>
-								<ProtectedRoute
-									path="/clinic/doctors/:id"
-									title="Doctor"
-									component={Doctor}
-								/>
-								<ProtectedRoute
-									path="/clinic/doctors"
-									title="Doctors"
-									component={DoctorTableData}
-								/>
+								<ProtectedRoute path="/clinic/patients/:id" title="Patient" component={Patient} />
+								<ProtectedRoute path="/clinic/patients" title="Patients" component={PatientTableData} />
+								<ProtectedRoute path="/clinic/doctors/:id" title="Doctor" component={Doctor} />
+								<ProtectedRoute path="/clinic/doctors" title="Doctors" component={DoctorTableData} />
 
 								<Route path="/clinic/yourdrive/" title="Your Drive" component={YourDrive} />
 								<Route path="/calendar" title="Calendar" component={Calendar} />
@@ -296,109 +278,45 @@ class Content extends React.Component {
 									component={TicketsTableData}
 								/> */}
 
-								<Route
-									path="/clinic/add_tcmsession"
-									title="TCM Session"
-									component={TCMSession}
-								/>
+								<Route path="/clinic/add_tcmsession" title="TCM Session" component={TCMSession} />
 								<Route path="/email/inbox" title="Email Inbox" component={EmailInbox} />
-								<Route
-									path="/email/compose"
-									title="Email Compose"
-									component={EmailCompose}
-								/>
+								<Route path="/email/compose" title="Email Compose" component={EmailCompose} />
 								<Route path="/email/detail" title="Email Detail" component={EmailDetail} />
 								<Route path="/widgets" title="Widgets" component={Widgets} />
 								<Route path="/ui/general" title="UI General" component={UIGeneral} />
-								<Route
-									path="/ui/typography"
-									title="UI Typography"
-									component={UITypography}
-								/>
-								<Route
-									path="/ui/tabs-accordion"
-									title="UI Tabs Accordion"
-									component={UITabsAccordion}
-								/>
+								<Route path="/ui/typography" title="UI Typography" component={UITypography} />
+								<Route path="/ui/tabs-accordion" title="UI Tabs Accordion" component={UITabsAccordion} />
 								<Route
 									path="/ui/modal-notification"
 									title="UI Modal Notification"
 									component={UIModalNotification}
 								/>
-								<Route
-									path="/ui/widget-boxes"
-									title="UI Widget Boxes"
-									component={UIWidgetBoxes}
-								/>
-								<Route
-									path="/ui/media-object"
-									title="UI Media Object"
-									component={UIMediaObject}
-								/>
+								<Route path="/ui/widget-boxes" title="UI Widget Boxes" component={UIWidgetBoxes} />
+								<Route path="/ui/media-object" title="UI Media Object" component={UIMediaObject} />
 								<Route path="/ui/buttons" title="UI Buttons" component={UIButtons} />
 								<Route path="/ui/icons" title="UIIcons" component={UIIcons} />
-								<Route
-									path="/ui/simple-line-icons"
-									title="UISimpleLineIcons"
-									component={UISimpleLineIcons}
-								/>
+								<Route path="/ui/simple-line-icons" title="UISimpleLineIcons" component={UISimpleLineIcons} />
 								<Route path="/ui/ionicons" title="UIIonicons" component={UIIonicons} />
-								<Route
-									path="/ui/language-bar-icon"
-									title="UILanguageBarIcon"
-									component={UILanguageBarIcon}
-								/>
-								<Route
-									path="/ui/social-buttons"
-									title="UISocialButtons"
-									component={UISocialButtons}
-								/>
+								<Route path="/ui/language-bar-icon" title="UILanguageBarIcon" component={UILanguageBarIcon} />
+								<Route path="/ui/social-buttons" title="UISocialButtons" component={UISocialButtons} />
 								<Route path="/bootstrap-4" title="Bootstrap4" component={Bootstrap4} />
-								<Route
-									path="/form/elements"
-									title="FormElements"
-									component={FormElements}
-								/>
+								<Route path="/form/elements" title="FormElements" component={FormElements} />
 								<Route path="/form/wizards" title="FormWizards" component={FormWizards} />
 								<Route path="/form/form" title="FormPlugins" component={FormPlugins} />
 								<Route path="/table/basic" title="TableBasic" component={TableBasic} />
 								<Route path="/table/data" title="TableData" component={TableData} />
-								<Route
-									path="/pos/customer-order"
-									title="PosCustomerOrder"
-									component={PosCustomerOrder}
-								/>
-								<Route
-									path="/pos/kitchen-order"
-									title="PosKitchenOrder"
-									component={PosKitchenOrder}
-								/>
-								<Route
-									path="/pos/counter-checkout"
-									title="PosCounterCheckout"
-									component={PosCounterCheckout}
-								/>
-								<Route
-									path="/pos/table-booking"
-									title="PosTableBooking"
-									component={PosTableBooking}
-								/>
-								<Route
-									path="/pos/menu-stock"
-									title="PosMenuStock"
-									component={PosMenuStock}
-								/>
+								<Route path="/pos/customer-order" title="PosCustomerOrder" component={PosCustomerOrder} />
+								<Route path="/pos/kitchen-order" title="PosKitchenOrder" component={PosKitchenOrder} />
+								<Route path="/pos/counter-checkout" title="PosCounterCheckout" component={PosCounterCheckout} />
+								<Route path="/pos/table-booking" title="PosTableBooking" component={PosTableBooking} />
+								<Route path="/pos/menu-stock" title="PosMenuStock" component={PosMenuStock} />
 								<Route path="/chart/js" title="ChartJS" component={ChartJS} />
 								<Route path="/chart/d3" title="ChartD3" component={ChartD3} />
 								<Route path="/chart/apex" title="ChartApex" component={ChartApex} />
 
 								<Route path="/map" title="Map" component={Map} />
 								<Route path="/gallery" title="Gallery" component={Gallery} />
-								<Route
-									path="/page-option/with-footer"
-									title="PageWithFooter"
-									component={PageWithFooter}
-								/>
+								<Route path="/page-option/with-footer" title="PageWithFooter" component={PageWithFooter} />
 								<Route
 									path="/page-option/without-sidebar"
 									title="PageWithoutSidebar"
@@ -419,11 +337,7 @@ class Content extends React.Component {
 									title="PageWithTwoSidebar"
 									component={PageWithTwoSidebar}
 								/>
-								<Route
-									path="/page-option/full-height"
-									title="PageFullHeight"
-									component={PageFullHeight}
-								/>
+								<Route path="/page-option/full-height" title="PageFullHeight" component={PageFullHeight} />
 								<Route
 									path="/page-option/with-wide-sidebar"
 									title="PageWithWideSidebar"
@@ -439,11 +353,7 @@ class Content extends React.Component {
 									title="PageWithMegaMenu"
 									component={PageWithMegaMenu}
 								/>
-								<Route
-									path="/page-option/with-top-menu"
-									title="PageWithTopMenu"
-									component={PageWithTopMenu}
-								/>
+								<Route path="/page-option/with-top-menu" title="PageWithTopMenu" component={PageWithTopMenu} />
 								<Route
 									path="/page-option/with-boxed-layout"
 									title="PageWithBoxedLayout"
@@ -469,32 +379,12 @@ class Content extends React.Component {
 									title="Page With Search Sidebar"
 									component={PageWithSearchSidebar}
 								/>
-								<Route
-									path="/extra/timeline"
-									title="Extra Timeline"
-									component={ExtraTimeline}
-								/>
-								<Route
-									path="/extra/coming-soon"
-									title="Extra Coming Soon"
-									component={ExtraComingSoon}
-								/>
-								<Route
-									path="/extra/search"
-									title="Extra Search Results"
-									component={ExtraSearch}
-								/>
-								<Route
-									path="/extra/invoice"
-									title="Extra Invoice"
-									component={ExtraInvoice}
-								/>
+								<Route path="/extra/timeline" title="Extra Timeline" component={ExtraTimeline} />
+								<Route path="/extra/coming-soon" title="Extra Coming Soon" component={ExtraComingSoon} />
+								<Route path="/extra/search" title="Extra Search Results" component={ExtraSearch} />
+								<Route path="/extra/invoice" title="Extra Invoice" component={ExtraInvoice} />
 								<Route path="/user/profile" title="Extra Profile" component={Profile} />
-								<Route
-									path="/extra/scrum-board"
-									title="Extra Scrum Board"
-									component={ExtraScrumBoard}
-								/>
+								<Route path="/extra/scrum-board" title="Extra Scrum Board" component={ExtraScrumBoard} />
 								<Route
 									path="/extra/cookie-acceptance-banner"
 									title="Extra Cookie Acceptance Banner"
