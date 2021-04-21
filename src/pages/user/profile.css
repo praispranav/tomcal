@@ -1,0 +1,32 @@
+.save_btn {
+    background-color: #1BC4BF;
+    padding :8px 15px;
+    color:white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+.save_btn:hover {
+    color:white;
+    text-decoration: none;
+}
+.cancel_btn {
+    background-color: #E2E6EE;
+    padding :8px 15px;
+    color:#7B828D;
+    text-decoration: none;
+    border-radius: 5px;
+}
+.formLabel {
+    font-size: 14px;
+    font-weight: bold;
+}
+.cancel_btn:hover {
+    color:#7B828D;
+    text-decoration: none;
+}
+.input {
+    background-color: #F2F6F9;
+    outline:none;
+    border:none;
+    border-radius: 5px;
+}
