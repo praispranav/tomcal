@@ -12,7 +12,6 @@ import {
 	DropdownMenu,
 	DropdownItem,
 } from "reactstrap";
-//import axios from 'axios';
 import { getUsers, deleteUser } from "./../../services/users";
 import "bootstrap/dist/css/bootstrap.min.css";
 //import FloatSubMenu from './../../components/float-sub-menu/float-sub-menu';
@@ -67,7 +66,6 @@ class UserTableData extends Component {
 		const originalUsers = this.state.users;
 		CheckedUsers.map(async (user) => {
 			const users = this.state.users.filter((User) => User._id !== user);
-			// console.log("users: ", users);
 			this.setState({ users });
 			try {
 				await http.delete(apiUrl + "/users/" + user);

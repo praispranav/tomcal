@@ -15,12 +15,10 @@ class TableBody extends Component {
 		//console.log(data);
 		return (
 			<tbody>
-				{data.map((item) => (
+				{data?.map((item) => (
 					<tr key={item._id}>
 						{columns.map((column) => (
-							<td key={this.createKey(item, column)}>
-								{this.renderCell(item, column)}
-							</td>
+							<td key={this.createKey(item, column)}>{this.renderCell(item, column)}</td>
 						))}
 					</tr>
 				))}
