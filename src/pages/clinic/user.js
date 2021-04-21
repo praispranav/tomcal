@@ -149,12 +149,8 @@ class User extends Form {
 	async populateUser() {
 		try {
 			const userId = this.props.match.params.id;
-
 			if (userId === "new") return;
-
 			const { data: user } = await getUser(userId);
-
-			//console.log(this.mapToViewModel(user));
 			if (!user.dateBirth) user.dateBirth = new Date();
 
 			user.firstName = user.contactName.first;
@@ -177,13 +173,7 @@ class User extends Form {
 		await this.populateUser();
 	}
 
-	// schema = Joi.object({
-	// 	username: Joi.string().required().label('Username')
-	// 	//password: Joi.string().required().label('Password'),
-	// 	//email:Joi.string().required().label('Email'),
-	// 	//gender:Joi.string().required().label('Gender'),
-	// 	//country:Joi.string().required().label('Country')
-	// });
+
 
 	schema = Joi.object({
 		username: Joi.string().alphanum().min(3).max(30).required(),
@@ -222,12 +212,8 @@ class User extends Form {
 
 	handleDobChange = (e) => {
 		const errors = { ...this.state.errors };
-		const obj = { ["dateBirth"]: e };
-
 		const data = { ...this.state.data };
 		data["dateBirth"] = e;
-		//const data = {...this.state.data};
-		//data.dateBirth = e;
 		this.setState({ data });
 		console.log(this.state.data);
 	};
@@ -238,10 +224,9 @@ class User extends Form {
 	};
 
 	doSubmit = async (user) => {
-		//console.log('working');
+
 		try {
 			await saveUser(this.state.data, this.state.imageSrc);
-			//console.log(this.state.data);
 			this.props.history.push("/clinic/users");
 		} catch (ex) {
 			//if(ex.response && ex.response.status === 404){

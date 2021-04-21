@@ -64,9 +64,9 @@ class TicketsTableData extends Component {
 	}
 
 	makeTicketNO() {
-		var text = "TK-";
-		var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-		for (var i = 0; i <= 5; i++) text += possible.charAt(Math.floor(Math.random() * possible.length));
+		let text = "TK-";
+		const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+		for (let i = 0; i <= 5; i++) text += possible.charAt(Math.floor(Math.random() * possible.length));
 		return text;
 	}
 
@@ -114,6 +114,15 @@ class TicketsTableData extends Component {
 		return { data: tickets };
 	};
 
+
+    handleChange = ({currentTarget:input}) =>{
+		const ticketData = {...this.state.ticketData};
+		ticketData[input.name] = input.value;
+		this.setState({ticketData});
+	};
+
+
+
 	handleSubmit = async (e) => {
 		e.preventDefault();
 		console.log("tickets form data: ", this.state.ticketData);
@@ -130,7 +139,7 @@ class TicketsTableData extends Component {
 	render() {
 		const { length: count } = this.state.tickets;
 		const { pageSize, currentPage, sortColumn, searchQuery } = this.state;
-		if (count === 0) return <p>No data available</p>;
+		//if (count === 0) return <p>No data available</p>;
 
 		const { data: tickets } = this.getDataPgnation();
 
@@ -233,11 +242,7 @@ class TicketsTableData extends Component {
 												name="name"
 												placeholder="name"
 												value={this.state.ticketData.name}
-												onChange={(e) =>
-													this.setState({
-														ticketData: { ...this.state.ticketData, name: e.target.value },
-													})
-												}
+												onChange={this.handleChange}
 												required
 											/>
 										</FormGroup>
@@ -249,11 +254,7 @@ class TicketsTableData extends Component {
 												name="participants"
 												placeholder="participants"
 												value={this.state.ticketData.participants}
-												onChange={(e) =>
-													this.setState({
-														ticketData: { ...this.state.ticketData, participants: e.target.value },
-													})
-												}
+												onChange={this.handleChange}
 											/>
 										</FormGroup>
 									</Col>
@@ -266,11 +267,7 @@ class TicketsTableData extends Component {
 												name="narrative"
 												placeholder="narrative"
 												value={this.state.ticketData.narrative}
-												onChange={(e) =>
-													this.setState({
-														ticketData: { ...this.state.ticketData, narrative: e.target.value },
-													})
-												}
+												onChange={this.handleChange}
 											/>
 										</FormGroup>
 									</Col>
@@ -283,11 +280,7 @@ class TicketsTableData extends Component {
 												name="category"
 												placeholder="category"
 												value={this.state.ticketData.category}
-												onChange={(e) =>
-													this.setState({
-														ticketData: { ...this.state.ticketData, category: e.target.value },
-													})
-												}
+												onChange={this.handleChange}
 											>
 												<option value="orders">Orders</option>
 												<option value="bug-error">Bug Error</option>
@@ -306,11 +299,7 @@ class TicketsTableData extends Component {
 												name="priority"
 												placeholder="priority"
 												value={this.state.ticketData.priority}
-												onChange={(e) =>
-													this.setState({
-														ticketData: { ...this.state.ticketData, priority: e.target.value },
-													})
-												}
+												onChange={this.handleChange}
 											>
 												<option value="normal">Normal</option>
 												<option value="low">Low</option>
@@ -362,11 +351,7 @@ class TicketsTableData extends Component {
 												name="department"
 												placeholder="department"
 												value={this.state.ticketData.department}
-												onChange={(e) =>
-													this.setState({
-														ticketData: { ...this.state.ticketData, department: e.target.value },
-													})
-												}
+												onChange={this.handleChange}
 											/>
 										</FormGroup>
 									</Col>
@@ -377,11 +362,7 @@ class TicketsTableData extends Component {
 												name="sub-department"
 												placeholder="sub-department"
 												value={this.state.ticketData.subDepartment}
-												onChange={(e) =>
-													this.setState({
-														ticketData: { ...this.state.ticketData, subDepartment: e.target.value },
-													})
-												}
+												onChange={this.handleChange}
 											/>
 										</FormGroup>
 									</Col>
@@ -394,11 +375,7 @@ class TicketsTableData extends Component {
 												name="location"
 												placeholder="location"
 												value={this.state.ticketData.location}
-												onChange={(e) =>
-													this.setState({
-														ticketData: { ...this.state.ticketData, location: e.target.value },
-													})
-												}
+												onChange={this.handleChange}
 											/>
 										</FormGroup>
 									</Col>
@@ -409,11 +386,7 @@ class TicketsTableData extends Component {
 												name="field"
 												placeholder="field"
 												value={this.state.ticketData.field}
-												onChange={(e) =>
-													this.setState({
-														ticketData: { ...this.state.ticketData, field: e.target.value },
-													})
-												}
+												onChange={this.handleChange}
 											/>
 										</FormGroup>
 									</Col>
@@ -426,11 +399,7 @@ class TicketsTableData extends Component {
 												name="tags"
 												placeholder="tags"
 												value={this.state.ticketData.tags}
-												onChange={(e) =>
-													this.setState({
-														ticketData: { ...this.state.ticketData, tags: e.target.value },
-													})
-												}
+												onChange={this.handleChange}
 											/>
 										</FormGroup>
 									</Col>
@@ -441,11 +410,7 @@ class TicketsTableData extends Component {
 												name="reference"
 												placeholder="reference"
 												value={this.state.ticketData.reference}
-												onChange={(e) =>
-													this.setState({
-														ticketData: { ...this.state.ticketData, reference: e.target.value },
-													})
-												}
+												onChange={this.handleChange}
 											/>
 										</FormGroup>
 									</Col>
@@ -458,11 +423,7 @@ class TicketsTableData extends Component {
 												name="sharinglink"
 												placeholder="sharing link"
 												value={this.state.ticketData.sharingLink}
-												onChange={(e) =>
-													this.setState({
-														ticketData: { ...this.state.ticketData, sharingLink: e.target.value },
-													})
-												}
+												onChange={this.handleChange}
 											/>
 										</FormGroup>
 									</Col>
@@ -473,11 +434,7 @@ class TicketsTableData extends Component {
 												name="assignedto"
 												placeholder="assigned to"
 												value={this.state.ticketData.assignedto}
-												onChange={(e) =>
-													this.setState({
-														ticketData: { ...this.state.ticketData, assignedto: e.target.value },
-													})
-												}
+												onChange={this.handleChange}
 											/>
 										</FormGroup>
 									</Col>
@@ -491,11 +448,7 @@ class TicketsTableData extends Component {
 												name="sharedto"
 												placeholder="sharedto"
 												value={this.state.ticketData.sharedTo}
-												onChange={(e) =>
-													this.setState({
-														ticketData: { ...this.state.ticketData, sharedTo: e.target.value },
-													})
-												}
+												onChange={this.handleChange}
 											/>
 										</FormGroup>
 									</Col>
@@ -506,11 +459,7 @@ class TicketsTableData extends Component {
 												name="note"
 												placeholder="note"
 												value={this.state.ticketData.note}
-												onChange={(e) =>
-													this.setState({
-														ticketData: { ...this.state.ticketData, note: e.target.value },
-													})
-												}
+												onChange={this.handleChange}
 											/>
 										</FormGroup>
 									</Col>
@@ -523,11 +472,7 @@ class TicketsTableData extends Component {
 												name="businessname"
 												placeholder="business name"
 												value={this.state.ticketData.businessName}
-												onChange={(e) =>
-													this.setState({
-														ticketData: { ...this.state.ticketData, businessName: e.target.value },
-													})
-												}
+												onChange={this.handleChange}
 											/>
 										</FormGroup>
 									</Col>
@@ -538,11 +483,7 @@ class TicketsTableData extends Component {
 												name="status"
 												placeholder="status"
 												value={this.state.ticketData.status}
-												onChange={(e) =>
-													this.setState({
-														ticketData: { ...this.state.ticketData, status: e.target.value },
-													})
-												}
+												onChange={this.handleChange}
 											>
 												<option value="active">Active</option>
 												<option value="pending">Pending</option>

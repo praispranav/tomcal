@@ -220,24 +220,16 @@ schema = Joi.object({
 
 	handlecreatedOnChange = (e) => {
 		const errors = { ...this.state.errors };
-		const obj = { ['createdOn']: e };
-
 		const data = { ...this.state.data };
 		data['createdOn'] = e;
-		//const data = {...this.state.data};
-		//data.dateBirth = e;
 		this.setState({ data });
 		console.log(this.state.data);
 	};
 
 	handledeadlineChange = (e) => {
 		const errors = { ...this.state.errors };
-		const obj = { ['deadline']: e };
-
 		const data = { ...this.state.data };
 		data['deadline'] = e;
-		//const data = {...this.state.data};
-		//data.dateBirth = e;
 		this.setState({ data });
 		console.log(this.state.data);
 	};
@@ -250,11 +242,9 @@ schema = Joi.object({
 	}
 
 	doSubmit = async (ticket) => {
-		//console.log('working');
 	    try{
 			console.log(this.state.data);
 			await saveTicket(this.state.data,this.state.imageSrc);
-			//console.log(this.state.data);
 			this.props.history.push("/clinic/tickets");
 		}catch(ex){
 			//if(ex.response && ex.response.status === 404){

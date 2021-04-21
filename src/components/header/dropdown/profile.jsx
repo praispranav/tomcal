@@ -28,19 +28,9 @@ class DropdownProfile extends React.Component {
     async componentDidMount(){
 		try{
 				const user = auth.getProfile();	
-			
-		
 		if(user){
-			//const {data} = await getUser(user._id);
-
-			//this.setState({data});
 			const {data:currentUser} = await getUser(user._id);
-			//console.log(currentUser);
 			this.setState({ currentUser: this.mapToViewModel(currentUser) });
-			//this.setState({user});
-			//console.log(user._id);
-			//data.imageSrc;
-		
 		}
 		}catch(ex){
 			console.log(ex);
@@ -57,7 +47,6 @@ class DropdownProfile extends React.Component {
 		  password: user.password,
 		  profile: user.profile,
 		  email: user.email,
-		  //dateBirth: new Date(user.dateBirth),
 		  firstName: user.contactName.first,
 		  lastName: user.contactName.last,
 		  initials: user.contactName.initials,
@@ -70,12 +59,8 @@ class DropdownProfile extends React.Component {
 
 		
 	render() {
-	//console.log(this.state.currentUser);
-
-	console.log(this.state);
 	const { currentUser} = this.state;
 		return (
-			// <React.Fragment></React.Fragment>
 			<Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} className="dropdown navbar-user" tag="li">
 				<DropdownToggle tag="a">
 					<img src={currentUser.imageSrc} alt="" /> 
@@ -90,7 +75,6 @@ class DropdownProfile extends React.Component {
 					<DropdownItem><Link to="/logout">Log Out</Link></DropdownItem>
 				</DropdownMenu>
 			</Dropdown>
-		
 		);
 	}
 };

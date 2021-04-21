@@ -173,13 +173,10 @@ class Content extends React.Component {
 						}
 					>
 						<React.Fragment>
+						<ToastContainer />
 							<Switch>
-								<ToastContainer />
-
 								<ProtectedRoute path="/dashboard/" title="Clinic Dashboard" component={DashboardV2} />
-
 								<Redirect from="/" exact to="/dashboard/" />
-
 								<Route
 									path="/user/login"
 									title="Login"
@@ -188,16 +185,11 @@ class Content extends React.Component {
 										return <LoginV2 {...props} />;
 									}}
 								/>
-
 								<Route path="/logout" title="Logout" component={Logout} />
 								<Route path="/register" title="Register" component={RegisterV3} />
-
 								<ProtectedRoute path="/clinic/users/:id" title="User" component={User} />
-
 								<ProtectedRoute path="/clinic/users" title="Users" component={UserTableData} />
-
 								<ProtectedRoute path="/clinic/tickets" title="Tickets" component={TicketsTableData} />
-
 								<ProtectedRoute path="/clinic/clinicsolos/:id" title="ClinicSolo" component={ClinicSolo} />
 								<ProtectedRoute
 									path="/clinic/clinicsolos"
@@ -208,7 +200,6 @@ class Content extends React.Component {
 								<ProtectedRoute path="/clinic/patients" title="Patients" component={PatientTableData} />
 								<ProtectedRoute path="/clinic/doctors/:id" title="Doctor" component={Doctor} />
 								<ProtectedRoute path="/clinic/doctors" title="Doctors" component={DoctorTableData} />
-
 								<ProtectedRoute path="/clinic/clinicsolos/:id" title="ClinicSolo" component={ClinicSolo} />
 								<ProtectedRoute
 									path="/clinic/clinicsolos"
@@ -219,14 +210,12 @@ class Content extends React.Component {
 								<ProtectedRoute path="/clinic/patients" title="Patients" component={PatientTableData} />
 								<ProtectedRoute path="/clinic/doctors/:id" title="Doctor" component={Doctor} />
 								<ProtectedRoute path="/clinic/doctors" title="Doctors" component={DoctorTableData} />
-
 								<Route path="/clinic/yourdrive/" title="Your Drive" component={YourDrive} />
 								<Route path="/calendar" title="Calendar" component={Calendar} />
 								<Route path="/scheduler" title="Scheduler" component={SchedulerCal} />
 								<Route path="/scheduler2" title="Scheduler2" component={SchedulerfCal} />
 								<Route path="/kanban/kanban" title="KanBanBoard" component={KanBanBoard} />
 								{/* <Route path="/clinic/tickets" title="NewKanBanBoard" component={TicketsTableData} /> */}
-
 								<Route path="/clinic/add_tcmsession" title="TCM Session" component={TCMSession} />
 								<Route path="/email/inbox" title="Email Inbox" component={EmailInbox} />
 								<Route path="/email/compose" title="Email Compose" component={EmailCompose} />
@@ -262,7 +251,6 @@ class Content extends React.Component {
 								<Route path="/chart/js" title="ChartJS" component={ChartJS} />
 								<Route path="/chart/d3" title="ChartD3" component={ChartD3} />
 								<Route path="/chart/apex" title="ChartApex" component={ChartApex} />
-
 								<Route path="/map" title="Map" component={Map} />
 								<Route path="/gallery" title="Gallery" component={Gallery} />
 								<Route path="/page-option/with-footer" title="PageWithFooter" component={PageWithFooter} />
