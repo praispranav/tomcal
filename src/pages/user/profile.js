@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import './profile.css'
 import { PageSettings } from './../../config/page-settings.js';
 import GoogleMapReact from 'google-map-react';
+import { Container, Row, Col, Form, Button, Image} from 'react-bootstrap'
 
 class Profile extends React.Component {
 	static contextType = PageSettings;
@@ -44,7 +46,63 @@ class Profile extends React.Component {
 	render() {
 		return (
 			<div>
-				<div className="profile">
+				<Container className="my-5">
+                <Row>
+                    <Col xs={12} >
+                        <div className="d-flex mb-2">
+                            <div className="info mr-auto">
+                                <h4>Personal information</h4>
+                                <p>Update your personal informatin</p>
+                            </div>
+                            <div className="buttons d-flex justify-content-center align-items-center">
+                                <a href="www.google.com" className="save_btn" >Save Changes</a>
+                                <a href="www.google.com" className="cancel_btn ml-2" >Cancel</a>
+                            </div>
+                        </div>
+                        <hr />
+                    </Col>
+                    <Row>
+
+                    </Row>
+                    <Col md={8} sm={12}>
+                        <Form>                          
+                        <Form.Group className="my-3" as={Row} controlId="formHorizontalEmail">
+                            <Form.Label className="d-flex align-items-center" column sm={3}>
+                            <span className="formLabel">Avatar</span>
+                            </Form.Label>
+                            <Col sm={9}>
+                            <Image src="https://lh3.googleusercontent.com/proxy/vhFeBM0tVF1_RwI44nhO6qRg_C7fQwnvARN8DffHT2-fFhA6Dr2CvYghBoe0AAPK1jz2SfG9WlebrMOfII9NvwUFIEPOwLJ_E2rdgjLaRl37LLjbGgCaCsZTj9fq" />
+                            </Col>
+                            </Form.Group>   
+                        <Form.Group className="mb-4" as={Row} controlId="formHorizontalEmail">
+                            <Form.Label className="d-flex align-items-center" column sm={3}>
+                            <span className="formLabel">First Name</span>
+                            </Form.Label>
+                            <Col sm={9}>
+                            <Form.Control size="lg" className="input" type="text" placeholder="First Name" />
+                            </Col>
+                        </Form.Group>
+                        <Form.Group className="mb-4" as={Row} controlId="formHorizontalEmail">
+                            <Form.Label className="d-flex align-items-center" column sm={3}>
+							<span className="formLabel">last Name</span>
+                            </Form.Label>
+                            <Col sm={9}>
+                            <Form.Control size="lg" className="input" type="email" placeholder="last Name" />
+                            </Col>
+                        </Form.Group>
+                        <Form.Group className="mb-4" as={Row} controlId="formHorizontalEmail">
+                            <Form.Label className="d-flex align-items-center" column sm={3}>
+							<span className="formLabel">Company Name</span>
+                            </Form.Label>
+                            <Col sm={9}>
+                            <Form.Control size="lg" className="input" type="email" placeholder="Company Name" />
+                            </Col>
+                        </Form.Group>
+                      </Form>
+                </Col> 
+                </Row>
+            </Container>
+				{/* <div className="profile">
 					<div className="profile-header">
 						<div className="profile-header-cover"></div>
 						<div className="profile-header-content">
@@ -367,7 +425,7 @@ class Profile extends React.Component {
 							</div>
 						</div>
 					</div>
-				</div>
+				</div> */}
 			</div>
 		)
 	}
