@@ -207,7 +207,7 @@ class TicketsTableData extends Component {
 							</p>
 
 							<TicketsTable
-								users={tickets}
+								tickets={tickets}
 								onDelete={this.handleDelete}
 								onSort={this.handleSort}
 								sortColumn={sortColumn}
