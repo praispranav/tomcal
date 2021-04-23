@@ -3,79 +3,50 @@ import Table from "./../common/table";
 import { Link, withRouter } from "react-router-dom";
 
 class KanbansTable extends Component {
-	// constructor(props) {
-	// 	super(props);
-	// 	this.state = {
-	// 		values: [],
-	// 	};
-	// }
-
 	columns = [
-		//   {path: '_id', label: 'Id'},
 		{
 			key: "checkbox",
-			label: (
-				<input
-					type="check"
-					style={{
-						width: "15px",
-						height: "15px",
-						marginTop: "0.4rem",
-						borderRadius: 0,
-					}}
-				/>
-			),
-			content: (kanban) => (
+			label: <input type="check" style={checkboxStyles} />,
+			content: (listKanban) => (
 				<span className="icon-img sm-r-5" style={{ marginTop: "15px" }}>
 					<input
 						type="checkbox"
-						style={{
-							width: "15px",
-							height: "15px",
-							marginTop: "0.4rem",
-							borderRadius: 0,
-						}}
+						style={checkboxStyles}
 						onChange={this.props.handleCheckboxChange}
-						value={kanban._id}
+						value={listKanban._id}
 					/>
 				</span>
 			),
 		},
-		{
-			key: "avatar",
-			label: "avatar",
-			content: (user) => (
-				<span className="icon-img sm-r-5">
-					<img
-						style={{ width: "30px", height: "30px", borderRadius: "50%" }}
-						src={user.imageSrc}
-						alt=""
-					/>
-				</span>
-			),
-		},
-		{label: 'Owner',   path: 'username' } ,
-		{label: 'Name',   path: 'name' } ,   
-		{label: 'Participants',   path: 'participants' } ,   
+		{label: "KanbanNo", path: "listKanbanNo" },
+		{label: "Name", path: "name" },
+		{label: "Owner", path: "username" },
+		{label: "Participants", path: "participants" },
+		{label: "Business", path: "businessName" },		
 		{label: 'Department',   path: 'department' } ,   	  
+		{label: 'subDepartment',   path: 'subDepartment' } ,   	  		
 		{label: 'Field',   path: 'field' } ,   	  
 		{label: 'Tags',   path: 'tags' } ,   	  
-		{label: 'Narrative',   path: 'narrative' } ,   	  
-		{label: 'Note',   path: 'note' } ,   	  	  
+		{label: 'Description',   path: 'description' } ,   	  
+		{label: 'Note',   path: 'note' } ,   	  	  		
+		{label: "CreatedOn", path: "createdOn" },
+		{label: "Status", path: "status" },		
 	];
 
 	render() {
 		//console.log(this.columns) ;
 		const { kanbans, onSort, sortColumn } = this.props;
 		return (
-			<Table
-				columns={this.columns}
-				sortColumn={sortColumn}
-				onSort={onSort}
-				data={kanbans}
-			/>
+			<Table columns={this.columns} sortColumn={sortColumn} onSort={onSort} data={kanbans} />
 		);
 	}
 }
+
+const checkboxStyles = {
+	width: "15px",
+	height: "15px",
+	marginTop: "0.4rem",
+	borderRadius: 0,
+};
 
 export default KanbansTable;
