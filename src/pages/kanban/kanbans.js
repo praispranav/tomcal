@@ -59,7 +59,6 @@ class Kanban extends Form {
 				businessName : '',
 				username     : '',		  
 				priority     : '',
-				businessName : '',				
 				department   : '',
 				subDepartment: '',	  
 				locations    : '',	  
@@ -159,20 +158,20 @@ class Kanban extends Form {
 			 kanban.lastName = kanban.contactName.last;
 			 kanban.initials = kanban.contactName.initials;
 			 kanban.narrative = kanban.narrative;
+			 kanban.category = kanban.category;
 			 kanban.priority = kanban.priority;
-			 kanban.businessName = kanban.businessName;			 
+			 kanban.field = kanban.field;
+			 kanban.tag = kanban.tag;
 			 kanban.department = kanban.department;
 			 kanban.subDepartment = kanban.subDepartment;
 			 kanban.locations   = kanban.locations;
-			 kanban.field = kanban.field;
-			 kanban.tag = kanban.tag;
+			 kanban.createdOn = kanban.creadOn;
 			 kanban.deadline = kanban.deadline;
 			 kanban.licenseNo  = kanban.professionalInfo.licenseNo;
 			 kanban.licenseValidTill = kanban.professionalInfo.licenseValidTill;
 			 kanban.organizationAName = kanban.membership.organizationAName;
 			 kanban.organizationAMemberNo = kanban.membership.organizationAMemberNo;
 			 kanban.organizationBName = kanban.membership.organizationBName;
-			 kanban.createdOn = kanban.creadOn;			 
 			 kanban.status = kanban.status;
 
 		  this.setState({ data: this.mapToViewModel(kanban) });
