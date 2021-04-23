@@ -23,10 +23,11 @@ const Menu = [
 
   { path: '/files', icon: 'fa fa-hospital', title: 'Your Drive', badge: '10',
     children: [
-      { path: '/drive/yourdrive', title: 'your drive' },
+      { path: '/clinic/yourdrive', title: 'your drive' },
       { path: '/drive/files', title: 'files' },
-      { path: '/drive/filemanager/filemanager', title: 'File Manager' },	  
       { path: '/drive/search_drive', title: 'Search in Your drive' },  
+      { path: '/page-option/with-wide-sidebar', title: 'My Drive' },	  
+	  { path: '/gallery', icon: 'fa fa-image', title: 'Gallery' },	  
     ]
   },
   
@@ -62,7 +63,7 @@ const Menu = [
   { path: '/Medicalfiles', icon: 'fa fa-medkit', title: 'Medical Files', badge: '10',
     children: [
       { path: '/clinic/medicalfiles', title: 'Medical Files' },
-      { path: '/clinic/add_tcmsession', title: 'Add session' },
+      { path: '/clinic/tcmsession/new', title: 'Add session' },
       { path: '/clinic/search_medicalfile', title: 'Search in Medical Files' },  
     ]
   },
@@ -93,7 +94,7 @@ const Menu = [
 
   { path: '/tickets', icon: 'fa fa-ticket-alt', title: 'Tickets', badge: '10',
     children: [
-      { path: '/clinic/tickets-grid', title: 'Gridview of Tickets' },	
+      { path: '/clinic/grid-tickets', title: 'Gridview of Tickets' },	
       { path: '/clinic/tickets', title: 'Tickets' },
       { path: '/clinic/add_ticket', title: 'Add ticket' },
       { path: '/clinic/search_ticket', title: 'Search in tickets' },  
@@ -170,7 +171,10 @@ const Menu = [
   },
   { path: '/kanban', icon: 'fa fa-columns', title: 'Kanban',
     children: [
-      { path: '/kanban/kanban', title: 'Kanban', highlight: true },
+      { path: '/kanban/scrumboard', title: 'Kanban', highlight: true },
+      { path: '/kanban/kanbans', title: 'Admin Kanbans', highlight: true },	  
+      { path: '/kanban/listkanbans', title: 'Admin Lists of Kanbans', highlight: true },	  	  
+      { path: '/kanban/cards', title: 'Admin Cards', highlight: true },	  	  
     ]
   },
   
