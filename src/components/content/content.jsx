@@ -74,6 +74,8 @@ import ExtraCookieAcceptanceBanner from "./../../pages/extra/extra-cookie-accept
 import LoginV2 from "../../pages/user/login.js";
 import RegisterV3 from "./../../pages/register.js";
 import User from "./../../pages/clinic/user.js";
+import Ticket from "./../../pages/clinic/ticket.js";
+
 import ClinicSolo from "./../../pages/clinic/clinicsolo.js";
 import ClinicSoloTableData from "./../../pages/clinic/clinicsolos.js";
 //import Appointment from './../../pages/clinic/appointment.js';
@@ -132,8 +134,7 @@ class Content extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.state = {
-		};
+		this.state = {};
 	}
 
 	async componentDidMount() {
@@ -157,8 +158,6 @@ class Content extends React.Component {
 	//   });
 	// }
 
-
-
 	render() {
 		const { user } = this.state;
 		return (
@@ -173,7 +172,7 @@ class Content extends React.Component {
 						}
 					>
 						<React.Fragment>
-						<ToastContainer />
+							<ToastContainer />
 							<Switch>
 								<ProtectedRoute path="/dashboard/" title="Clinic Dashboard" component={DashboardV2} />
 								<Redirect from="/" exact to="/dashboard/" />
@@ -188,6 +187,8 @@ class Content extends React.Component {
 								<Route path="/logout" title="Logout" component={Logout} />
 								<Route path="/register" title="Register" component={RegisterV3} />
 								<ProtectedRoute path="/clinic/users/:id" title="User" component={User} />
+								<ProtectedRoute path="/clinic/tickets/:id" title="Ticket" component={Ticket} />
+
 								<ProtectedRoute path="/clinic/users" title="Users" component={UserTableData} />
 								<ProtectedRoute path="/clinic/tickets" title="Tickets" component={TicketsTableData} />
 								<ProtectedRoute path="/clinic/clinicsolos/:id" title="ClinicSolo" component={ClinicSolo} />

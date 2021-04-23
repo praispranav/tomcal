@@ -30,51 +30,19 @@ class TicketsTableData extends Component {
 			sortColumn: { path: "title", order: "asc" },
 			searchQuery: "",
 			errors: {},
-			checkedUsers: [],
-			toggleModal: false,
-			ticketData: {
-				ticketNO: this.makeTicketNO(),
-				name: "",
-				status: "active",
-				participants: "",
-				narrative: "",
-				category: "orders",
-				priority: "normal",
-				businessName: "",
-				createdOn: "",
-				deadline: "",
-				department: "",
-				subDepartment: "",
-				location: "",
-				field: "",
-				tags: "",
-				referenece: "",
-				sharingLink: "",
-				assignedto: "",
-				sharedTo: "",
-				note: "",
-			},
+			checkedTickets: [],
 		};
 
-		// this.handleDelete = this.handleDelete.bind(this);
-		// this.handleMassDelete = this.handleMassDelete.bind(this);
-		// this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
-		this.toggle = this.toggle.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleDelete = this.handleDelete.bind(this);
+		this.handleMassDelete = this.handleMassDelete.bind(this);
+		this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
 	}
 
-	makeTicketNO() {
-		let text = "TK-";
-		const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-		for (let i = 0; i <= 5; i++) text += possible.charAt(Math.floor(Math.random() * possible.length));
-		return text;
-	}
-
-	toggle() {
-		this.setState((prevState) => ({
-			toggleModal: !prevState.toggleModal,
-		}));
-	}
+	// toggle() {
+	// 	this.setState((prevState) => ({
+	// 		toggleModal: !prevState.toggleModal,
+	// 	}));
+	// }
 
 	async componentDidMount() {
 		const { data } = await getTickets();
@@ -114,16 +82,63 @@ class TicketsTableData extends Component {
 		return { data: tickets };
 	};
 
+	handleDelete = async (ticket) => {
+		///delete
+		const originalTickets = this.state.tickets;
+		const tickets = this.state.tickets.filter((Ticket) => Ticket._id !== ticket._id);
+		this.setState({ tickets });
+		try {
+			await http.delete(apiUrl + "/tickets/" + ticket._id);
+		} catch (ex) {
+			//ex.request
+			//ex.response
 
-    handleChange = ({currentTarget:input}) =>{
-		const ticketData = {...this.state.ticketData};
-		ticketData[input.name] = input.value;
-		this.setState({ticketData});
+			if (ex.response && ex.response === 404) {
+				alert("already deleted");
+			}
+
+			this.setState({ tickets: originalTickets });
+		}
 	};
 
+	handleCheckboxChange = ({ target: { checked, value } }) => {
+		if (checked) {
+			this.setState(({ checkedTickets }) => ({
+				checkedTickets: [...checkedTickets, value],
+			}));
+		} else {
+			this.setState(({ checkedTickets }) => ({
+				checkedTickets: checkedTickets.filter((e) => e !== value),
+			}));
+		}
+		console.log("checked users: ", this.state.checkedTickets);
+	};
 
+	handleMassDelete = (CheckedTickets) => {
+		const originalTickets = this.state.tickets;
+		CheckedTickets.map(async (ticket) => {
+			const tickets = this.state.tickets.filter((Ticket) => Ticket._id !== ticket);
+			this.setState({ tickets });
+			try {
+				await http.delete(apiUrl + "/tickets/" + ticket);
+			} catch (ex) {
+				if (ex.response && ex.response === 404) {
+					alert("already deleted");
+				}
 
-	handleSubmit = async (e) => {
+				this.setState({ tickets: originalTickets });
+			}
+			console.log("Tickets: ", this.state.tickets);
+		});
+	};
+
+	// handleChange = ({ currentTarget: input }) => {
+	// 	const ticketData = { ...this.state.ticketData };
+	// 	ticketData[input.name] = input.value;
+	// 	this.setState({ ticketData });
+	// };
+
+	doSubmit = async (e) => {
 		e.preventDefault();
 		console.log("tickets form data: ", this.state.ticketData);
 		try {
@@ -161,39 +176,38 @@ class TicketsTableData extends Component {
 					<React.Fragment>
 						<ToastContainer />
 						<div className="toolbar" style={toolbarStyles}>
-							<button
-								className="btn btn-default active m-r-5 m-b-5"
-								title="add user"
-								onClick={this.toggle}
-								style={btnStyles}
-							>
+							<button className="btn btn-default active m-r-5 m-b-5" title="add ticket" style={btnStyles}>
 								{" "}
-								<img style={iconStyles} src={newIcon} />
+								<Link to="/clinic/tickets/new">
+									<img style={iconStyles} src={newIcon} />
+								</Link>
 							</button>
-							<button className="btn btn-default active m-r-5 m-b-5" title="edit" style={btnStyles}>
+							<button className="btn btn-default active m-r-5 m-b-5" title="edit ticket" style={btnStyles}>
 								{" "}
-								{/* <Link
+								<Link
 									to={
-										this.state.checkedUsers ? `/clinic/users/${this.state.checkedUsers[0]}` : "/clinic/users/"
+										this.state.checkedUsers
+											? `/clinic/tickets/${this.state.checkedTickets[0]}`
+											: "/clinic/tickets/"
 									}
-								> */}
-								<img style={iconStyles} src={editIcon} />
-								{/* </Link>{" "} */}
+								>
+									<img style={iconStyles} src={editIcon} />
+								</Link>{" "}
 							</button>
 							<button
 								className="btn btn-default active m-r-5 m-b-5"
-								title="delete"
+								title="delete tickets"
 								style={btnStyles}
-								// onClick={() => this.handleMassDelete(this.state.checkedUsers)}
+								onClick={() => this.handleMassDelete(this.state.checkedTickets)}
 							>
 								{" "}
 								<img style={{ width: "25px", height: "25px" }} src={deleteIcon} />
 							</button>
 							<button className="btn btn-default active m-r-5 m-b-5" title="csv" style={btnStyles}>
 								{" "}
-								{/* <Link to="/clinic/users/"> */}
-								<img style={iconStyles} src={csvIcon} />
-								{/* </Link>{" "} */}
+								<Link to="/clinic/tickets/">
+									<img style={iconStyles} src={csvIcon} />
+								</Link>{" "}
 							</button>
 						</div>
 
@@ -228,287 +242,6 @@ class TicketsTableData extends Component {
 						</div>
 					</PanelBody>
 				</Panel>
-
-				<div>
-					<Modal isOpen={this.state.toggleModal} toggle={this.toggle}>
-						<ModalHeader toggle={this.toggle}>Add Ticket</ModalHeader>
-						<ModalBody>
-							<Form onSubmit={this.handleSubmit}>
-								<Row form>
-									<Col md={6}>
-										<FormGroup>
-											<Input
-												type="text"
-												name="name"
-												placeholder="name"
-												value={this.state.ticketData.name}
-												onChange={this.handleChange}
-												required
-											/>
-										</FormGroup>
-									</Col>
-									<Col md={6}>
-										<FormGroup>
-											<Input
-												type="text"
-												name="participants"
-												placeholder="participants"
-												value={this.state.ticketData.participants}
-												onChange={this.handleChange}
-											/>
-										</FormGroup>
-									</Col>
-								</Row>
-								<Row form>
-									<Col md={12}>
-										<FormGroup>
-											<Input
-												type="textarea"
-												name="narrative"
-												placeholder="narrative"
-												value={this.state.ticketData.narrative}
-												onChange={this.handleChange}
-											/>
-										</FormGroup>
-									</Col>
-								</Row>
-								<Row form>
-									<Col md={6}>
-										<FormGroup>
-											<Input
-												type="select"
-												name="category"
-												placeholder="category"
-												value={this.state.ticketData.category}
-												onChange={this.handleChange}
-											>
-												<option value="orders">Orders</option>
-												<option value="bug-error">Bug Error</option>
-												<option value="complaint">Complaint</option>
-												<option value="disconnection">Disconnection</option>
-												<option value="feature-request">Feature Request</option>
-												<option value="sales">Sales</option>
-												<option value="others">Others</option>
-											</Input>
-										</FormGroup>
-									</Col>
-									<Col md={6}>
-										<FormGroup>
-											<Input
-												type="select"
-												name="priority"
-												placeholder="priority"
-												value={this.state.ticketData.priority}
-												onChange={this.handleChange}
-											>
-												<option value="normal">Normal</option>
-												<option value="low">Low</option>
-												<option value="high">High</option>
-												<option value="urgent">Urgent</option>
-											</Input>
-										</FormGroup>
-									</Col>
-								</Row>
-								<Row form>
-									<Col md={6}>
-										<FormGroup>
-											<Label>Created on</Label>
-											<Input
-												type="date"
-												name="createdon"
-												placeholder="created on"
-												value={this.state.ticketData.createdOn}
-												onChange={(e) =>
-													this.setState({
-														ticketData: { ...this.state.ticketData, createdOn: e.target.value },
-													})
-												}
-											/>
-										</FormGroup>
-									</Col>
-									<Col md={6}>
-										<FormGroup>
-											<Label>Deadline</Label>
-											<Input
-												type="date"
-												name="deadline"
-												placeholder="deadline"
-												value={this.state.ticketData.deadline}
-												onChange={(e) =>
-													this.setState({
-														ticketData: { ...this.state.ticketData, deadline: e.target.value },
-													})
-												}
-											/>
-										</FormGroup>
-									</Col>
-								</Row>
-								<Row form>
-									<Col md={6}>
-										<FormGroup>
-											<Input
-												type="text"
-												name="department"
-												placeholder="department"
-												value={this.state.ticketData.department}
-												onChange={this.handleChange}
-											/>
-										</FormGroup>
-									</Col>
-									<Col md={6}>
-										<FormGroup>
-											<Input
-												type="text"
-												name="sub-department"
-												placeholder="sub-department"
-												value={this.state.ticketData.subDepartment}
-												onChange={this.handleChange}
-											/>
-										</FormGroup>
-									</Col>
-								</Row>
-								<Row form>
-									<Col md={6}>
-										<FormGroup>
-											<Input
-												type="text"
-												name="location"
-												placeholder="location"
-												value={this.state.ticketData.location}
-												onChange={this.handleChange}
-											/>
-										</FormGroup>
-									</Col>
-									<Col md={6}>
-										<FormGroup>
-											<Input
-												type="text"
-												name="field"
-												placeholder="field"
-												value={this.state.ticketData.field}
-												onChange={this.handleChange}
-											/>
-										</FormGroup>
-									</Col>
-								</Row>
-								<Row form>
-									<Col md={6}>
-										<FormGroup>
-											<Input
-												type="text"
-												name="tags"
-												placeholder="tags"
-												value={this.state.ticketData.tags}
-												onChange={this.handleChange}
-											/>
-										</FormGroup>
-									</Col>
-									<Col md={6}>
-										<FormGroup>
-											<Input
-												type="text"
-												name="reference"
-												placeholder="reference"
-												value={this.state.ticketData.reference}
-												onChange={this.handleChange}
-											/>
-										</FormGroup>
-									</Col>
-								</Row>
-								<Row form>
-									<Col md={6}>
-										<FormGroup>
-											<Input
-												type="text"
-												name="sharinglink"
-												placeholder="sharing link"
-												value={this.state.ticketData.sharingLink}
-												onChange={this.handleChange}
-											/>
-										</FormGroup>
-									</Col>
-									<Col md={6}>
-										<FormGroup>
-											<Input
-												type="text"
-												name="assignedto"
-												placeholder="assigned to"
-												value={this.state.ticketData.assignedto}
-												onChange={this.handleChange}
-											/>
-										</FormGroup>
-									</Col>
-								</Row>
-
-								<Row form>
-									<Col md={6}>
-										<FormGroup>
-											<Input
-												type="text"
-												name="sharedto"
-												placeholder="sharedto"
-												value={this.state.ticketData.sharedTo}
-												onChange={this.handleChange}
-											/>
-										</FormGroup>
-									</Col>
-									<Col md={6}>
-										<FormGroup>
-											<Input
-												type="text"
-												name="note"
-												placeholder="note"
-												value={this.state.ticketData.note}
-												onChange={this.handleChange}
-											/>
-										</FormGroup>
-									</Col>
-								</Row>
-								<Row form>
-									<Col md={6}>
-										<FormGroup>
-											<Input
-												type="text"
-												name="businessname"
-												placeholder="business name"
-												value={this.state.ticketData.businessName}
-												onChange={this.handleChange}
-											/>
-										</FormGroup>
-									</Col>
-									<Col md={6}>
-										<FormGroup>
-											<Input
-												type="select"
-												name="status"
-												placeholder="status"
-												value={this.state.ticketData.status}
-												onChange={this.handleChange}
-											>
-												<option value="active">Active</option>
-												<option value="pending">Pending</option>
-												<option value="new">New</option>
-												<option value="archive">Archive</option>
-											</Input>
-										</FormGroup>
-									</Col>
-								</Row>
-								<Row form>
-									<Col md={6}>
-										<Button style={{ float: "right" }} type="submit" color="primary">
-											Submit
-										</Button>
-									</Col>
-									<Col md={6}>
-										<Button color="secondary" onClick={this.toggle}>
-											Cancel
-										</Button>
-									</Col>
-								</Row>
-							</Form>
-						</ModalBody>
-					</Modal>
-				</div>
 			</div>
 		);
 	}
@@ -528,3 +261,286 @@ const iconStyles = {
 };
 
 export default TicketsTableData;
+
+{
+	/* <div>
+	<Modal isOpen={this.state.toggleModal} toggle={this.toggle}>
+		<ModalHeader toggle={this.toggle}>Add Ticket</ModalHeader>
+		<ModalBody>
+			<Form onSubmit={this.handleSubmit}>
+				<Row form>
+					<Col md={6}>
+						<FormGroup>
+							<Input
+								type="text"
+								name="name"
+								placeholder="name"
+								value={this.state.ticketData.name}
+								onChange={this.handleChange}
+								required
+							/>
+						</FormGroup>
+					</Col>
+					<Col md={6}>
+						<FormGroup>
+							<Input
+								type="text"
+								name="participants"
+								placeholder="participants"
+								value={this.state.ticketData.participants}
+								onChange={this.handleChange}
+							/>
+						</FormGroup>
+					</Col>
+				</Row>
+				<Row form>
+					<Col md={12}>
+						<FormGroup>
+							<Input
+								type="textarea"
+								name="narrative"
+								placeholder="narrative"
+								value={this.state.ticketData.narrative}
+								onChange={this.handleChange}
+							/>
+						</FormGroup>
+					</Col>
+				</Row>
+				<Row form>
+					<Col md={6}>
+						<FormGroup>
+							<Input
+								type="select"
+								name="category"
+								placeholder="category"
+								value={this.state.ticketData.category}
+								onChange={this.handleChange}
+							>
+								<option value="orders">Orders</option>
+								<option value="bug-error">Bug Error</option>
+								<option value="complaint">Complaint</option>
+								<option value="disconnection">Disconnection</option>
+								<option value="feature-request">Feature Request</option>
+								<option value="sales">Sales</option>
+								<option value="others">Others</option>
+							</Input>
+						</FormGroup>
+					</Col>
+					<Col md={6}>
+						<FormGroup>
+							<Input
+								type="select"
+								name="priority"
+								placeholder="priority"
+								value={this.state.ticketData.priority}
+								onChange={this.handleChange}
+							>
+								<option value="normal">Normal</option>
+								<option value="low">Low</option>
+								<option value="high">High</option>
+								<option value="urgent">Urgent</option>
+							</Input>
+						</FormGroup>
+					</Col>
+				</Row>
+				<Row form>
+					<Col md={6}>
+						<FormGroup>
+							<Label>Created on</Label>
+							<Input
+								type="date"
+								name="createdon"
+								placeholder="created on"
+								value={this.state.ticketData.createdOn}
+								onChange={(e) =>
+									this.setState({
+										ticketData: { ...this.state.ticketData, createdOn: e.target.value },
+									})
+								}
+							/>
+						</FormGroup>
+					</Col>
+					<Col md={6}>
+						<FormGroup>
+							<Label>Deadline</Label>
+							<Input
+								type="date"
+								name="deadline"
+								placeholder="deadline"
+								value={this.state.ticketData.deadline}
+								onChange={(e) =>
+									this.setState({
+										ticketData: { ...this.state.ticketData, deadline: e.target.value },
+									})
+								}
+							/>
+						</FormGroup>
+					</Col>
+				</Row>
+				<Row form>
+					<Col md={6}>
+						<FormGroup>
+							<Input
+								type="text"
+								name="department"
+								placeholder="department"
+								value={this.state.ticketData.department}
+								onChange={this.handleChange}
+							/>
+						</FormGroup>
+					</Col>
+					<Col md={6}>
+						<FormGroup>
+							<Input
+								type="text"
+								name="sub-department"
+								placeholder="sub-department"
+								value={this.state.ticketData.subDepartment}
+								onChange={this.handleChange}
+							/>
+						</FormGroup>
+					</Col>
+				</Row>
+				<Row form>
+					<Col md={6}>
+						<FormGroup>
+							<Input
+								type="text"
+								name="location"
+								placeholder="location"
+								value={this.state.ticketData.location}
+								onChange={this.handleChange}
+							/>
+						</FormGroup>
+					</Col>
+					<Col md={6}>
+						<FormGroup>
+							<Input
+								type="text"
+								name="field"
+								placeholder="field"
+								value={this.state.ticketData.field}
+								onChange={this.handleChange}
+							/>
+						</FormGroup>
+					</Col>
+				</Row>
+				<Row form>
+					<Col md={6}>
+						<FormGroup>
+							<Input
+								type="text"
+								name="tags"
+								placeholder="tags"
+								value={this.state.ticketData.tags}
+								onChange={this.handleChange}
+							/>
+						</FormGroup>
+					</Col>
+					<Col md={6}>
+						<FormGroup>
+							<Input
+								type="text"
+								name="reference"
+								placeholder="reference"
+								value={this.state.ticketData.reference}
+								onChange={this.handleChange}
+							/>
+						</FormGroup>
+					</Col>
+				</Row>
+				<Row form>
+					<Col md={6}>
+						<FormGroup>
+							<Input
+								type="text"
+								name="sharinglink"
+								placeholder="sharing link"
+								value={this.state.ticketData.sharingLink}
+								onChange={this.handleChange}
+							/>
+						</FormGroup>
+					</Col>
+					<Col md={6}>
+						<FormGroup>
+							<Input
+								type="text"
+								name="assignedto"
+								placeholder="assigned to"
+								value={this.state.ticketData.assignedto}
+								onChange={this.handleChange}
+							/>
+						</FormGroup>
+					</Col>
+				</Row>
+
+				<Row form>
+					<Col md={6}>
+						<FormGroup>
+							<Input
+								type="text"
+								name="sharedto"
+								placeholder="sharedto"
+								value={this.state.ticketData.sharedTo}
+								onChange={this.handleChange}
+							/>
+						</FormGroup>
+					</Col>
+					<Col md={6}>
+						<FormGroup>
+							<Input
+								type="text"
+								name="note"
+								placeholder="note"
+								value={this.state.ticketData.note}
+								onChange={this.handleChange}
+							/>
+						</FormGroup>
+					</Col>
+				</Row>
+				<Row form>
+					<Col md={6}>
+						<FormGroup>
+							<Input
+								type="text"
+								name="businessname"
+								placeholder="business name"
+								value={this.state.ticketData.businessName}
+								onChange={this.handleChange}
+							/>
+						</FormGroup>
+					</Col>
+					<Col md={6}>
+						<FormGroup>
+							<Input
+								type="select"
+								name="status"
+								placeholder="status"
+								value={this.state.ticketData.status}
+								onChange={this.handleChange}
+							>
+								<option value="active">Active</option>
+								<option value="pending">Pending</option>
+								<option value="new">New</option>
+								<option value="archive">Archive</option>
+							</Input>
+						</FormGroup>
+					</Col>
+				</Row>
+				<Row form>
+					<Col md={6}>
+						<Button style={{ float: "right" }} type="submit" color="primary">
+							Submit
+						</Button>
+					</Col>
+					<Col md={6}>
+						<Button color="secondary" onClick={this.toggle}>
+							Cancel
+						</Button>
+					</Col>
+				</Row>
+			</Form>
+		</ModalBody>
+	</Modal>
+</div> */
+}
