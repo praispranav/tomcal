@@ -81,7 +81,7 @@ class User extends Form {
 			{ value: 'delayed', label: 'Delayed' },
 			{ value: 'invoiced', label: 'Invoiced' },
 			{ value: 'arrived', label: 'Arrived' },
-			{ value: 'intreatement', label: 'In Treatment' },			
+			{ value: 'intreatment', label: 'In Treatment' },			
 			{ value: 'active', label: 'Active' },			
 		];
 		
@@ -148,6 +148,7 @@ class User extends Form {
 			 Appointment.appointmentType = Appointment.appointmentType;
 			 Appointment.sessionType = Appointment.sessionType;
 			 Appointment.doctorNo = Appointment.doctorNo;
+			 Appointment.notePatient = Appointment.notePatient;			 
 			 Appointment.note = Appointment.note;
 			 Appointment.status = Appointment.status;			 
 			 
@@ -193,6 +194,7 @@ schema = Joi.object({
 		sessionType: Joi.string().optional(),
 		businessName: Joi.any().required(),				
 		doctorNo: Joi.string().optional(),		
+		notePatient: Joi.string().optional(),				
 		note: Joi.string().optional(),		
 		status: Joi.string().optional(),		
 	});
@@ -239,8 +241,9 @@ schema = Joi.object({
             appointmentType: Appointment.appointmentType,
             sessionType: Appointment.sessionType,
             doctorNo: Appointment.doctorNo,
+            notePatient: Appointment.notePatient,
             note: Appointment.note,  
-            businessName : Appointment.clinicNo,
+            businessName : Appointment.businessName,
             status : Appointment.status,     
 		};
 	  }
