@@ -350,8 +350,8 @@ schema = Joi.object({
 											{errors.sessionType && (<div className="alert alert-danger">{errors.sessionType}</div>)}
 										</div>
 
-										{this.renderInput("note","Note","text","* Enter Note"
-										)}
+										{this.renderInput("notePatient","Note from Patient","text","Enter your Note for clinic")}										
+										{this.renderInput("note","Note","text","Enter Note")}
 										<div className="form-group row">
 											<label className="col-lg-4 col-form-label" htmlFor="status" >Select Status</label>
 											<div className="col-lg-8">
