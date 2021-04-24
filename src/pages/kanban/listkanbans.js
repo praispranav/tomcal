@@ -24,12 +24,21 @@ import Joi from 'joi';
 import Form from '../../common/form.jsx';
 import {apiUrl} from '../../config/config.json';
 import http from '../../services/httpService';
-import {saveKanban,getKanban} from './../../services/kanbans';
+import {savelistKanban,getlistKanban} from './../../services/listkanbans';
+
+// Icons imports
+import newIcon from "../../assets/Icons/new.svg";
+import editIcon from "../../assets/Icons/edit.svg";
+import trashIcon from "../../assets/Icons/trash.svg";
+import csvIcon from "../../assets/Icons/csv.svg";
+import xlsIcon from "../../assets/Icons/xls.svg";
+import pdfIcon from "../../assets/Icons/pdf.svg";
+
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
 const Handle = Slider.Handle;
 
 
-class Kanban extends Form {
+class listKanban extends Form {
 	constructor(props) {
 		super(props);
 
@@ -55,44 +64,26 @@ class Kanban extends Form {
 			data: {
 			    name         : '',
 				narrative    : '',	  
-				participants : '',	  
+				category     : '',	  
 				businessName : '',
 				username     : '',		  
 				priority     : '',
-				businessName : '',				
 				department   : '',
 				subDepartment: '',	  
 				locations    : '',	  
 				kanbanNo     : '',		  
+				createdOn    : new Date(),
 				deadline     : '',	  
 				documentNo   : '',	  
-				field        : '',	  
-				tags	     : '',	  
-				createdOn    : new Date(),				
+				kanbanReference    : '',	  	  
 				status   	 : '',	  				
 			},
             selectedFile: null,
 			errors: {}
 		}
 
-		this.categoryOptions = [
-			{ value: 'bug-error', label: 'Bug/Error' },
-			{ value: 'complaint', label: 'Complaint' },
-			{ value: 'disconnection', label: 'Disconnection' },
-			{ value: 'feature-request', label: 'Feature Request' },
-			{ value: 'orders', label: 'orders' },
-			{ value: 'sales', label: 'Sales' },
-			{ value: 'other', label: 'Other' }
-		];
-
-		this.priorityOptions = [
-			{ value: 'normal', label: 'normal' },
-			{ value: 'low', label: 'low' },
-			{ value: 'high', label: 'high' },
-			{ value: 'urgent', label: 'urgent' },
-		];
-
 		this.statusOptions = [
+			{ value: 'active', label: 'Active' },		
 			{ value: 'in progress', label: 'In Progress' },
 			{ value: 'pending', label: 'Pending' },
 			{ value: 'new', label: 'New' },
@@ -151,17 +142,15 @@ class Kanban extends Form {
 
 			 kanban.username = kanban.username;		  
 			 kanban.name = kanban.name;
-			 kanban.participants = kanban.participants;
 			 kanban.narrative = kanban.narrative;
-			 kanban.businessName = kanban.businessName;			 
+			 kanban.priority = kanban.priority;
+			 kanban.field = kanban.field;
+			 kanban.tag = kanban.tag;
 			 kanban.department = kanban.department;
 			 kanban.subDepartment = kanban.subDepartment;
 			 kanban.locations   = kanban.locations;
-			 kanban.field = kanban.field;
-			 kanban.tag = kanban.tag;
-//			 kanban.sharingLink  = kanban.sharingLink;
-//			 kanban.sharedTo = kanban.sharedTo;
-			 kanban.createdOn = kanban.creadOn;			 
+			 kanban.createdOn = kanban.creadOn;
+			 kanban.deadline = kanban.deadline;
 			 kanban.status = kanban.status;
 
 		  this.setState({ data: this.mapToViewModel(kanban) });
@@ -175,35 +164,18 @@ class Kanban extends Form {
 
 	async componentDidMount() {
 	
-		await this.populateCategory();
-		await this.populatePriority();
 		await this.populateKanban();
 	}
 
 schema = Joi.object({
 		name: Joi.string(),
 		username: Joi.string(),
-		businessName: Joi.any().optional(),
 		narrative: Joi.string().optional(),
-		priority: Joi.string().optional(),
-		category: Joi.string().optional(),
-		message: Joi.string().optional(),		
-		commentParent: Joi.string().optional(),		
-		reply: Joi.string().optional(),
-		department: Joi.string().optional(),		
-		subDepartment: Joi.string().optional(),				
-		createdOn: Joi.date().optional(),
+
 		deadline: Joi.date().optional(),
 		locations: Joi.string().optional(),
 		kanbanNo: Joi.string().optional(),
-		documentNo: Joi.string().optional(),
-		field: Joi.string().optional(),
-		tags: Joi.string().optional(),
-		kanbanReference: Joi.string().optional(),
-		action: Joi.string().optional(),
-		sharingLink: Joi.string().optional(),
-		assignedTo: Joi.string().optional(),
-		sharedTo: Joi.string().optional(),
+		createdOn: Joi.date().optional(),
 		status: Joi.string().optional(),			
 	});
 
@@ -247,40 +219,17 @@ schema = Joi.object({
 		}
 		
 	};
-
-	makeKanbanNo() {
-		let kanbanNumber = "KB-";
-		const possible = "ABCDEFGHIJKLMNPQRSTUVWXYZ2356789";
-		for (let i = 0; i <= 5; i++) kanbanNumber += possible.charAt(Math.floor(Math.random() * possible.length));
-		return kanbanNumber;
-	}
 	
-	mapToViewModel(kanban) {
+	mapToViewModel(listKanban) {
 		return {
-            _id: kanban._id,
-            kanbanname	: kanban.kanbanname,            
+            _id: listkanban._id,
+            listkanbanNo	: kanban.No,            
             name		: kanban.name,
             narrative	: kanban.narrative,
             category	: kanban.category,
-            message		: kanban.message,
-            comment		: kanban.comment,
-            reply		: kanban.reply,
 			businessName: kanban.businessName,
-			priority	: kanban.priority,
-            department	: kanban.department,
-            subDepartment: kanban.subDepartment,  
-            locations	: kanban.locations,
             kanbanNo	: kanban.kanbanNo,
-            createdOn	: new Date(kanban.createdOn),			
-            deadline	: new Date(kanban.deadline),			
-            documentNo  : kanban.documentNo,
-            field       : kanban.field,
-            tags		: kanban.tags,			
-            action      : kanban.action,
-            kanbanReference: kanban.kanbanReference,
-            sharingLink : kanban.sharingLink,
-            assignedTo  : kanban.assignedTo,
-            sharedTo    : kanban.sharedTo,
+            createdOn	: new Date(kanban.createdOn),						
             status      : kanban.status,     
 		};
 	  }
@@ -346,16 +295,6 @@ schema = Joi.object({
 											</div>
 											{errors.category && (<div className="alert alert-danger">{errors.category}</div>)}
 										</div>
-										
-										{this.renderInput("department","Department","text","Enter Department")} 
-										{this.renderInput("subDepartment","Sub-Department","text","Enter Sub-department")}
-										{this.renderInput("locations","Locations","text","Enter Locations")}
-										{this.renderInput("documentNo","DocumentNo","text","Enter DocumentNo")}
-										{this.renderInput("field","field","text","Enter field")} 
-										{this.renderInput("tags","Tags","text","Enter Tags")}
-										{this.renderInput("kanbanReference","References","text","Enter References")} 
-										{this.renderInput("assignedTo","Assigned To","text","Enter Assignees")}
-										{this.renderInput("sharedTo","Shared To","text","Enter Shared kanbans")} 
 										
 										<div className="form-group row">
 											<label className="col-lg-4 col-form-label" htmlFor="deadline" >Deadline</label>

@@ -24,12 +24,12 @@ import Joi from 'joi';
 import Form from '../../common/form.jsx';
 import {apiUrl} from '../../config/config.json';
 import http from '../../services/httpService';
-import {saveKanban,getKanban} from './../../services/kanbans';
+import {saveListKanban,getListKanban} from './../../services/listkanbans';
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
 const Handle = Slider.Handle;
 
 
-class Kanban extends Form {
+class ListKanban extends Form {
 	constructor(props) {
 		super(props);
 
@@ -54,20 +54,9 @@ class Kanban extends Form {
 			profiles: [],
 			data: {
 			    name         : '',
-				narrative    : '',	  
 				participants : '',	  
-				businessName : '',
 				username     : '',		  
-				priority     : '',
-				businessName : '',				
-				department   : '',
-				subDepartment: '',	  
-				locations    : '',	  
 				kanbanNo     : '',		  
-				deadline     : '',	  
-				documentNo   : '',	  
-				field        : '',	  
-				tags	     : '',	  
 				createdOn    : new Date(),				
 				status   	 : '',	  				
 			},
@@ -75,25 +64,8 @@ class Kanban extends Form {
 			errors: {}
 		}
 
-		this.categoryOptions = [
-			{ value: 'bug-error', label: 'Bug/Error' },
-			{ value: 'complaint', label: 'Complaint' },
-			{ value: 'disconnection', label: 'Disconnection' },
-			{ value: 'feature-request', label: 'Feature Request' },
-			{ value: 'orders', label: 'orders' },
-			{ value: 'sales', label: 'Sales' },
-			{ value: 'other', label: 'Other' }
-		];
-
-		this.priorityOptions = [
-			{ value: 'normal', label: 'normal' },
-			{ value: 'low', label: 'low' },
-			{ value: 'high', label: 'high' },
-			{ value: 'urgent', label: 'urgent' },
-		];
-
 		this.statusOptions = [
-			{ value: 'in progress', label: 'In Progress' },
+			{ value: 'active', label: 'Active' },
 			{ value: 'pending', label: 'Pending' },
 			{ value: 'new', label: 'New' },
 			{ value: 'archive', label: 'Archive' }
@@ -117,20 +89,6 @@ class Kanban extends Form {
 		this.handleChange = this.handleChange.bind(this);
 		this.onChangeImgHandler = this.onChangeImgHandler.bind(this);
 	}
-
-	async populateCategory(){
-		this.categoryoptions = this.categoryOptions.map(option => (
-			<option key={option.label} value={option.value}>
-				{option.value}
-			</option>
-		));
-	}
-	async populatePriority(){
-    this.priorityoptions = this.priorityOptions.map(option => (
-		<option key={option.label} value={option.value}>
-			{option.value}
-		</option>
-	));
 	}
 
 	async populateStatus(){
@@ -141,13 +99,13 @@ class Kanban extends Form {
 	));
 	}
 	
-	async populateKanban() { 
+	async populateListKanban() { 
 		try {
 		  const kanbanId = this.props.match.params.id;
 		
 		  if (kanbanId === "new") return;
 	
-		  const { data: kanban } = await getKanban(kanbanId);
+		  const { data: kanban } = await getListKanban(kanbanId);
 
 			 kanban.username = kanban.username;		  
 			 kanban.name = kanban.name;
@@ -177,19 +135,14 @@ class Kanban extends Form {
 	
 		await this.populateCategory();
 		await this.populatePriority();
-		await this.populateKanban();
+		await this.populateListKanban();
 	}
 
 schema = Joi.object({
 		name: Joi.string(),
 		username: Joi.string(),
-		businessName: Joi.any().optional(),
 		narrative: Joi.string().optional(),
-		priority: Joi.string().optional(),
-		category: Joi.string().optional(),
-		message: Joi.string().optional(),		
-		commentParent: Joi.string().optional(),		
-		reply: Joi.string().optional(),
+		businessName: Joi.any().optional(),		
 		department: Joi.string().optional(),		
 		subDepartment: Joi.string().optional(),				
 		createdOn: Joi.date().optional(),
@@ -199,11 +152,6 @@ schema = Joi.object({
 		documentNo: Joi.string().optional(),
 		field: Joi.string().optional(),
 		tags: Joi.string().optional(),
-		kanbanReference: Joi.string().optional(),
-		action: Joi.string().optional(),
-		sharingLink: Joi.string().optional(),
-		assignedTo: Joi.string().optional(),
-		sharedTo: Joi.string().optional(),
 		status: Joi.string().optional(),			
 	});
 
@@ -234,7 +182,7 @@ schema = Joi.object({
 	doSubmit = async (kanban) => {
 	    try{
 			console.log(this.state.data);
-			await saveKanban(this.state.data,this.state.imageSrc);
+			await saveListKanban(this.state.data,this.state.imageSrc);
 			this.props.history.push("/clinic/kanbans");
 		}catch(ex){
 			//if(ex.response && ex.response.status === 404){
@@ -248,11 +196,11 @@ schema = Joi.object({
 		
 	};
 
-	makeKanbanNo() {
-		let kanbanNumber = "KB-";
+	makelistKanbanNo() {
+		let listKanbanNumber = "LK-";
 		const possible = "ABCDEFGHIJKLMNPQRSTUVWXYZ2356789";
-		for (let i = 0; i <= 5; i++) kanbanNumber += possible.charAt(Math.floor(Math.random() * possible.length));
-		return kanbanNumber;
+		for (let i = 0; i <= 5; i++) listKanbanNumber += possible.charAt(Math.floor(Math.random() * possible.length));
+		return listKanbanNumber;
 	}
 	
 	mapToViewModel(kanban) {
@@ -293,17 +241,17 @@ schema = Joi.object({
 				<div>
 					<ol className="breadcrumb float-xl-right">
 						<li className="breadcrumb-item"><Link to="/form/plugins">Home</Link></li>
-						<li className="breadcrumb-item"><Link to="/clinic/kanbans">Kanbans</Link></li>
-						<li className="breadcrumb-item active">Add Kanban</li>
+						<li className="breadcrumb-item"><Link to="/clinic/kanbans">ListKanbans</Link></li>
+						<li className="breadcrumb-item active">Add ListKanban</li>
 					</ol>
 					<h1 className="page-header">
-						Add Kanban-Solo <small>Kanban-registration-form</small>
+						Add ListKanban-Solo <small>ListKanban-registration-form</small>
 					</h1>
 
 					<div className="row">
 						<div className="col-xl-10">
 							<Panel>
-								<PanelHeader>Add Kanban</PanelHeader>
+								<PanelHeader>Add ListKanban</PanelHeader>
 								<PanelBody className="panel-form">
 									<form className="form-horizontal form-bordered" onSubmit={this.handleSubmit} >
  
@@ -314,8 +262,8 @@ schema = Joi.object({
 										<label className="col-lg-4 col-form-label">Subscription Type</label>
 										<div className="btn-group col-lg-8">
 											<div className="btn btn-secondary active">
-												<input type="radio" name="subscription" onChange={this.handleChange} value="Kanban"  checked={data.subscription === "Kanban" } />
-												<label>Kanban</label>
+												<input type="radio" name="subscription" onChange={this.handleChange} value="ListKanban"  checked={data.subscription === "ListKanban" } />
+												<label>ListKanban</label>
 											</div>
 											<div className="btn btn-secondary">
 												<input type="radio" name="subscription" onChange={this.handleChange} value="Solo" checked={data.subscription === "Solo" } />
@@ -416,4 +364,4 @@ schema = Joi.object({
 	}
 }
 
-export default withRouter(Kanban);
+export default withRouter(ListKanban);

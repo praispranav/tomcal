@@ -24,12 +24,12 @@ import Joi from 'joi';
 import Form from '../../common/form.jsx';
 import {apiUrl} from '../../config/config.json';
 import http from '../../services/httpService';
-import {saveKanban,getKanban} from './../../services/kanbans';
+import {saveCard,getCard} from './../../services/cards';
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
 const Handle = Slider.Handle;
 
 
-class Kanban extends Form {
+class Card extends Form {
 	constructor(props) {
 		super(props);
 
@@ -55,20 +55,24 @@ class Kanban extends Form {
 			data: {
 			    name         : '',
 				narrative    : '',	  
-				participants : '',	  
+				category     : '',	  
 				businessName : '',
 				username     : '',		  
 				priority     : '',
-				businessName : '',				
 				department   : '',
 				subDepartment: '',	  
 				locations    : '',	  
-				kanbanNo     : '',		  
+				cardNo       : '',		  
+				createdOn    : new Date(),
 				deadline     : '',	  
 				documentNo   : '',	  
 				field        : '',	  
 				tags	     : '',	  
-				createdOn    : new Date(),				
+				cardReference    : '',	  	  
+				sharingLink  : '',	  
+				assignedTo   : '',	  
+				sharedTo   	 : '',	  
+				note     	 : '',	  				
 				status   	 : '',	  				
 			},
             selectedFile: null,
@@ -141,30 +145,30 @@ class Kanban extends Form {
 	));
 	}
 	
-	async populateKanban() { 
+	async populateCard() { 
 		try {
-		  const kanbanId = this.props.match.params.id;
+		  const cardId = this.props.match.params.id;
 		
-		  if (kanbanId === "new") return;
+		  if (cardId === "new") return;
 	
-		  const { data: kanban } = await getKanban(kanbanId);
+		  const { data: card } = await getCard(cardId);
 
-			 kanban.username = kanban.username;		  
-			 kanban.name = kanban.name;
-			 kanban.participants = kanban.participants;
-			 kanban.narrative = kanban.narrative;
-			 kanban.businessName = kanban.businessName;			 
-			 kanban.department = kanban.department;
-			 kanban.subDepartment = kanban.subDepartment;
-			 kanban.locations   = kanban.locations;
-			 kanban.field = kanban.field;
-			 kanban.tag = kanban.tag;
-//			 kanban.sharingLink  = kanban.sharingLink;
-//			 kanban.sharedTo = kanban.sharedTo;
-			 kanban.createdOn = kanban.creadOn;			 
-			 kanban.status = kanban.status;
+			 card.username = card.username;		  
+			 card.name = card.name;
+			 card.narrative = card.narrative;
+			 card.category = card.category;
+			 card.priority = card.priority;
+			 card.field = card.field;
+			 card.tag = card.tag;
+			 card.department = card.department;
+			 card.subDepartment = card.subDepartment;
+			 card.locations   = card.locations;
+			 card.createdOn = card.creadOn;
+			 card.deadline = card.deadline;
+			 card.note = card.note;
+			 card.status = card.status;
 
-		  this.setState({ data: this.mapToViewModel(kanban) });
+		  this.setState({ data: this.mapToViewModel(card) });
 
 		  console.log(this.state.data);
 		} catch (ex) {
@@ -177,7 +181,7 @@ class Kanban extends Form {
 	
 		await this.populateCategory();
 		await this.populatePriority();
-		await this.populateKanban();
+		await this.populateCard();
 	}
 
 schema = Joi.object({
@@ -187,23 +191,21 @@ schema = Joi.object({
 		narrative: Joi.string().optional(),
 		priority: Joi.string().optional(),
 		category: Joi.string().optional(),
-		message: Joi.string().optional(),		
-		commentParent: Joi.string().optional(),		
-		reply: Joi.string().optional(),
 		department: Joi.string().optional(),		
 		subDepartment: Joi.string().optional(),				
 		createdOn: Joi.date().optional(),
 		deadline: Joi.date().optional(),
 		locations: Joi.string().optional(),
-		kanbanNo: Joi.string().optional(),
+		cardNo: Joi.string().optional(),
 		documentNo: Joi.string().optional(),
 		field: Joi.string().optional(),
 		tags: Joi.string().optional(),
-		kanbanReference: Joi.string().optional(),
+		cardReference: Joi.string().optional(),
 		action: Joi.string().optional(),
 		sharingLink: Joi.string().optional(),
 		assignedTo: Joi.string().optional(),
 		sharedTo: Joi.string().optional(),
+		note: Joi.string().optional(),		
 		status: Joi.string().optional(),			
 	});
 
@@ -231,57 +233,54 @@ schema = Joi.object({
 	
 	}
 
-	doSubmit = async (kanban) => {
+	doSubmit = async (card) => {
 	    try{
 			console.log(this.state.data);
-			await saveKanban(this.state.data,this.state.imageSrc);
-			this.props.history.push("/clinic/kanbans");
+			await saveCard(this.state.data,this.state.imageSrc);
+			this.props.history.push("/clinic/cards");
 		}catch(ex){
 			//if(ex.response && ex.response.status === 404){
 			if(ex.response){
 				const errors = {...this.state.errors};
-				errors.kanbanname = ex.response.data;
+				errors.cardname = ex.response.data;
 				this.setState({errors});
 				//console.log(this.state.errors);
 			}
 		}
 		
 	};
-
-	makeKanbanNo() {
-		let kanbanNumber = "KB-";
+	
+	makeCardNo() {
+		let cardNumber = "CD-";
 		const possible = "ABCDEFGHIJKLMNPQRSTUVWXYZ2356789";
-		for (let i = 0; i <= 5; i++) kanbanNumber += possible.charAt(Math.floor(Math.random() * possible.length));
-		return kanbanNumber;
+		for (let i = 0; i <= 5; i++) cardNumber += possible.charAt(Math.floor(Math.random() * possible.length));
+		return cardNumber;
 	}
 	
-	mapToViewModel(kanban) {
+	mapToViewModel(card) {
 		return {
-            _id: kanban._id,
-            kanbanname	: kanban.kanbanname,            
-            name		: kanban.name,
-            narrative	: kanban.narrative,
-            category	: kanban.category,
-            message		: kanban.message,
-            comment		: kanban.comment,
-            reply		: kanban.reply,
-			businessName: kanban.businessName,
-			priority	: kanban.priority,
-            department	: kanban.department,
-            subDepartment: kanban.subDepartment,  
-            locations	: kanban.locations,
-            kanbanNo	: kanban.kanbanNo,
-            createdOn	: new Date(kanban.createdOn),			
-            deadline	: new Date(kanban.deadline),			
-            documentNo  : kanban.documentNo,
-            field       : kanban.field,
-            tags		: kanban.tags,			
-            action      : kanban.action,
-            kanbanReference: kanban.kanbanReference,
-            sharingLink : kanban.sharingLink,
-            assignedTo  : kanban.assignedTo,
-            sharedTo    : kanban.sharedTo,
-            status      : kanban.status,     
+            _id: card._id,
+            cardname	: card.cardname,            
+            name		: card.name,
+            narrative	: card.narrative,
+            category	: card.category,
+			businessName: card.businessName,
+			priority	: card.priority,
+            department	: card.department,
+            subDepartment: card.subDepartment,  
+            locations	: card.locations,
+            cardNo	: card.cardNo,
+            createdOn	: new Date(card.createdOn),			
+            deadline	: new Date(card.deadline),			
+            documentNo  : card.documentNo,
+            field       : card.field,
+            tags		: card.tags,			
+            cardReference: card.cardReference,
+            sharingLink : card.sharingLink,
+            assignedTo  : card.assignedTo,
+            sharedTo    : card.sharedTo,
+            note        : card.note,			
+            status      : card.status,     
 		};
 	  }
 
@@ -293,29 +292,29 @@ schema = Joi.object({
 				<div>
 					<ol className="breadcrumb float-xl-right">
 						<li className="breadcrumb-item"><Link to="/form/plugins">Home</Link></li>
-						<li className="breadcrumb-item"><Link to="/clinic/kanbans">Kanbans</Link></li>
-						<li className="breadcrumb-item active">Add Kanban</li>
+						<li className="breadcrumb-item"><Link to="/clinic/cards">Cards</Link></li>
+						<li className="breadcrumb-item active">Add Card</li>
 					</ol>
 					<h1 className="page-header">
-						Add Kanban-Solo <small>Kanban-registration-form</small>
+						Add Card-Solo <small>Card-registration-form</small>
 					</h1>
 
 					<div className="row">
 						<div className="col-xl-10">
 							<Panel>
-								<PanelHeader>Add Kanban</PanelHeader>
+								<PanelHeader>Add Card</PanelHeader>
 								<PanelBody className="panel-form">
 									<form className="form-horizontal form-bordered" onSubmit={this.handleSubmit} >
  
-									   {this.renderInput("name","Name of kanban","text","Enter Name/Title/subject for kanban")}
+									   {this.renderInput("name","Name of card","text","Enter Name/Title/subject for card")}
 									   {this.renderInput("narrative","Narrative","text","* Tell your story/issue....")}                                    
                                            
 									{/* <div className="form-group row">
 										<label className="col-lg-4 col-form-label">Subscription Type</label>
 										<div className="btn-group col-lg-8">
 											<div className="btn btn-secondary active">
-												<input type="radio" name="subscription" onChange={this.handleChange} value="Kanban"  checked={data.subscription === "Kanban" } />
-												<label>Kanban</label>
+												<input type="radio" name="subscription" onChange={this.handleChange} value="Card"  checked={data.subscription === "Card" } />
+												<label>Card</label>
 											</div>
 											<div className="btn btn-secondary">
 												<input type="radio" name="subscription" onChange={this.handleChange} value="Solo" checked={data.subscription === "Solo" } />
@@ -353,9 +352,9 @@ schema = Joi.object({
 										{this.renderInput("documentNo","DocumentNo","text","Enter DocumentNo")}
 										{this.renderInput("field","field","text","Enter field")} 
 										{this.renderInput("tags","Tags","text","Enter Tags")}
-										{this.renderInput("kanbanReference","References","text","Enter References")} 
+										{this.renderInput("cardReference","References","text","Enter References")} 
 										{this.renderInput("assignedTo","Assigned To","text","Enter Assignees")}
-										{this.renderInput("sharedTo","Shared To","text","Enter Shared kanbans")} 
+										{this.renderInput("sharedTo","Shared To","text","Enter Shared cards")} 
 										
 										<div className="form-group row">
 											<label className="col-lg-4 col-form-label" htmlFor="deadline" >Deadline</label>
@@ -416,4 +415,4 @@ schema = Joi.object({
 	}
 }
 
-export default withRouter(Kanban);
+export default withRouter(Card);

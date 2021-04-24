@@ -28,6 +28,14 @@ import {saveKanban,getKanban} from './../../services/kanbans';
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
 const Handle = Slider.Handle;
 
+// Icons imports
+import newIcon from "../../assets/Icons/new.svg";
+import editIcon from "../../assets/Icons/edit.svg";
+import trashIcon from "../../assets/Icons/trash.svg";
+import csvIcon from "../../assets/Icons/csv.svg";
+import xlsIcon from "../../assets/Icons/xls.svg";
+import pdfIcon from "../../assets/Icons/pdf.svg";
+
 
 class Kanban extends Form {
 	constructor(props) {
@@ -55,10 +63,8 @@ class Kanban extends Form {
 			data: {
 			    name         : '',
 				narrative    : '',	  
-				category     : '',	  
 				businessName : '',
 				username     : '',		  
-				priority     : '',
 				department   : '',
 				subDepartment: '',	  
 				locations    : '',	  
@@ -79,24 +85,8 @@ class Kanban extends Form {
 			errors: {}
 		}
 
-		this.categoryOptions = [
-			{ value: 'bug-error', label: 'Bug/Error' },
-			{ value: 'complaint', label: 'Complaint' },
-			{ value: 'disconnection', label: 'Disconnection' },
-			{ value: 'feature-request', label: 'Feature Request' },
-			{ value: 'orders', label: 'orders' },
-			{ value: 'sales', label: 'Sales' },
-			{ value: 'other', label: 'Other' }
-		];
-
-		this.priorityOptions = [
-			{ value: 'normal', label: 'normal' },
-			{ value: 'low', label: 'low' },
-			{ value: 'high', label: 'high' },
-			{ value: 'urgent', label: 'urgent' },
-		];
-
 		this.statusOptions = [
+			{ value: 'active', label: 'active' },		
 			{ value: 'in progress', label: 'In Progress' },
 			{ value: 'pending', label: 'Pending' },
 			{ value: 'new', label: 'New' },
@@ -122,21 +112,6 @@ class Kanban extends Form {
 		this.onChangeImgHandler = this.onChangeImgHandler.bind(this);
 	}
 
-	async populateCategory(){
-		this.categoryoptions = this.categoryOptions.map(option => (
-			<option key={option.label} value={option.value}>
-				{option.value}
-			</option>
-		));
-	}
-	async populatePriority(){
-    this.priorityoptions = this.priorityOptions.map(option => (
-		<option key={option.label} value={option.value}>
-			{option.value}
-		</option>
-	));
-	}
-
 	async populateStatus(){
     this.statusoptions = this.statusOptions.map(option => (
 		<option key={option.label} value={option.value}>
@@ -155,11 +130,7 @@ class Kanban extends Form {
 
 			 kanban.username = kanban.username;		  
 			 kanban.name = kanban.name;
-			 kanban.lastName = kanban.contactName.last;
-			 kanban.initials = kanban.contactName.initials;
 			 kanban.narrative = kanban.narrative;
-			 kanban.category = kanban.category;
-			 kanban.priority = kanban.priority;
 			 kanban.field = kanban.field;
 			 kanban.tag = kanban.tag;
 			 kanban.department = kanban.department;
@@ -167,11 +138,6 @@ class Kanban extends Form {
 			 kanban.locations   = kanban.locations;
 			 kanban.createdOn = kanban.creadOn;
 			 kanban.deadline = kanban.deadline;
-			 kanban.licenseNo  = kanban.professionalInfo.licenseNo;
-			 kanban.licenseValidTill = kanban.professionalInfo.licenseValidTill;
-			 kanban.organizationAName = kanban.membership.organizationAName;
-			 kanban.organizationAMemberNo = kanban.membership.organizationAMemberNo;
-			 kanban.organizationBName = kanban.membership.organizationBName;
 			 kanban.status = kanban.status;
 
 		  this.setState({ data: this.mapToViewModel(kanban) });
@@ -185,8 +151,6 @@ class Kanban extends Form {
 
 	async componentDidMount() {
 	
-		await this.populateCategory();
-		await this.populatePriority();
 		await this.populateKanban();
 	}
 
@@ -195,11 +159,6 @@ schema = Joi.object({
 		username: Joi.string(),
 		businessName: Joi.any().optional(),
 		narrative: Joi.string().optional(),
-		priority: Joi.string().optional(),
-		category: Joi.string().optional(),
-		message: Joi.string().optional(),		
-		commentParent: Joi.string().optional(),		
-		reply: Joi.string().optional(),
 		department: Joi.string().optional(),		
 		subDepartment: Joi.string().optional(),				
 		createdOn: Joi.date().optional(),
@@ -210,7 +169,6 @@ schema = Joi.object({
 		field: Joi.string().optional(),
 		tags: Joi.string().optional(),
 		kanbanReference: Joi.string().optional(),
-		action: Joi.string().optional(),
 		sharingLink: Joi.string().optional(),
 		assignedTo: Joi.string().optional(),
 		sharedTo: Joi.string().optional(),
@@ -264,12 +222,7 @@ schema = Joi.object({
             kanbanname	: kanban.kanbanname,            
             name		: kanban.name,
             narrative	: kanban.narrative,
-            category	: kanban.category,
-            message		: kanban.message,
-            comment		: kanban.comment,
-            reply		: kanban.reply,
 			businessName: kanban.businessName,
-			priority	: kanban.priority,
             department	: kanban.department,
             subDepartment: kanban.subDepartment,  
             locations	: kanban.locations,
@@ -279,7 +232,6 @@ schema = Joi.object({
             documentNo  : kanban.documentNo,
             field       : kanban.field,
             tags		: kanban.tags,			
-            action      : kanban.action,
             kanbanReference: kanban.kanbanReference,
             sharingLink : kanban.sharingLink,
             assignedTo  : kanban.assignedTo,
@@ -354,7 +306,7 @@ schema = Joi.object({
 										{this.renderInput("subDepartment","Sub-Department","text","Enter Sub-department")}
 										{this.renderInput("locations","Locations","text","Enter Locations")}
 										{this.renderInput("documentNo","DocumentNo","text","Enter DocumentNo")}
-										{this.renderInput("field","field","text","Enter field")} 
+										{this.renderInput("field","Field","text","Enter field")} 
 										{this.renderInput("tags","Tags","text","Enter Tags")}
 										{this.renderInput("kanbanReference","References","text","Enter References")} 
 										{this.renderInput("assignedTo","Assigned To","text","Enter Assignees")}
