@@ -70,6 +70,7 @@ class AppointmentsTable extends Component {
 		{label: 'Doctor',   path: 'doctorNo' } ,   	  	  		
 		{label: 'Appointment-type',   path: 'appointmentType' } ,   	  	  		
 		{label: 'Session-type',   path: 'sessionType' } ,   	  	  			
+		{label: 'Note from Patient',   path: 'notePatient' } ,   	  	  		
 		{label: 'Note',   path: 'note' } ,   	  	  
 		{label: 'Status',   path: 'status' } ,   	  	  	
 	];
