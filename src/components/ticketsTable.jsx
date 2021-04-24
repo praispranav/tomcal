@@ -38,24 +38,6 @@ class TicketsTable extends Component {
 		{ label: "AssignedTo", path: "assignedTo" },
 		{ label: "SharedTo", path: "sharedTo" },
 		{ label: "Note", path: "note" },
-		{
-			key: "edit",
-			label: "",
-			content: (ticket) => (
-				<Link to={`/clinic/users/${ticket._id}`}>
-					<i className="far fa-lg fa-fw m-r-10 fa-edit"></i>
-				</Link>
-			),
-		},
-		{
-			key: "delete",
-			label: "",
-			content: (ticket) => (
-				<a onClick={() => this.props.onDelete(ticket)}>
-					<i className="fas fa-lg fa-fw m-r-10 fa-trash"></i>
-				</a>
-			),
-		},
 	];
 
 	render() {

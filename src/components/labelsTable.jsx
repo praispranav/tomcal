@@ -55,7 +55,7 @@ class LabelsTable extends Component {
 			),
 		},
 		{label: 'Username',   path: 'username' } ,
-		{label: 'name',   path: 'name' } ,   
+		{label: 'Name',   path: 'name' } ,   
 		{label: 'Labelsize',   path: 'labelSize' } ,   
 		{label: 'Fontsize',   path: 'fontSize' } ,   	  
 		{label: 'SKU',   path: 'SKU' } ,   	  
@@ -65,6 +65,7 @@ class LabelsTable extends Component {
 		{label: 'BarcodeType',   path: 'barcodeType' } ,   	  
 		{label: 'ExpriredOn',   path: 'expriredOn' } ,   	  	  
 		{label: 'PrintedOn',   path: 'printedOn' } ,   	  	  			
+		{label: 'Orientation',   path: 'orientation' } ,   	  	  					
 		{label: 'copies',   path: 'copies' } ,   	  	  		  	  			
 		{label: 'Note',   path: 'note' } ,   	  	  
 	];
