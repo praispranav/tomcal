@@ -16,6 +16,7 @@ import Joi from "joi";
 import Form from "../../common/form.jsx";
 import { apiUrl } from "../../config/config.json";
 import http from "../../services/httpService";
+import auth from "../../services/authservice";
 import { saveTicket, getTicket } from "./../../services/tickets";
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
 const Handle = Slider.Handle;
@@ -42,8 +43,9 @@ class Ticket extends Form {
 
 		this.state = {
 			maxDateDisabled: true,
-			profiles: [],
+			users: [],
 			data: {
+				username: "",
 				name: "",
 				narrative: "",
 				category: "orders",
@@ -128,31 +130,43 @@ class Ticket extends Form {
 		));
 	}
 
+	async populateAssignedTo() {
+		const { data: users } = await http.get(apiUrl + "/users");
+		this.setState({ users });
+		this.selectUsers = this.state.users.map((option) => (
+			<option key={option._id} value={option._id}>
+				{option.username}
+			</option>
+		));
+	}
+
+
+
 	async populateTicket() {
 		try {
 			const ticketId = this.props.match.params.id;
 			if (ticketId === "new") return;
 			const { data: ticket } = await getTicket(ticketId);
 
-			ticket.name = ticket.name;
-			ticket.businessName = ticket.businessName;
-			ticket.narrative = ticket.narrative;
-			ticket.category = ticket.category;
-			ticket.priority = ticket.priority;
-			ticket.field = ticket.field;
-			ticket.tags = ticket.tags;
-			ticket.department = ticket.department;
-			ticket.subDepartment = ticket.subDepartment;
-			ticket.locations = ticket.locations;
-			ticket.ticketNo = ticket.ticketNo;
-			ticket.documentNo = ticket.documentNo;
-			ticket.ticketReference = ticket.ticketReference;
-			ticket.sharingLink = ticket.sharingLink;
-			ticket.sharedTo = ticket.sharedTo;
-			ticket.assignedTo = ticket.assignedTo;
-			ticket.createdOn = ticket.creadOn;
-			ticket.deadline = ticket.deadline;
-			ticket.status = ticket.status;
+			// ticket.name = ticket.name;
+			// ticket.businessName = ticket.businessName;
+			// ticket.narrative = ticket.narrative;
+			// ticket.category = ticket.category;
+			// ticket.priority = ticket.priority;
+			// ticket.field = ticket.field;
+			// ticket.tags = ticket.tags;
+			// ticket.department = ticket.department;
+			// ticket.subDepartment = ticket.subDepartment;
+			// ticket.locations = ticket.locations;
+			// ticket.ticketNo = ticket.ticketNo;
+			// ticket.documentNo = ticket.documentNo;
+			// ticket.ticketReference = ticket.ticketReference;
+			// ticket.sharingLink = ticket.sharingLink;
+			// ticket.sharedTo = ticket.sharedTo;
+			// ticket.assignedTo = ticket.assignedTo;
+			// ticket.createdOn = ticket.createdOn;
+			// ticket.deadline = ticket.deadline;
+			// ticket.status = ticket.status;
 
 			this.setState({ data: this.mapToViewModel(ticket) });
 
@@ -166,28 +180,30 @@ class Ticket extends Form {
 		await this.populateCategory();
 		await this.populatePriority();
 		await this.populateStatus();
+		await this.populateAssignedTo();
+		await this.populateTicket();
 	}
 
 	schema = Joi.object({
 		name: Joi.string(),
 		businessName: Joi.any().optional(),
-		narrative: Joi.string().optional(),
-		priority: Joi.string().optional(),
-		category: Joi.string().optional(),
-		department: Joi.string().optional(),
-		subDepartment: Joi.string().optional(),
-		createdOn: Joi.date().optional(),
-		deadline: Joi.date().optional(),
-		locations: Joi.string().optional(),
-		ticketNo: Joi.string().optional(),
-		documentNo: Joi.string().optional(),
-		field: Joi.string().optional(),
-		tags: Joi.string().optional(),
-		ticketReference: Joi.string().optional(),
-		sharingLink: Joi.string().optional(),
-		assignedTo: Joi.string().optional(),
-		sharedTo: Joi.string().optional(),
-		status: Joi.string().optional(),
+		narrative: Joi.any().optional(),
+		priority: Joi.any().optional(),
+		category: Joi.any().optional(),
+		department: Joi.any().optional(),
+		subDepartment: Joi.any().optional(),
+		createdOn: Joi.any().optional(),
+		deadline: Joi.any().optional(),
+		locations: Joi.any().optional(),
+		ticketNo: Joi.any().optional(),
+		documentNo: Joi.any().optional(),
+		field: Joi.any().optional(),
+		tags: Joi.any().optional(),
+		ticketReference: Joi.any().optional(),
+		sharingLink: Joi.any().optional(),
+		assignedTo: Joi.any().optional(),
+		sharedTo: Joi.any().optional(),
+		status: Joi.any().optional(),
 	});
 
 	handlecreatedOnChange = (e) => {
@@ -211,15 +227,19 @@ class Ticket extends Form {
 		console.log(event.target.files[0]);
 	};
 
-	doSubmit = async (ticket) => {
+	doSubmit = async () => {
 		console.log(this.state.data);
+		const user = auth.getProfile();	
+		const data = { ...this.state.data };
+		data.username = user._id;
+		this.setState({ data });
 		try {
 			await saveTicket(this.state.data);
 			this.props.history.push("/clinic/tickets");
 		} catch (ex) {
 			if (ex.response) {
 				const errors = { ...this.state.errors };
-				errors.username = ex.response.data;
+				errors.status = ex.response.data;
 				this.setState({ errors });
 			}
 		}
@@ -227,14 +247,15 @@ class Ticket extends Form {
 
 	makeTicketNo() {
 		let ticketNumber = "TK-";
-		const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-		for (let i = 0; i <= 5; i++) ticketNumber += possible.charAt(Math.floor(Math.random() * possible.length));
+		const possible = "ABCDEFGHIJKLMNPQRSTUVWXYZ2356789";
+		for (let i = 0; i <= 6; i++) ticketNumber += possible.charAt(Math.floor(Math.random() * possible.length));
 		return ticketNumber;
 	}
 
 	mapToViewModel(ticket) {
 		return {
 			_id: ticket._id,
+			username: ticket.username,
 			name: ticket.name,
 			narrative: ticket.narrative,
 			category: ticket.category,
@@ -249,7 +270,6 @@ class Ticket extends Form {
 			documentNo: ticket.documentNo,
 			field: ticket.field,
 			tags: ticket.tags,
-			action: ticket.action,
 			ticketReference: ticket.ticketReference,
 			sharingLink: ticket.sharingLink,
 			assignedTo: ticket.assignedTo,
@@ -265,7 +285,7 @@ class Ticket extends Form {
 				<div>
 					<ol className="breadcrumb float-xl-right">
 						<li className="breadcrumb-item">
-							<Link to="/form/plugins">Home</Link>
+							<Link to="/">Home</Link>
 						</li>
 						<li className="breadcrumb-item">
 							<Link to="/clinic/tickets">Tickets</Link>
@@ -288,26 +308,11 @@ class Ticket extends Form {
 											"text",
 											"Enter Name/Title/subject for ticket"
 										)}
-										{this.renderInput("narrative", "Narrative", "text", "* Tell your story/issue....")}
 
-										{/* <div className="form-group row">
-										<label className="col-lg-4 col-form-label">Subscription Type</label>
-										<div className="btn-group col-lg-8">
-											<div className="btn btn-secondary active">
-												<input type="radio" name="subscription" onChange={this.handleChange} value="Ticket"  checked={data.subscription === "Ticket" } />
-												<label>Ticket</label>
-											</div>
-											<div className="btn btn-secondary">
-												<input type="radio" name="subscription" onChange={this.handleChange} value="Solo" checked={data.subscription === "Solo" } />
-												<label>SoloPractice</label>
-											</div>
-										</div>
-										{errors.subscription && (<div className="alert alert-danger">{errors.subscription}</div>)}
-									</div>  */}
+										{this.renderInput("narrative", "Narrative", "text", "Enter your story...")}										
 
 										<div className="form-group row">
-											<label className="col-lg-4 col-form-label" htmlFor="priority">
-												Priority
+											<label className="col-lg-4 col-form-label" htmlFor="priority">Priority
 											</label>
 											<div className="col-lg-8">
 												<select
@@ -325,8 +330,7 @@ class Ticket extends Form {
 										</div>
 
 										<div className="form-group row">
-											<label className="col-lg-4 col-form-label" htmlFor="category">
-												Category
+											<label className="col-lg-4 col-form-label" htmlFor="category">Category
 											</label>
 											<div className="col-lg-8">
 												<select
@@ -349,9 +353,56 @@ class Ticket extends Form {
 										{this.renderInput("documentNo", "DocumentNo", "text", "Enter DocumentNo")}
 										{this.renderInput("field", "field", "text", "Enter field")}
 										{this.renderInput("tags", "Tags", "text", "Enter Tags")}
+										
+										
 										{this.renderInput("ticketReference", "References", "text", "Enter References")}
-										{this.renderInput("assignedTo", "Assigned To", "text", "Enter Assignees")}
-										{this.renderInput("sharedTo", "Shared To", "text", "Enter Shared tickets")}
+										{this.renderInput("sharingLink", "Sharinglink", "text", "Enter sharinglink")}										
+										{/* {this.renderInput("assignedTo", "Assigned To", "text", "Enter Assignees")} */}
+										{/* {this.renderInput("sharedTo", "Shared To", "text", "Enter Shared tickets")} */}
+
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="assignedTo">
+												Assigned To
+											</label>
+											<div className="col-lg-8">
+												<select
+													name="assignedTo"
+													id="assignedTo"
+													value={data.assignedTo}
+													onChange={this.handleChange}
+													className="form-control"
+												>
+													<option value="">Select</option>
+													{this.selectUsers}
+												</select>
+											</div>
+											{errors.assignedTo && (
+												<div className="alert alert-danger">{errors.assignedTo}</div>
+											)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="sharedTo">
+												Shared To
+											</label>
+											<div className="col-lg-8">
+												<select
+													name="sharedTo"
+													id="sharedTo"
+													value={data.sharedTo}
+													onChange={this.handleChange}
+													className="form-control"
+												>
+													<option value="">Select</option>
+													{this.selectUsers}
+												</select>
+											</div>
+											{errors.sharedTo && (
+												<div className="alert alert-danger">{errors.sharedTo}</div>
+											)}
+										</div>
+
 
 										<div className="form-group row">
 											<label className="col-lg-4 col-form-label" htmlFor="deadline">
@@ -386,24 +437,6 @@ class Ticket extends Form {
 												{errors.deadline && <div className="alert alert-danger">{errors.deadline}</div>}
 											</div>
 										</div>
-
-										{/* <div className="form-group row">
-											<label className="col-lg-4 col-form-label" htmlFor="imageSrc">
-												Image
-											</label>
-											<div className="col-lg-8">
-												<div className="row row-space-10">
-													<input
-														type="file"
-														id="imageSrc"
-														name="imageSrc"
-														className="form-control-file m-b-5"
-														onChange={this.onChangeImgHandler}
-													/>
-													{errors.imageSrc && <div className="alert alert-danger">{errors.imageSrc}</div>}
-												</div>
-											</div>
-										</div> */}
 
 										<div className="form-group row">
 											<label className="col-lg-4 col-form-label" htmlFor="status">
