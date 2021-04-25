@@ -70,8 +70,8 @@ class ReqforappointmentsTable extends Component {
 		{label: 'appointmentType',   path: 'appointmentType' } ,   	  
 		{label: 'sessionType',   path: 'sessionType' } , 
 		{label: 'doctor',   path: 'doctor' } ,     
-		{label: 'Patient-note',   path: 'notePatient' } ,         
-		{label: 'Note',   path: 'internalNote' } ,             
+		{label: 'Patient-note',   path: 'patientNote' } ,         
+		{label: 'Internal note',   path: 'internalNote' } ,             
     
 	];
 

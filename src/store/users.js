@@ -69,7 +69,7 @@ export const loadCurrentUser = (id) => (dispatch,getState) => {
 
   const diffInSeconds = moment().diff(moment(lastFetch), "seconds");
 
-  if (diffInSeconds < 30) return;
+  if (diffInSeconds < 20) return;
   return dispatch(
     apiCallBegan({
       url: url + "/" + id,
