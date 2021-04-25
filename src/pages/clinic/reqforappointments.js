@@ -122,11 +122,68 @@ class reqforreqforappointmentTableData extends Component {
   
          <React.Fragment>
            <ToastContainer />
-           {/* {reqforappointment && ( <button className="btn btn-default active m-r-5 m-b-5" style={{marginBottom:20},{marginLeft:20},{marginTop:20}}>  <Link to="/clinic/reqforappointment/new">Add reqforappointment</Link>  </button>)} */}
-            <button className="btn btn-default active m-r-5 m-b-5" title="add reqforappointment" style={{marginBottom:20},{marginLeft:20},{marginTop:20}}>  <Link to="/clinic/reqforappointments/new"><i className="fas fa-plus"></i></Link>  </button>
-            <button className="btn btn-default active m-r-5 m-b-5" title="edit" style={{marginBottom:20},{marginLeft:20},{marginTop:20}}>  <Link to="/clinic/reqforappointments/edit"><i className="far fa-edit"></i></Link>  </button>			
-            <button className="btn btn-default active m-r-5 m-b-5" title="delete" style={{marginBottom:20},{marginLeft:20},{marginTop:20}}>  <Link to="/clinic/reqforappointments/del"><i className="far fa-trash-alt"></i></Link>  </button>						
-            <button className="btn btn-default active m-r-5 m-b-5" title="download" style={{marginBottom:20},{marginLeft:20},{marginTop:20}}>  <Link to="/clinic/reqforappointments/download"><i className="ion-md-download"></i></Link>  </button>						
+						<div className="toolbar" style={toolbarStyles}>
+							<button className="btn btn-default active m-r-5 m-b-5" title="add ticket" style={btnStyles}>
+								{" "}
+								<Link to="/clinic/reqforappointments/new">
+									<img style={iconStyles} src={newIcon} />
+								</Link>
+							</button>
+							
+							<button className="btn btn-default active m-r-5 m-b-5" title="edit ticket" style={btnStyles}>
+								{" "}
+								<Link
+									to={
+										this.state.checkedTickets
+											? `/clinic/reqforappointments/${this.state.checkedTickets[0]}`
+											: "/clinic/reqforappointments/"
+									}
+								>
+									<img style={iconStyles} src={editIcon} />
+								</Link>{" "}
+							</button>
+							<button
+								className="btn btn-default active m-r-5 m-b-5"
+								title="delete tickets"
+								style={btnStyles}
+								onClick={() => this.handleMassDelete(this.state.checkedTickets)}
+							>
+								{" "}
+								<img style={{ width: "25px", height: "25px" }} src={trashIcon} />
+							</button>
+							<button className="btn btn-default active m-r-5 m-b-5" title="Excel" style={btnStyles}>
+								{" "}
+								<Link to="/clinic/reqforappointments/">
+									<img style={iconStyles} src={xlsIcon} />
+								</Link>{" "}
+							</button>
+							
+							<button className="btn btn-default active m-r-5 m-b-5" title="csv" style={btnStyles}>
+								{" "}
+								<Link to="/clinic/reqforappointments/">
+									<img style={iconStyles} src={csvIcon} />
+								</Link>{" "}
+							</button>
+							<button className="btn btn-default active m-r-5 m-b-5" title="PDF" style={btnStyles}>
+								{" "}
+								<Link to="/clinic/reqforappointments/">
+									<img style={iconStyles} src={pdfIcon} />
+								</Link>{" "}
+							</button>
+							<button className="btn btn-default active m-r-5 m-b-5" title="Share to other" style={btnStyles}>
+								{" "}
+								<Link to="/clinic/reqforappointments/">
+									<img style={iconStyles} src={shareIcon} />
+								</Link>{" "}
+							</button>
+							<button className="btn btn-default active m-r-5 m-b-5" title="Archive the ticket" style={btnStyles}>
+								{" "}
+								<Link to="/clinic/reqforappointments/">
+									<img style={iconStyles} src={archiveIcon} />
+								</Link>{" "}
+							</button>
+							
+						</div>
 				<div className="table-responsive">
      
        <SearchBox value={searchQuery} onChange={this.handleSearch} />           
