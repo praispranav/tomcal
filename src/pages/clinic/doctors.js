@@ -112,14 +112,14 @@ class DoctorTableData extends Component {
 				<React.Fragment>
 					 <ToastContainer />
 						<div className="toolbar" style={toolbarStyles}>
-							<button className="btn btn-default active m-r-5 m-b-5" title="add ticket" style={btnStyles}>
+							<button className="btn btn-default active m-r-5 m-b-5" title="add doctor" style={btnStyles}>
 								{" "}
 								<Link to="/clinic/doctors/new">
 									<img style={iconStyles} src={newIcon} />
 								</Link>
 							</button>
 							
-							<button className="btn btn-default active m-r-5 m-b-5" title="edit ticket" style={btnStyles}>
+							<button className="btn btn-default active m-r-5 m-b-5" title="edit doctor" style={btnStyles}>
 								{" "}
 								<Link
 									to={
@@ -133,7 +133,7 @@ class DoctorTableData extends Component {
 							</button>
 							<button
 								className="btn btn-default active m-r-5 m-b-5"
-								title="delete tickets"
+								title="delete doctor"
 								style={btnStyles}
 								onClick={() => this.handleMassDelete(this.state.checkeddoctors)}
 							>
