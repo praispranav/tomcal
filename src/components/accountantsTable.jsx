@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Table from "./../common/table";
 import { Link, withRouter } from "react-router-dom";
 
-class ReceptionsTable extends Component {
+class AccountantsTable extends Component {
 	// constructor(props) {
 	// 	super(props);
 	// 	this.state = {
@@ -98,4 +98,4 @@ class ReceptionsTable extends Component {
 	}
 }
 
-export default ReceptionsTable;
+export default AccountantsTable;
