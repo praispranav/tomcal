@@ -85,10 +85,11 @@ const Menu = [
   
   { path: '/accounting', icon: 'fa fa-balance-scale', title: 'Accounting', badge: '10',
     children: [
-      { path: '/clinic/invoices', title: 'invoices' },
-      { path: '/clinic/add_invoice', title: 'Add invoice' },
-      { path: '/clinic/expences', title: 'expences' },	  
-      { path: '/clinic/expenses', title: 'Add expense' },  
+      { path: '/accounting/productsservices', title: 'Product & Services' },
+      { path: '/accounting/invoices', title: 'Invoices' },	  
+      { path: '/accounting/invoices/new', title: 'Add invoice' },
+      { path: '/accounting/expences', title: 'Expences' },	  
+      { path: '/accounting/expenses/new', title: 'Add expense' },  
     ]
   },
 
@@ -171,10 +172,10 @@ const Menu = [
   },
   { path: '/kanban', icon: 'fa fa-columns', title: 'Kanban',
     children: [
-      { path: '/kanban/scrumboard', title: 'Kanban', highlight: true },
-      { path: '/kanban/kanbans', title: 'Admin Kanbans', highlight: true },	  
-      { path: '/kanban/listkanbans', title: 'Admin Lists of Kanbans', highlight: true },	  	  
-      { path: '/kanban/cards', title: 'Admin Cards', highlight: true },	  	  
+      { path: '/kanban/scrumboard', title: 'Kanban'},
+      { path: '/kanban/kanbans', title: 'Admin Kanbans'},	  
+      { path: '/kanban/listkanbans', title: 'Admin Lists of Kanbans'},	  	  
+      { path: '/kanban/cards', title: 'Admin Cards'},	  	  
     ]
   },
   
