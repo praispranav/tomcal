@@ -21,7 +21,7 @@ import trashIcon from "../../assets/Icons/trash.svg";
 import csvIcon from "../../assets/Icons/csv.svg";
 import xlsIcon from "../../assets/Icons/xls.svg";
 import pdfIcon from "../../assets/Icons/pdf.svg";
-import shareIcon from "../../assets/Icons/sharing.svg";
+import sharingIcon from "../../assets/Icons/sharing.svg";
 import archiveIcon from "../../assets/Icons/archive.svg";
 
 class TicketsTableData extends Component {
@@ -230,7 +230,7 @@ class TicketsTableData extends Component {
 							<button className="btn btn-default active m-r-5 m-b-5" title="Share to other" style={btnStyles}>
 								{" "}
 								<Link to="/clinic/tickets/">
-									<img style={iconStyles} src={shareIcon} />
+									<img style={iconStyles} src={sharingIcon} />
 								</Link>{" "}
 							</button>
 							<button className="btn btn-default active m-r-5 m-b-5" title="Archive the ticket" style={btnStyles}>

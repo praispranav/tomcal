@@ -12,11 +12,12 @@ import Pagination from '../../common/pagination';
 import {paginate} from '../../utils/paginate';
 import AppointmentsTable from '../../components/appointmentsTable.jsx';
 import SearchBox from './../../common/searchBox';
-import _ from 'lodash';
-import http from './../../services/httpService';
-import {apiUrl} from './../../config/config.json';
-import {ToastContainer} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import _ from "lodash";
+import http from "./../../services/httpService";
+import { apiUrl } from "./../../config/config.json";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Col, Button, Form, FormGroup, Input, Modal, Label, ModalHeader, ModalBody, Row } from "reactstrap";
 
 // Icons imports
 import newIcon from "../../assets/Icons/new.svg";
@@ -25,7 +26,7 @@ import trashIcon from "../../assets/Icons/trash.svg";
 import csvIcon from "../../assets/Icons/csv.svg";
 import xlsIcon from "../../assets/Icons/xls.svg";
 import pdfIcon from "../../assets/Icons/pdf.svg";
-
+import sharingIcon from "../../assets/Icons/sharing.svg";
 
 class AppointmentTableData extends Component {
   
@@ -182,7 +183,7 @@ class AppointmentTableData extends Component {
 							<button className="btn btn-default active m-r-5 m-b-5" title="Share to other" style={btnStyles}>
 								{" "}
 								<Link to="/clinic/appointments/">
-									<img style={iconStyles} src={shareIcon} />
+									<img style={iconStyles} src={sharingIcon} />
 								</Link>{" "}
 							</button>
 							

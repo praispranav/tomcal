@@ -10,7 +10,21 @@ import Pagination from '../../common/pagination';
 import {paginate} from '../../utils/paginate';
 import DoctorsTable from '../../components/doctorsTable.jsx';
 import SearchBox from './../../common/searchBox';
-import _ from 'lodash';
+import _ from "lodash";
+import http from "./../../services/httpService";
+import { apiUrl } from "./../../config/config.json";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Col, Button, Form, FormGroup, Input, Modal, Label, ModalHeader, ModalBody, Row } from "reactstrap";
+
+// Icons imports
+import newIcon from "../../assets/Icons/new.svg";
+import editIcon from "../../assets/Icons/edit.svg";
+import trashIcon from "../../assets/Icons/trash.svg";
+import csvIcon from "../../assets/Icons/csv.svg";
+import xlsIcon from "../../assets/Icons/xls.svg";
+import pdfIcon from "../../assets/Icons/pdf.svg";
+import sharingIcon from "../../assets/Icons/sharing.svg";
 
 class DoctorTableData extends Component {
   
@@ -95,32 +109,88 @@ class DoctorTableData extends Component {
 					Doctors Management
 				</PanelHeader>
   
-         <React.Fragment>
-         <button className="btn btn-default active m-r-5 m-b-5" style={{marginBottom:20},{marginLeft:20},{marginTop:20}}><Link to="/clinic/add_user">Add Doctor</Link></button>
+				<React.Fragment>
+					 <ToastContainer />
+						<div className="toolbar" style={toolbarStyles}>
+							<button className="btn btn-default active m-r-5 m-b-5" title="add ticket" style={btnStyles}>
+								{" "}
+								<Link to="/clinic/doctors/new">
+									<img style={iconStyles} src={newIcon} />
+								</Link>
+							</button>
+							
+							<button className="btn btn-default active m-r-5 m-b-5" title="edit ticket" style={btnStyles}>
+								{" "}
+								<Link
+									to={
+										this.state.checkeddoctors
+											? `/clinic/doctors/${this.state.checkeddoctors[0]}`
+											: "/clinic/doctors/"
+									}
+								>
+									<img style={iconStyles} src={editIcon} />
+								</Link>{" "}
+							</button>
+							<button
+								className="btn btn-default active m-r-5 m-b-5"
+								title="delete tickets"
+								style={btnStyles}
+								onClick={() => this.handleMassDelete(this.state.checkeddoctors)}
+							>
+								{" "}
+								<img style={{ width: "25px", height: "25px" }} src={trashIcon} />
+							</button>
+							<button className="btn btn-default active m-r-5 m-b-5" title="Excel" style={btnStyles}>
+								{" "}
+								<Link to="/clinic/doctors/">
+									<img style={iconStyles} src={xlsIcon} />
+								</Link>{" "}
+							</button>
+							
+							<button className="btn btn-default active m-r-5 m-b-5" title="csv" style={btnStyles}>
+								{" "}
+								<Link to="/clinic/doctors/">
+									<img style={iconStyles} src={csvIcon} />
+								</Link>{" "}
+							</button>
+							<button className="btn btn-default active m-r-5 m-b-5" title="PDF" style={btnStyles}>
+								{" "}
+								<Link to="/clinic/doctors/">
+									<img style={iconStyles} src={pdfIcon} />
+								</Link>{" "}
+							</button>
+							<button className="btn btn-default active m-r-5 m-b-5" title="Share to other" style={btnStyles}>
+								{" "}
+								<Link to="/clinic/doctors/">
+									<img style={iconStyles} src={sharingIcon} />
+								</Link>{" "}
+							</button>
+							
+						</div>
 				<div className="table-responsive">
-       
-           
-        <p className="page-header float-xl-left" style={{marginBottom:5},{marginLeft:20},{marginTop:5}}>{count} entries</p> 
-       <SearchBox value={searchQuery} onChange={this.handleSearch} />
-       <DoctorsTable doctors={doctors} 
-       onDelete={this.handleDelete}
-       onSort={this.handleSort}
-       sortColumn={sortColumn}
-       />
+     
+				   <SearchBox value={searchQuery} onChange={this.handleSearch} />           
+					<p className="page-header float-xl-left" style={{marginBottom:5},{marginLeft:20},{marginTop:5}}>{count} entries</p> 
+
+				   <doctorsTable doctors={doctors} 
+				   onDelete={this.handleDelete}
+				   onSort={this.handleSort}
+				   sortColumn={sortColumn}
+				   />
         
 			 </div> 
-       
-       </React.Fragment>
+     
+        </React.Fragment>
 
 			 <hr className="m-0" />
 			 <PanelBody>
        	<div className="d-flex align-items-center justify-content-center">
-         <Pagination 
+            <Pagination 
            itemsCount ={count}
            pageSize={pageSize}
            onPageChange={this.handlePageChange}
            currentPage={currentPage}
-           />
+            />
 				</div>
 			 </PanelBody>
 			</Panel>
