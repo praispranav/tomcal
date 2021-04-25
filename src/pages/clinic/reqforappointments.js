@@ -134,8 +134,8 @@ class reqforreqforappointmentTableData extends Component {
 								{" "}
 								<Link
 									to={
-										this.state.checkedTickets
-											? `/clinic/reqforappointments/${this.state.checkedTickets[0]}`
+										this.state.checkedReqforappointments
+											? `/clinic/reqforappointments/${this.state.checkedReqforappointments[0]}`
 											: "/clinic/reqforappointments/"
 									}
 								>
@@ -146,7 +146,7 @@ class reqforreqforappointmentTableData extends Component {
 								className="btn btn-default active m-r-5 m-b-5"
 								title="delete tickets"
 								style={btnStyles}
-								onClick={() => this.handleMassDelete(this.state.checkedTickets)}
+								onClick={() => this.handleMassDelete(this.state.checkedReqforappointments)}
 							>
 								{" "}
 								<img style={{ width: "25px", height: "25px" }} src={trashIcon} />
