@@ -199,5 +199,17 @@ class DoctorTableData extends Component {
     )
   }
 }
+const toolbarStyles = {
+	background: "#c8e9f3",
+	padding: "10px",
+};
+
+const btnStyles = { background: "#348fe2", margin: "0rem" };
+
+const iconStyles = {
+	width: "25px",
+	height: "25px",
+	marginRight: "0rem",
+};
 
 export default DoctorTableData

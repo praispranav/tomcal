@@ -133,14 +133,14 @@ class PatientTableData extends Component {
          <React.Fragment>
 					 <ToastContainer />
 						<div className="toolbar" style={toolbarStyles}>
-							<button className="btn btn-default active m-r-5 m-b-5" title="add patient" style={btnStyles}>
+							<button className="btn btn-default active m-r-5 m-b-5" title="add ticket" style={btnStyles}>
 								{" "}
 								<Link to="/clinic/patients/new">
 									<img style={iconStyles} src={newIcon} />
 								</Link>
 							</button>
 							
-							<button className="btn btn-default active m-r-5 m-b-5" title="edit patient" style={btnStyles}>
+							<button className="btn btn-default active m-r-5 m-b-5" title="edit ticket" style={btnStyles}>
 								{" "}
 								<Link
 									to={
@@ -154,7 +154,7 @@ class PatientTableData extends Component {
 							</button>
 							<button
 								className="btn btn-default active m-r-5 m-b-5"
-								title="delete patient"
+								title="delete tickets"
 								style={btnStyles}
 								onClick={() => this.handleMassDelete(this.state.checkedpatients)}
 							>
@@ -193,7 +193,7 @@ class PatientTableData extends Component {
 				   <SearchBox value={searchQuery} onChange={this.handleSearch} />           
 					<p className="page-header float-xl-left" style={{marginBottom:5},{marginLeft:20},{marginTop:5}}>{count} entries</p> 
 
-				   <patientsTable patients={patients} 
+				   <patientsTable users={users} 
 				   onDelete={this.handleDelete}
 				   onSort={this.handleSort}
 				   sortColumn={sortColumn}
@@ -219,5 +219,17 @@ class PatientTableData extends Component {
     )
   }
 }
+const toolbarStyles = {
+	background: "#c8e9f3",
+	padding: "10px",
+};
+
+const btnStyles = { background: "#348fe2", margin: "0rem" };
+
+const iconStyles = {
+	width: "25px",
+	height: "25px",
+	marginRight: "0rem",
+};
 
 export default PatientTableData

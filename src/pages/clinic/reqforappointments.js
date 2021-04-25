@@ -216,4 +216,4 @@ class reqforreqforappointmentTableData extends Component {
   }
 }
 
-export default reqforappointmentTableData
+export default reqforappointmentTableData;
