@@ -18,6 +18,15 @@ import {apiUrl} from './../../config/config.json';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+// Icons imports
+import newIcon from "../../assets/Icons/new.svg";
+import editIcon from "../../assets/Icons/edit.svg";
+import trashIcon from "../../assets/Icons/trash.svg";
+import csvIcon from "../../assets/Icons/csv.svg";
+import xlsIcon from "../../assets/Icons/xls.svg";
+import pdfIcon from "../../assets/Icons/pdf.svg";
+import shareIcon from "../../assets/Icons/sharing.svg";
+
 class reqforreqforappointmentTableData extends Component {
   
   constructor(props) {
@@ -174,12 +183,6 @@ class reqforreqforappointmentTableData extends Component {
 								{" "}
 								<Link to="/clinic/reqforappointments/">
 									<img style={iconStyles} src={shareIcon} />
-								</Link>{" "}
-							</button>
-							<button className="btn btn-default active m-r-5 m-b-5" title="Archive the ticket" style={btnStyles}>
-								{" "}
-								<Link to="/clinic/reqforappointments/">
-									<img style={iconStyles} src={archiveIcon} />
 								</Link>{" "}
 							</button>
 							
