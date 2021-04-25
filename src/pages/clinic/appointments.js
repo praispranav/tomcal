@@ -18,6 +18,15 @@ import {apiUrl} from './../../config/config.json';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+// Icons imports
+import newIcon from "../../assets/Icons/new.svg";
+import editIcon from "../../assets/Icons/edit.svg";
+import trashIcon from "../../assets/Icons/trash.svg";
+import csvIcon from "../../assets/Icons/csv.svg";
+import xlsIcon from "../../assets/Icons/xls.svg";
+import pdfIcon from "../../assets/Icons/pdf.svg";
+
+
 class AppointmentTableData extends Component {
   
   constructor(props) {
@@ -121,24 +130,74 @@ class AppointmentTableData extends Component {
 				</PanelHeader>
   
          <React.Fragment>
-           <ToastContainer />
-           {/* {appointment && ( <button className="btn btn-default active m-r-5 m-b-5" style={{marginBottom:20},{marginLeft:20},{marginTop:20}}>  <Link to="/clinic/appointment/new">Add Appointment</Link>  </button>)} */}
-            <button className="btn btn-default active m-r-5 m-b-5" title="add appointment" style={{marginBottom:20},{marginLeft:20},{marginTop:20}}>  <Link to="/clinic/appointments/new"><i className="fas fa-plus"></i></Link>  </button>
-            <button className="btn btn-default active m-r-5 m-b-5" title="edit" style={{marginBottom:20},{marginLeft:20},{marginTop:20}}>  <Link to="/clinic/appointments/edit"><i className="far fa-edit"></i></Link>  </button>			
-            <button className="btn btn-default active m-r-5 m-b-5" title="delete" style={{marginBottom:20},{marginLeft:20},{marginTop:20}}>  <Link to="/clinic/appointments/del"><i className="far fa-trash-alt"></i></Link>  </button>						
-            <button className="btn btn-default active m-r-5 m-b-5" title="download" style={{marginBottom:20},{marginLeft:20},{marginTop:20}}>  <Link to="/clinic/appointments/download"><i className="ion-md-download"></i></Link>  </button>						
+					 <ToastContainer />
+						<div className="toolbar" style={toolbarStyles}>
+							<button className="btn btn-default active m-r-5 m-b-5" title="add ticket" style={btnStyles}>
+								{" "}
+								<Link to="/clinic/appointments/new">
+									<img style={iconStyles} src={newIcon} />
+								</Link>
+							</button>
+							
+							<button className="btn btn-default active m-r-5 m-b-5" title="edit ticket" style={btnStyles}>
+								{" "}
+								<Link
+									to={
+										this.state.checkedappointments
+											? `/clinic/appointments/${this.state.checkedappointments[0]}`
+											: "/clinic/appointments/"
+									}
+								>
+									<img style={iconStyles} src={editIcon} />
+								</Link>{" "}
+							</button>
+							<button
+								className="btn btn-default active m-r-5 m-b-5"
+								title="delete tickets"
+								style={btnStyles}
+								onClick={() => this.handleMassDelete(this.state.checkedappointments)}
+							>
+								{" "}
+								<img style={{ width: "25px", height: "25px" }} src={trashIcon} />
+							</button>
+							<button className="btn btn-default active m-r-5 m-b-5" title="Excel" style={btnStyles}>
+								{" "}
+								<Link to="/clinic/appointments/">
+									<img style={iconStyles} src={xlsIcon} />
+								</Link>{" "}
+							</button>
+							
+							<button className="btn btn-default active m-r-5 m-b-5" title="csv" style={btnStyles}>
+								{" "}
+								<Link to="/clinic/appointments/">
+									<img style={iconStyles} src={csvIcon} />
+								</Link>{" "}
+							</button>
+							<button className="btn btn-default active m-r-5 m-b-5" title="PDF" style={btnStyles}>
+								{" "}
+								<Link to="/clinic/appointments/">
+									<img style={iconStyles} src={pdfIcon} />
+								</Link>{" "}
+							</button>
+							<button className="btn btn-default active m-r-5 m-b-5" title="Share to other" style={btnStyles}>
+								{" "}
+								<Link to="/clinic/appointments/">
+									<img style={iconStyles} src={shareIcon} />
+								</Link>{" "}
+							</button>
+							
+						</div>
 				<div className="table-responsive">
      
-       <SearchBox value={searchQuery} onChange={this.handleSearch} />           
-        <p className="page-header float-xl-left" style={{marginBottom:5},{marginLeft:20},{marginTop:5}}>{count} entries</p> 
+				   <SearchBox value={searchQuery} onChange={this.handleSearch} />           
+					<p className="page-header float-xl-left" style={{marginBottom:5},{marginLeft:20},{marginTop:5}}>{count} entries</p> 
 
-       <AppointmentsTable appointments={appointments} 
-       onDelete={this.handleDelete}
-       onSort={this.handleSort}
-       sortColumn={sortColumn}
-       />
-        
-			 </div> 
+				   <appointmentsTable appointments={appointments} 
+				   onDelete={this.handleDelete}
+				   onSort={this.handleSort}
+				   sortColumn={sortColumn}
+				   />
+	  </div> 
        
        </React.Fragment>
 
