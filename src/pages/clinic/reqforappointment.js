@@ -74,7 +74,7 @@ class User extends Form {
 			{ value: 'video', label: 'Video' },
 		];
 
-		this.apointmentStatusOptions = [
+		this.reqforapointmentStatusOptions = [
 			{ value: 'approved', label: 'Approved' },
 			{ value: 'canceled', label: 'Canceled' },
 			{ value: 'active', label: 'Active' },			
@@ -112,7 +112,7 @@ class User extends Form {
 		));
 	}
 	async populatereqforappointmentStatus(){
-		this.apointmentStatusoptions = this.apointmentStatusOptions.map(option => (
+		this.reqforapointmentStatusoptions = this.reqforapointmentStatusOptions.map(option => (
 			<option key={option.label} value={option.value}>
 				{option.value}
 			</option>
@@ -161,7 +161,7 @@ class User extends Form {
 	async componentDidMount() {
 	
 		await this.populateApointmentType();
-		await this.populateApointmentStatus();		
+		await this.populateReqForApointmentStatus();		
 		await this.populateSessionType();
 		await this.populateApointment();
 	
@@ -234,7 +234,7 @@ schema = Joi.object({
             date: new Date(reqForAppointment.date),
             preferStartTime: reqForAppointment.preferStartTime,
             preferEndTime: reqForAppointment.preferEndTime,
-            reqforappointmentType: reqForAppointment.reqforappointmentType,
+            appointmentType: reqForAppointment.appointmentType,
             sessionType: reqForAppointment.sessionType,
             doctorNo: reqForAppointment.doctorNo,
             notePatient: reqForAppointment.notePatient,  			
