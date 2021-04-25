@@ -5,18 +5,19 @@ import { Link, withRouter  } from 'react-router-dom';
 import { Panel, PanelHeader, PanelBody } from './../../components/panel/panel.jsx';
 import { UncontrolledButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 //import axios from 'axios';
-import {getAppointments,deleteAppointment} from './../../services/appointments';
+import {getPatients,deletePatient} from './../../services/patients';
 import 'bootstrap/dist/css/bootstrap.min.css';
 //import FloatSubMenu from './../../components/float-sub-menu/float-sub-menu';
 import Pagination from '../../common/pagination';
 import {paginate} from '../../utils/paginate';
-import reqforappointmentsTable from '../../components/reqforappointmentsTable.jsx';
+import PatientsTable from '../../components/patientsTable.jsx';
 import SearchBox from './../../common/searchBox';
-import _ from 'lodash';
-import http from './../../services/httpService';
-import {apiUrl} from './../../config/config.json';
-import {ToastContainer} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import _ from "lodash";
+import http from "./../../services/httpService";
+import { apiUrl } from "./../../config/config.json";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Col, Button, Form, FormGroup, Input, Modal, Label, ModalHeader, ModalBody, Row } from "reactstrap";
 
 // Icons imports
 import newIcon from "../../assets/Icons/new.svg";
@@ -27,12 +28,12 @@ import xlsIcon from "../../assets/Icons/xls.svg";
 import pdfIcon from "../../assets/Icons/pdf.svg";
 import sharingIcon from "../../assets/Icons/sharing.svg";
 
-class reqforreqforappointmentTableData extends Component {
+class ReceptionTableData extends Component {
   
   constructor(props) {
 		super(props);
       this.state = {
-        reqforappointments:[],
+        users:[],
         pageSize: 10,
         currentPage: 1,
         sortColumn:{path:'title',order:'asc'},
@@ -44,19 +45,19 @@ class reqforreqforappointmentTableData extends Component {
     }
 
   async componentDidMount(){
-      const {data} = await getreqforappointments();
-      this.setState({reqforappointments:data});
+      const {data} = await getReceptions();
+      this.setState({users:data});
     }
 
-  handleDelete = async (reqforappointment)=>{
+  handleDelete = async (user)=>{
  
 
      ///delete
-		const originalreqforappointments = this.state.reqforappointments;
-		const reqforappointments = this.state.reqforappointments.filter(reqforappointment => reqforappointment._id !== reqforappointment._id);
-		this.setState({reqforappointments});
+		const originalUsers = this.state.users;
+		const users = this.state.users.filter(User => User._id !== user._id);
+		this.setState({users});
 		try{
-			await http.delete(apiUrl+"/reqforappointments/"+ reqforappointment._id);
+			await http.delete(apiUrl+"/patients/"+ user._id);
 		}
 		catch(ex){
 			//ex.request
@@ -66,12 +67,12 @@ class reqforreqforappointmentTableData extends Component {
 				alert("already deleted");
 			}
 			
-			this.setState({reqforappointments:originalreqforappointments});
+			this.setState({users:originalUsers});
 		}
     ////
  
   };
-
+ 
 
   //sorting columns
   handleSort = (sortColumn)=>{
@@ -90,29 +91,29 @@ class reqforreqforappointmentTableData extends Component {
 
 
  getDataPgnation= ()=>{
-  const {pageSize,currentPage,reqforappointments:reqforappointments,sortColumn,searchQuery} = this.state;
+  const {pageSize,currentPage,users:Users,sortColumn,searchQuery} = this.state;
   //
   //filter maybe next time
-  let filtered = reqforappointments;
+  let filtered = Users;
   if(searchQuery){
     console.log(searchQuery);
-    filtered = reqforappointments.filter((el)=> el.email.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
-    el.reqforappointmentname.toLowerCase().startsWith(searchQuery.toLowerCase())
+    filtered = Users.filter((el)=> el.email.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
+    el.username.toLowerCase().startsWith(searchQuery.toLowerCase())
     );
   }
 
   //
    const sorted = _.orderBy(filtered,[sortColumn.path],[sortColumn.order]);   
-  const reqforappointments = paginate(sorted,currentPage,pageSize);
-  return {data:reqforappointments};
+  const users = paginate(sorted,currentPage,pageSize);
+  return {data:users};
  }
 
   render(){
-    const {length:count} = this.state.reqforappointments; 
+    const {length:count} = this.state.users; 
     const {pageSize,currentPage,sortColumn,searchQuery} = this.state;
-    if(count === 0)  return "<p>No data available</p>";
+    //if(count === 0)  return "<p>No data available</p>";
    
-    const {data:reqforappointments} = this. getDataPgnation();
+    const {data:users} = this. getDataPgnation();
 
 
     return(
@@ -121,91 +122,94 @@ class reqforreqforappointmentTableData extends Component {
 			<ol className="breadcrumb float-xl-right">
 				<li className="breadcrumb-item"><Link to="/">Home</Link></li>
 				<li className="breadcrumb-item"><Link to="/">Tables</Link></li>
-				<li className="breadcrumb-item active">Data Tables</li>
+				<li className="breadcrumb-item active">Receptions Table</li>
 			</ol>
-			<h1 className="page-header">Requests for Appointments </h1>
+			<h1 className="page-header">Receptions </h1>
 			<Panel>
 				<PanelHeader>
-					Requests for Appointments' Management
+					Receptions Management
 				</PanelHeader>
   
          <React.Fragment>
-           <ToastContainer />
+					 <ToastContainer />
 						<div className="toolbar" style={toolbarStyles}>
-							<button className="btn btn-default active m-r-5 m-b-5" title="add Request for Appointment" style={btnStyles}>
+							<button className="btn btn-default active m-r-5 m-b-5" title="add reception" style={btnStyles}>
 								{" "}
-								<Link to="/clinic/reqforappointments/new">
+								<Link to="/clinic/receptions/new">
 									<img style={iconStyles} src={newIcon} />
 								</Link>
 							</button>
 							
-							<button className="btn btn-default active m-r-5 m-b-5" title="edit Request for Appointment" style={btnStyles}>
+							<button className="btn btn-default active m-r-5 m-b-5" title="edit reception" style={btnStyles}>
 								{" "}
 								<Link
 									to={
-										this.state.checkedReqforappointments
-											? `/clinic/reqforappointments/${this.state.checkedReqforappointments[0]}`
-											: "/clinic/reqforappointments/"
+										this.state.checkedreceptions
+											? `/clinic/receptions/${this.state.checkedreceptions[0]}`
+											: "/clinic/receptions/"
 									}
 								>
 									<img style={iconStyles} src={editIcon} />
 								</Link>{" "}
 							</button>
-							<button className="btn btn-default active m-r-5 m-b-5" title="delete Request for Appointment" style={btnStyles}
-								onClick={() => this.handleMassDelete(this.state.checkedReqforappointments)}>
+							<button
+								className="btn btn-default active m-r-5 m-b-5"
+								title="delete reception"
+								style={btnStyles}
+								onClick={() => this.handleMassDelete(this.state.checkedreceptions)}
+							>
 								{" "}
 								<img style={{ width: "25px", height: "25px" }} src={trashIcon} />
 							</button>
 							<button className="btn btn-default active m-r-5 m-b-5" title="Excel" style={btnStyles}>
 								{" "}
-								<Link to="/clinic/reqforappointments/">
+								<Link to="/clinic/receptions/">
 									<img style={iconStyles} src={xlsIcon} />
 								</Link>{" "}
 							</button>
 							
 							<button className="btn btn-default active m-r-5 m-b-5" title="csv" style={btnStyles}>
 								{" "}
-								<Link to="/clinic/reqforappointments/">
+								<Link to="/clinic/receptions/">
 									<img style={iconStyles} src={csvIcon} />
 								</Link>{" "}
 							</button>
 							<button className="btn btn-default active m-r-5 m-b-5" title="PDF" style={btnStyles}>
 								{" "}
-								<Link to="/clinic/reqforappointments/">
+								<Link to="/clinic/receptions/">
 									<img style={iconStyles} src={pdfIcon} />
 								</Link>{" "}
 							</button>
 							<button className="btn btn-default active m-r-5 m-b-5" title="Share to other" style={btnStyles}>
 								{" "}
-								<Link to="/clinic/reqforappointments/">
-									<img style={iconStyles} src={shareIcon} />
+								<Link to="/clinic/receptions/">
+									<img style={iconStyles} src={sharingIcon} />
 								</Link>{" "}
 							</button>
 							
 						</div>
 				<div className="table-responsive">
      
-       <SearchBox value={searchQuery} onChange={this.handleSearch} />           
-        <p className="page-header float-xl-left" style={{marginBottom:5},{marginLeft:20},{marginTop:5}}>{count} entries</p> 
+				   <SearchBox value={searchQuery} onChange={this.handleSearch} />           
+					<p className="page-header float-xl-left" style={{marginBottom:5},{marginLeft:20},{marginTop:5}}>{count} entries</p> 
 
-       <reqforappointmentsTable reqforappointments={reqforappointments} 
-       onDelete={this.handleDelete}
-       onSort={this.handleSort}
-       sortColumn={sortColumn}
-       />
-        
-			 </div> 
+				   <receptionsTable receptions={receptions} 
+				   onDelete={this.handleDelete}
+				   onSort={this.handleSort}
+				   sortColumn={sortColumn}
+				   />
+	  </div> 
        
-       </React.Fragment>
+        </React.Fragment>
 
 			 <hr className="m-0" />
 			 <PanelBody>
        	<div className="d-flex align-items-center justify-content-center">
-         <Pagination 
-           itemsCount ={count}
-           pageSize={pageSize}
-           onPageChange={this.handlePageChange}
-           currentPage={currentPage}
+           <Pagination 
+             itemsCount ={count}
+             pageSize={pageSize}
+             onPageChange={this.handlePageChange}
+             currentPage={currentPage}
            />
 				</div>
 			 </PanelBody>
@@ -216,4 +220,4 @@ class reqforreqforappointmentTableData extends Component {
   }
 }
 
-export default reqforappointmentTableData
+export default ReceptionTableData
