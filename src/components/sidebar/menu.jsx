@@ -172,6 +172,19 @@ const Menu = [
   },
   { path: '/kanban', icon: 'fa fa-columns', title: 'Kanban',
     children: [
+      { path: '/kanban/scrumboard', title: 'Kanbanboard',
+        children: [
+          { path: '/kanban/scrumboard/menu-2-1', title: 'Menu 2.1',
+            children: [
+              { path: '/kanban/scrumboard/menu-3-1', title: 'Menu 3.1' },
+              { path: '/kanban/scrumboard/menu-2-1/menu-3-2', title: 'Menu 3.2' }
+            ]
+          },
+          { path: '/menu/menu-1-1/menu-2-2', title: 'Menu 2.2' },
+          { path: '/menu/menu-1-1/menu-2-3', title: 'Menu 2.3' },
+        ]
+      },
+	
       { path: '/kanban/scrumboard', title: 'Kanban'},
       { path: '/kanban/kanbans', title: 'Admin Kanbans'},	  
       { path: '/kanban/listkanbans', title: 'Admin Lists of Kanbans'},	  	  
