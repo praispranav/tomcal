@@ -37,13 +37,13 @@ const Menu = [
       { path: '/clinic/add_doctor', title: 'Add doctor' },
       { path: '/clinic/search_doctor', title: 'Search in Doctors' },  
       { path: '/clinic/receptions', title: 'receptions' },
-      { path: '/clinic/add_reception', title: 'Add reception' },
+      { path: '/clinic/receptions/new', title: 'Add reception' },
       { path: '/clinic/search_reception', title: 'Search in Receptions' },  
       { path: '/clinic/accountants', title: 'accountants' },
-      { path: '/clinic/add_accountant', title: 'Add accountant' },
+      { path: '/clinic/accountants/new', title: 'Add accountant' },
       { path: '/clinic/search_accountant', title: 'Search in Accountants' },  
       { path: '/clinic/patients', title: 'patients' },
-      { path: '/clinic/add_patient', title: 'Add patient' },
+      { path: '/clinic/patients/new', title: 'Add patient' },
       { path: '/clinic/search_reception', title: 'Search in Patients' },  
       { path: '/clinic/users', title: 'users' },
       { path: '/clinic/user/new', title: 'Add user' },
@@ -55,7 +55,7 @@ const Menu = [
   { path: '/Clinicsolos', icon: 'fa fa-hospital', title: 'ClinicSolos', badge: '10',
     children: [
       { path: '/clinic/clinicsolos', title: 'clinicsolos' },
-      { path: '/clinic/add_clinicsolo', title: 'Add clinicsolo' },
+      { path: '/clinic/clinicsolos/new', title: 'Add clinicsolo' },
       { path: '/clinic/search_clinicsolo', title: 'Search in clinicsolos' },  
     ]
   },
@@ -71,7 +71,7 @@ const Menu = [
   { path: '/treatments', icon: 'fa fa-medkit', title: 'Treatments for TCM', badge: '10',
     children: [
       { path: '/clinic/treatments', title: 'treatments' },
-      { path: '/clinic/add_treatment', title: 'Add treatment' },
+      { path: '/clinic/treatments/new', title: 'Add treatment' },
       { path: '/clinic/search_treatment', title: 'Search in treatments' },  
     ]
   },
@@ -79,7 +79,7 @@ const Menu = [
   { path: '/Physical Conditions', icon: 'fa fa-child', title: 'Physical Conditions', badge: '10',
     children: [
       { path: '/clinic/physicalconditions', title: 'Physical Conditions' },
-      { path: '/clinic/add_physicalcondition', title: 'Add Phisical Condtion of patient' },
+      { path: '/clinic/physicalconditions/new', title: 'Add Phisical Condtion of patient' },
     ]
   },
   
@@ -137,7 +137,7 @@ const Menu = [
   { path: '/Salons', icon: 'fa fa-building', title: 'Salons', badge: '10',
     children: [
       { path: '/clinic/salons', title: 'Salons' },
-      { path: '/clinic/add_salon', title: 'Add salon' },
+      { path: '/clinic/salons/new', title: 'Add salon' },
       { path: '/clinic/search_reception', title: 'Search in Salons' },  
     ]
   },
@@ -145,7 +145,7 @@ const Menu = [
   { path: '/Products', icon: 'fa fa-calendar', title: 'Products', badge: '10',
     children: [
       { path: '/clinic/products-b', title: 'Products Beauty' },
-      { path: '/clinic/add_productb', title: 'Add Product' },
+      { path: '/clinic/productbs/new', title: 'Add Product' },
       { path: '/clinic/search_product', title: 'Search in Products' },  
     ]
   },
@@ -172,10 +172,24 @@ const Menu = [
   },
   { path: '/kanban', icon: 'fa fa-columns', title: 'Kanban',
     children: [
+      { path: '/kanban/scrumboard', title: 'Kanbanboard',
+        children: [
+          { path: '/kanban/scrumboard/menu-2-1', title: 'Menu 2.1',
+            children: [
+              { path: '/kanban/scrumboard/menu-3-1', title: 'Menu 3.1' },
+              { path: '/kanban/scrumboard/menu-2-1/menu-3-2', title: 'Menu 3.2' }
+            ]
+          },
+          { path: '/menu/menu-1-1/menu-2-2', title: 'Menu 2.2' },
+          { path: '/menu/menu-1-1/menu-2-3', title: 'Menu 2.3' },
+        ]
+      },
+	
       { path: '/kanban/scrumboard', title: 'Kanban'},
       { path: '/kanban/kanbans', title: 'Admin Kanbans'},	  
       { path: '/kanban/listkanbans', title: 'Admin Lists of Kanbans'},	  	  
       { path: '/kanban/cards', title: 'Admin Cards'},	  	  
+      { path: '/kanban/scrumboard', title: 'Archived Kanban'},	  
     ]
   },
   

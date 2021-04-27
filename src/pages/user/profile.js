@@ -4,7 +4,9 @@ import './profile.css'
 import { PageSettings } from './../../config/page-settings.js';
 import GoogleMapReact from 'google-map-react';
 import { Container, Row, Col, Form, Button, Image} from 'react-bootstrap'
-
+import auth from "../../services/authservice";
+import {connect} from "react-redux";
+import {loadCurrentUser} from "./../../store/users";
 class Profile extends React.Component {
 	static contextType = PageSettings;
 
@@ -13,6 +15,7 @@ class Profile extends React.Component {
 
 		this.showTab = this.showTab.bind(this);
 		this.state = {
+            currentUser: {},
 			tabAbout: true,
 			tabBank: false,
 			tabInsurance: false,
@@ -21,10 +24,16 @@ class Profile extends React.Component {
 		}
 	}
 	
-	componentDidMount() {
+	async componentDidMount() {
+		const user = auth.getProfile();	
+		await this.props.loadCurrentUser(user._id);
+        const currentUser = await this.props.currentUser;
+        this.setState({currentUser});
 		this.context.handleSetPageContentFullHeight(true);
 		this.context.handleSetPageContentFullWidth(true);
 	}
+
+
 
 	componentWillUnmount() {
 		this.context.handleSetPageContentFullHeight(false);
@@ -44,9 +53,15 @@ class Profile extends React.Component {
 	}
 	
 	render() {
+		const {currentUser} = this.state;
+		//console.log(this.state);
 		return (
 			<div>
-				<Container className="my-5">
+
+
+
+
+			{/* 	<Container className="my-5">
                 <Row>
                     <Col xs={12} >
                         <div className="d-flex mb-2">
@@ -101,13 +116,17 @@ class Profile extends React.Component {
                       </Form>
                 </Col> 
                 </Row>
-            </Container>
-				{/* <div className="profile">
+            </Container> */}
+
+
+
+
+				<div className="profile">
 					<div className="profile-header">
 						<div className="profile-header-cover"></div>
 						<div className="profile-header-content">
 							<div className="profile-header-img">
-								<img src="{user.imageSrc}" alt="" />
+        <img src={currentUser.imageSrc} alt="" /> 
 							</div>
 							<div className="profile-header-info">
 								<h4 className="m-t-10 m-b-5">Sean Ngu</h4>
@@ -425,10 +444,20 @@ class Profile extends React.Component {
 							</div>
 						</div>
 					</div>
-				</div> */}
+				</div>
 			</div>
 		)
 	}
 }
 
-export default Profile;
+
+
+//export default Profile;
+const mapStateToProps = state => ({
+	currentUser: state.entities.users.currentUser,
+	});
+	const mapDispatchToProps = dispatch => ({
+	loadCurrentUser: id => dispatch(loadCurrentUser(id))
+
+	});
+export default connect(mapStateToProps,mapDispatchToProps)(Profile);

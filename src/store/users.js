@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createSelector } from "reselect";
+//import { createSelector } from "reselect";
 import { apiCallBegan } from "./api";
 import moment from "moment";
 
@@ -69,7 +69,7 @@ export const loadCurrentUser = (id) => (dispatch,getState) => {
 
   const diffInSeconds = moment().diff(moment(lastFetch), "seconds");
 
-  if (diffInSeconds < 30) return;
+  if (diffInSeconds < 20) return;
   return dispatch(
     apiCallBegan({
       url: url + "/" + id,
