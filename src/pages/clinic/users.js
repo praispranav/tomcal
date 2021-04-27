@@ -1,17 +1,8 @@
 import React, { Component } from "react";
 //import { Link } from 'react-router-dom';
 import { Link, withRouter } from "react-router-dom";
-import {
-	Panel,
-	PanelHeader,
-	PanelBody,
-} from "./../../components/panel/panel.jsx";
-import {
-	UncontrolledButtonDropdown,
-	DropdownToggle,
-	DropdownMenu,
-	DropdownItem,
-} from "reactstrap";
+import { Panel, PanelHeader, PanelBody } from "./../../components/panel/panel.jsx";
+import { UncontrolledButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from "reactstrap";
 import { getUsers, deleteUser } from "./../../services/users";
 import "bootstrap/dist/css/bootstrap.min.css";
 //import FloatSubMenu from './../../components/float-sub-menu/float-sub-menu';
@@ -132,13 +123,7 @@ class UserTableData extends Component {
 	};
 
 	getDataPgnation = () => {
-		const {
-			pageSize,
-			currentPage,
-			users: Users,
-			sortColumn,
-			searchQuery,
-		} = this.state;
+		const { pageSize, currentPage, users: Users, sortColumn, searchQuery } = this.state;
 		//
 		//filter maybe next time
 		let filtered = Users;
@@ -183,11 +168,7 @@ class UserTableData extends Component {
 						<ToastContainer />
 						{/* {user && ( <button className="btn btn-default active m-r-5 m-b-5" style={{marginBottom:20},{marginLeft:20},{marginTop:20}}>  <Link to="/clinic/user/new">Add User</Link>  </button>)} */}
 						<div className="toolbar" style={toolbarStyles}>
-							<button
-								className="btn btn-default active m-r-5 m-b-5"
-								title="add user"
-								style={btnStyles}
-							>
+							<button className="btn btn-default active m-r-5 m-b-5" title="add user" style={btnStyles}>
 								{" "}
 								<Link to="/clinic/users/new">
 									<img style={iconStyles} src={newIcon} />
@@ -202,9 +183,7 @@ class UserTableData extends Component {
 								{" "}
 								<Link
 									to={
-										this.state.checkedUsers
-											? `/clinic/users/${this.state.checkedUsers[0]}`
-											: "/clinic/users/"
+										this.state.checkedUsers ? `/clinic/users/${this.state.checkedUsers[0]}` : "/clinic/users/"
 									}
 								>
 									<img style={iconStyles} src={editIcon} />
@@ -214,198 +193,116 @@ class UserTableData extends Component {
 								className="btn btn-default active m-r-5 m-b-5"
 								title="delete"
 								style={btnStyles}
-								onClick={() =>
-									this.handleMassDelete(this.state.checkedUsers)
-								}
+								onClick={() => this.handleMassDelete(this.state.checkedUsers)}
 							>
 								{" "}
 								{/* <Link to="/clinic/users/del"> */}
-								<img
-									style={{ width: "25px", height: "25px" }}
-									src={deleteIcon}
-								/>
+								<img style={{ width: "25px", height: "25px" }} src={deleteIcon} />
 								{/* </Link>{" "} */}
 							</button>
-							<button
-								className="btn btn-default active m-r-5 m-b-5"
-								title="csv"
-								style={btnStyles}
-							>
+							<button className="btn btn-default active m-r-5 m-b-5" title="csv" style={btnStyles}>
 								{" "}
 								<Link to="/clinic/users/">
 									<img style={iconStyles} src={csvIcon} />
 								</Link>{" "}
 							</button>
 
-							<button
-								className="btn btn-default active m-r-5 m-b-5"
-								title="pdf"
-								style={btnStyles}
-							>
+							<button className="btn btn-default active m-r-5 m-b-5" title="pdf" style={btnStyles}>
 								{" "}
 								<Link to="/clinic/users/">
 									<img style={iconStyles} src={pdfIcon} />
 								</Link>{" "}
 							</button>
 
-							<button
-								className="btn btn-default active m-r-5 m-b-5"
-								title="excel"
-								style={btnStyles}
-							>
+							<button className="btn btn-default active m-r-5 m-b-5" title="excel" style={btnStyles}>
 								{" "}
 								<Link to="/clinic/users/">
 									<img style={iconStyles} src={xlsIcon} />
 								</Link>{" "}
 							</button>
 
-							<button
-								className="btn btn-default active m-r-5 m-b-5"
-								title="print"
-								style={btnStyles}
-							>
+							<button className="btn btn-default active m-r-5 m-b-5" title="print" style={btnStyles}>
 								{" "}
 								<Link to="/clinic/users/">
 									<img style={iconStyles} src={printIcon} />
 								</Link>{" "}
 							</button>
 
-							<button
-								className="btn btn-default active m-r-5 m-b-5"
-								title="copy to clipboard"
-								style={btnStyles}
-							>
+							<button className="btn btn-default active m-r-5 m-b-5" title="copy to clipboard" style={btnStyles}>
 								{" "}
 								<Link to="/clinic/users/">
 									<img style={iconStyles} src={copy2clipboardIcon} />
 								</Link>{" "}
 							</button>
 
-							<button
-								className="btn btn-default active m-r-5 m-b-5"
-								title="print"
-								style={btnStyles}
-							>
+							<button className="btn btn-default active m-r-5 m-b-5" title="print" style={btnStyles}>
 								{" "}
 								<Link to="/clinic/users/">
 									<img style={iconStyles} src={printIcon} />
 								</Link>{" "}
 							</button>
 
-							<button
-								className="btn btn-default active m-r-5 m-b-5"
-								title="print"
-								style={btnStyles}
-							>
+							<button className="btn btn-default active m-r-5 m-b-5" title="print" style={btnStyles}>
 								{" "}
 								<Link to="/clinic/users/">
 									<img style={iconStyles} src={printIcon} />
 								</Link>{" "}
 							</button>
 
-							<button
-								className="btn btn-default active m-r-5 m-b-5"
-								title="print"
-								style={btnStyles}
-							>
+							<button className="btn btn-default active m-r-5 m-b-5" title="print" style={btnStyles}>
 								{" "}
 								<Link to="/clinic/users/">
 									<img style={iconStyles} src={printIcon} />
 								</Link>{" "}
 							</button>
 
-							<button
-								className="btn btn-default active m-r-5 m-b-5"
-								title="print"
-								style={btnStyles}
-							>
+							<button className="btn btn-default active m-r-5 m-b-5" title="print" style={btnStyles}>
 								{" "}
 								<Link to="/clinic/users/">
 									<img style={iconStyles} src={printIcon} />
 								</Link>{" "}
 							</button>
-							<button
-								className="btn btn-default active m-r-5 m-b-5"
-								title="lock"
-								style={btnStyles}
-							>
+							<button className="btn btn-default active m-r-5 m-b-5" title="lock" style={btnStyles}>
 								{" "}
 								<Link to="/clinic/users/">
 									<img style={iconStyles} src={lockIcon} />
 								</Link>{" "}
 							</button>
 
-							<button
-								className="btn btn-default active m-r-5 m-b-5"
-								title="unlock"
-								style={btnStyles}
-							>
+							<button className="btn btn-default active m-r-5 m-b-5" title="unlock" style={btnStyles}>
 								{" "}
 								<Link to="/clinic/users/">
 									<img style={iconStyles} src={unlockIcon} />
 								</Link>{" "}
 							</button>
 
-							<button
-								className="btn btn-default active m-r-5 m-b-5"
-								title="ban"
-								style={btnStyles}
-							>
+							<button className="btn btn-default active m-r-5 m-b-5" title="ban" style={btnStyles}>
 								{" "}
 								<Link to="/clinic/users/">
 									<img style={iconStyles} src={banIcon} />
 								</Link>{" "}
 							</button>
 
-							<button
-								className="btn btn-default active m-r-5 m-b-5"
-								title="email"
-								style={btnStyles}
-							>
+							<button className="btn btn-default active m-r-5 m-b-5" title="email" style={btnStyles}>
 								{" "}
 								<Link to="/clinic/users/">
 									<img style={iconStyles} src={emailIcon} />
 								</Link>{" "}
 							</button>
 
-							<button
-								className="btn btn-default active m-r-5 m-b-5"
-								title="message"
-								style={btnStyles}
-							>
+							<button className="btn btn-default active m-r-5 m-b-5" title="message" style={btnStyles}>
 								{" "}
 								<Link to="/clinic/users/">
 									<img style={iconStyles} src={messageIcon} />
 								</Link>{" "}
 							</button>
 						</div>
-						{/* <button
-							className="btn btn-default active m-r-5 m-b-5"
-							title="download"
-							style={
-								({ marginBottom: 20 },
-								{ marginLeft: 20 },
-								{ marginTop: 20 })
-							}
-						>
-							{" "}
-							<Link to="/clinic/users/download">
-								<i className="ion-md-download"></i>
-							</Link>{" "}
-						</button> */}
 
 						<div className="table-responsive">
-							<SearchBox
-								value={searchQuery}
-								onChange={this.handleSearch}
-							/>
+							<SearchBox value={searchQuery} onChange={this.handleSearch} />
 							<p
 								className="page-header float-xl-left"
-								style={
-									({ marginBottom: 5 },
-									{ marginLeft: 20 },
-									{ marginTop: 5 })
-								}
+								style={({ marginBottom: 5 }, { marginLeft: 20 }, { marginTop: 5 })}
 							>
 								{count} entries
 							</p>

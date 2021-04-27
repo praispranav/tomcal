@@ -75,6 +75,7 @@ import LoginV2 from "../../pages/user/login.js";
 import RegisterV3 from "./../../pages/register.js";
 import User from "./../../pages/clinic/user.js";
 import Ticket from "./../../pages/clinic/ticket.js";
+import reqForAppointment from "./../../pages/clinic/reqforappointment";
 
 import ClinicSolo from "./../../pages/clinic/clinicsolo.js";
 import ClinicSoloTableData from "./../../pages/clinic/clinicsolos.js";
@@ -87,6 +88,8 @@ import PatientTableData from "./../../pages/clinic/patients.js";
 import Patient from "./../../pages/clinic/patient.js";
 import UserTableData from "./../../pages/clinic/users.js";
 import TicketsTableData from "./../../pages/clinic/tickets.js";
+import reqforappointmentTableData from "./../../pages/clinic/reqforappointments.js";
+
 import Doctor from "./../../pages/clinic/doctor.js";
 import DoctorTableData from "./../../pages/clinic/doctors.js";
 //import Label from './../../pages/label/label.js';
@@ -188,9 +191,20 @@ class Content extends React.Component {
 								<Route path="/register" title="Register" component={RegisterV3} />
 								<ProtectedRoute path="/clinic/users/:id" title="User" component={User} />
 								<ProtectedRoute path="/clinic/tickets/:id" title="Ticket" component={Ticket} />
+								<ProtectedRoute
+									path="/clinic/reqforappointments/:id"
+									title="ReqForAppointment"
+									component={reqForAppointment}
+								/>
 
 								<ProtectedRoute path="/clinic/users" title="Users" component={UserTableData} />
 								<ProtectedRoute path="/clinic/tickets" title="Tickets" component={TicketsTableData} />
+								<ProtectedRoute
+									path="/clinic/reqforappointments"
+									title="ReqForAppointments"
+									component={reqforappointmentTableData}
+								/>
+
 								<ProtectedRoute path="/clinic/clinicsolos/:id" title="ClinicSolo" component={ClinicSolo} />
 								<ProtectedRoute
 									path="/clinic/clinicsolos"
