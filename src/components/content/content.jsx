@@ -77,45 +77,51 @@ import User from "./../../pages/clinic/user.js";
 import Ticket from "./../../pages/clinic/ticket.js";
 import reqForAppointment from "./../../pages/clinic/reqforappointment";
 
+
 import ClinicSolo from "./../../pages/clinic/clinicsolo.js";
 import ClinicSoloTableData from "./../../pages/clinic/clinicsolos.js";
 //import Appointment from './../../pages/clinic/appointment.js';
 import AppointmentTableData from "./../../pages/clinic/appointments.js";
-//import ReqForAppointment from './../../pages/clinic/reqforappointment.js';
-//import ReqForAppointmentTableData from './../../pages/clinic/reqforappointments.js';
+
 //import Patient from './../../pages/clinic/patient.js';
 import PatientTableData from "./../../pages/clinic/patients.js";
 import Patient from "./../../pages/clinic/patient.js";
 import UserTableData from "./../../pages/clinic/users.js";
 import TicketsTableData from "./../../pages/clinic/tickets.js";
-import reqforappointmentTableData from "./../../pages/clinic/reqforappointments.js";
+import reqforappointmentTable from "./../../pages/clinic/reqforappointments.js";
 
 import Doctor from "./../../pages/clinic/doctor.js";
 import DoctorTableData from "./../../pages/clinic/doctors.js";
+//import NewKanBanBoard from './../../pages/clinic/grid-tickets.js';
 //import Label from './../../pages/label/label.js';
-//import LabelTableData from './../../pages/label/labels.js';
-// import Accountant from './../../pages/clinic/accountant.js';
-// import AccountantTableData from './../../pages/clinic/accountants.js';
-// import Reception from './../../pages/clinic/reception.js';
-// import ReceptionTableData from './../../pages/clinic/receptions.js';
+//import LabelTable from './../../pages/label/labels.js';
+//import accountant from './../../pages/clinic/accountant.js';
+//import accountantsTable from './../../pages/clinic/accountants.js';
+// import reception from './../../pages/clinic/reception.js';
+// import receptionTable from './../../pages/clinic/receptions.js';
 // import Invoice from './../../pages/clinic/Invoice.js';
-// import InvoiceTableData from './../../pages/clinic/invoices.js';
+// import InvoiceTable from './../../pages/clinic/invoices.js';
 // import TCMTreatment from './../../pages/clinic/tcmtreatment.js';
-// import TCMTreatmentTableData from './../../pages/clinic/tcmtreatments.js';
+// import TCMTreatmentTable from './../../pages/clinic/tcmtreatments.js';
 // import MedicalFile from './../../pages/clinic/medicalfile.js';
-// import MedicalFilesTableData from './../../pages/clinic/medicalfiles.js';
-// import AddTCMSession from './../../pages/clinic/tcmsession.js';
-// import AcupunctureTableData from './../../pages/clinic/acupuncture.js';
-// import AcupunctureTableData from './../../pages/clinic/acupunctures.js';
-// import FormulaTableData from './../../pages/clinic/formula.js';
-// import FormulaTableData from './../../pages/clinic/formulas.js';
-// import MateriaMedicaTableData from './../../pages/clinic/materiamedica.js';
-// import MateriaMedicaTableData from './../../pages/clinic/materiamedicas.js';
-// import MeridianTableData from './../../pages/clinic/meridians.js';
+// import MedicalFilesTable from './../../pages/clinic/medicalfiles.js';
+// import AcupunctureTable from './../../pages/clinic/acupuncture.js';
+// import AcupunctureTable from './../../pages/clinic/acupunctures.js';
+// import FormulaTable from './../../pages/clinic/formula.js';
+// import FormulaTable from './../../pages/clinic/formulas.js';
+// import MateriaMedicaTable from './../../pages/clinic/materiamedica.js';
+// import MateriaMedicaTable from './../../pages/clinic/materiamedicas.js';
+// import MeridianTable from './../../pages/clinic/meridians.js';
 // import Salon from './../../pages/clinic/salon.js';
-// import SalonTableData from './../../pages/clinic/salons.js';
+// import SalonTable from './../../pages/clinic/salons.js';
 // import BTreatment from './../../pages/clinic/btreatment.js';
-// import BTreatmentTableData from './../../pages/clinic/btreatments.js';
+// import BTreatmentTable from './../../pages/clinic/btreatments.js';
+
+
+// import Card from './../../pages/kanban/card.js';
+// import Listkanban from './../../pages/kanban/listkanban.js';
+// import Kanban from './../../pages/kanban/kanban.js';
+// import Scrumboard from './../../pages/kanban/scrumboard.js';
 
 import FormPlugins from "./../../pages/form/form-plugins";
 import Logout from "./../../common/logout";
@@ -202,7 +208,7 @@ class Content extends React.Component {
 								<ProtectedRoute
 									path="/clinic/reqforappointments"
 									title="ReqForAppointments"
-									component={reqforappointmentTableData}
+									component={reqforappointmentTable}
 								/>
 
 								<ProtectedRoute path="/clinic/clinicsolos/:id" title="ClinicSolo" component={ClinicSolo} />
@@ -335,7 +341,10 @@ class Content extends React.Component {
 								<Route path="/extra/coming-soon" title="Extra Coming Soon" component={ExtraComingSoon} />
 								<Route path="/extra/search" title="Extra Search Results" component={ExtraSearch} />
 								<Route path="/extra/invoice" title="Extra Invoice" component={ExtraInvoice} />
+								
+								<Provider store={store}>
 								<Route path="/user/profile" title="Extra Profile" component={Profile} />
+							    </Provider>  
 								<Route path="/extra/scrum-board" title="Extra Scrum Board" component={ExtraScrumBoard} />
 								<Route
 									path="/extra/cookie-acceptance-banner"

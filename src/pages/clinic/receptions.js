@@ -28,7 +28,7 @@ import xlsIcon from "../../assets/Icons/xls.svg";
 import pdfIcon from "../../assets/Icons/pdf.svg";
 import sharingIcon from "../../assets/Icons/sharing.svg";
 
-class ReceptionTableData extends Component {
+class ReceptionTable extends Component {
   
   constructor(props) {
 		super(props);
@@ -220,4 +220,4 @@ class ReceptionTableData extends Component {
   }
 }
 
-export default ReceptionTableData
+export default ReceptionTable

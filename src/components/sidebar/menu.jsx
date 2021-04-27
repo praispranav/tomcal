@@ -64,6 +64,7 @@ const Menu = [
     children: [
       { path: '/clinic/medicalfiles', title: 'Medical Files' },
       { path: '/clinic/tcmsession/new', title: 'Add session' },
+      { path: '/clinic/homeopathysession/new', title: 'Add homeopathic session' },	  
       { path: '/clinic/search_medicalfile', title: 'Search in Medical Files' },  
     ]
   },

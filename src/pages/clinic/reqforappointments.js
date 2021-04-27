@@ -28,7 +28,7 @@ import xlsIcon from "../../assets/Icons/xls.svg";
 import pdfIcon from "../../assets/Icons/pdf.svg";
 import shareIcon from "../../assets/Icons/sharing.svg";
 
-class reqforappointmentTableData extends Component {
+class reqforappointmentTable extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -254,4 +254,4 @@ const iconStyles = {
 	marginRight: "0rem",
 };
 
-export default reqforappointmentTableData;
+export default reqforappointmentTable;

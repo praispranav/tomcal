@@ -18,7 +18,7 @@ import {apiUrl} from './../../config/config.json';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-class AppointmentTableData extends Component {
+class AppointmentTable extends Component {
   
   constructor(props) {
 		super(props);
@@ -160,4 +160,4 @@ class AppointmentTableData extends Component {
   }
 }
 
-export default AppointmentTableData
+export default AppointmentTable

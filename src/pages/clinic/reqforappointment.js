@@ -178,19 +178,20 @@ class reqForAppointment extends Form {
 	}
 
 	async componentDidMount() {
+		await this.populatePatients();
+		await this.populateClinics();
+		await this.populateDoctors();
 		await this.populateappointmentTypes();
 		await this.populatereqforappointmentStatus();
 		await this.populatesessionType();
 		await this.populatereqForAppointment();
-		await this.populateClinics();
-		await this.populateDoctors();
-		await this.populatePatients();
+	
 	}
 
 	schema = Joi.object({
-		patient: Joi.any(),
-		doctor: Joi.any(),
-		clinic: Joi.any(),
+		patientNo: Joi.any(),
+		doctorNo: Joi.any(),
+		clinicNo: Joi.any(),
 		date: Joi.any(),
 		preferedStartTime: Joi.any().optional(),
 		preferedEndTime: Joi.any().optional(),
@@ -204,8 +205,6 @@ class reqForAppointment extends Form {
 
 	handledateChange = (e) => {
 		const errors = { ...this.state.errors };
-		const obj = { ["date"]: e };
-
 		const data = { ...this.state.data };
 		data["date"] = e;
 		this.setState({ data });
@@ -226,7 +225,7 @@ class reqForAppointment extends Form {
 			//if(ex.response && ex.response.status === 404){
 			if (ex.response) {
 				const errors = { ...this.state.errors };
-				errors.username = ex.response.data;
+				errors.clinicNo = ex.response.data;
 				this.setState({ errors });
 				//console.log(this.state.errors);
 			}
@@ -237,9 +236,9 @@ class reqForAppointment extends Form {
 		return {
 			_id: reqForAppointment._id,
 			// username: reqForAppointment.username,
-			patient: reqForAppointment.patient,
-			doctor: reqForAppointment.doctor,
-			clinic: reqForAppointment.clinic,
+			patientNo: reqForAppointment.patientNo,
+			doctorNo: reqForAppointment.doctorNo,
+			clinicNo: reqForAppointment.clinicNo,
 			date: new Date(reqForAppointment.date),
 			preferedStartTime: reqForAppointment.preferedStartTime,
 			preferedEndTime: reqForAppointment.preferedEndTime,
@@ -278,11 +277,11 @@ class reqForAppointment extends Form {
 											<label className="col-lg-4 col-form-label">Patient</label>
 											<div className="col-lg-8">
 												<select
-													name="patient"
+													name="patientNo"
 													id="patients"
 													onChange={this.handleChange}
 													className="form-control"
-													value={data.patient}
+													value={data.patientNo}
 												>
 													<option value="">Select Patient</option>
 													{this.selectPatients}
@@ -296,11 +295,11 @@ class reqForAppointment extends Form {
 											</label>
 											<div className="col-lg-8">
 												<select
-													name="doctor"
+													name="doctorNo"
 													id="doctorNo"
 													onChange={this.handleChange}
 													className="form-control"
-													value={data.doctor}
+													value={data.doctorNo}
 												>
 													<option value="">Select Doctor</option>
 													{this.selectDoctors}
@@ -313,17 +312,17 @@ class reqForAppointment extends Form {
 											</label>
 											<div className="col-lg-8">
 												<select
-													name="clinic"
+													name="clinicNo"
 													id="clinicSolos"
 													onChange={this.handleChange}
 													className="form-control"
-													value={data.clinic}
+													value={data.clinicNo}
 												>
 													<option value="">Select Clinic</option>
 													{this.selectClinicSolos}
 												</select>
 											</div>
-											{errors.profile && <div className="alert alert-danger">{errors.profile}</div>}
+											{errors.clinicNo && <div className="alert alert-danger">{errors.clinicNo}</div>}
 										</div>
 
 										<div className="form-group row">

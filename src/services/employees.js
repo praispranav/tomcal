@@ -8,7 +8,7 @@ const apiEndpoint = apiUrl+'/employee';
     return `${apiEndpoint}/${id}`;
   }
   
-  export function getEmployee() {
+  export function getEmployees() {
     return http.get(apiEndpoint);
   }
   

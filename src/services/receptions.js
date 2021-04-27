@@ -8,7 +8,7 @@ const apiEndpoint = apiUrl+'/reception';
     return `${apiEndpoint}/${id}`;
   }
   
-  export function getReception() {
+  export function getReceptions() {
     return http.get(apiEndpoint);
   }
   

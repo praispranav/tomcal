@@ -8,7 +8,7 @@ const apiEndpoint = apiUrl+'/accountant';
     return `${apiEndpoint}/${id}`;
   }
   
-  export function getAccountant() {
+  export function getAccountants() {
     return http.get(apiEndpoint);
   }
   

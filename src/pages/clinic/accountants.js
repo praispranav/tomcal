@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Panel, PanelHeader, PanelBody } from './../../components/panel/panel.jsx';
 import { UncontrolledButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import axios from 'axios';
-import {getUsers} from './../../services/accountants';
+import {getAccountants} from './../../services/accountants';
 import 'bootstrap/dist/css/bootstrap.min.css';
 //import FloatSubMenu from './../../components/float-sub-menu/float-sub-menu';
 import Pagination from '../../common/pagination';
@@ -26,7 +26,7 @@ import xlsIcon from "../../assets/Icons/xls.svg";
 import pdfIcon from "../../assets/Icons/pdf.svg";
 import sharingIcon from "../../assets/Icons/sharing.svg";
 
-class AccountantTableData extends Component {
+class AccountantTable extends Component {
   
   constructor(props) {
 		super(props);
@@ -116,7 +116,7 @@ class AccountantTableData extends Component {
            
         <p className="page-header float-xl-left" style={{marginBottom:5},{marginLeft:20},{marginTop:5}}>{count} entries</p> 
        <SearchBox value={searchQuery} onChange={this.handleSearch} />
-       <AccountantsTable accountants={accountants} 
+       <accountantsTable accountants={accountants} 
        onDelete={this.handleDelete}
        onSort={this.handleSort}
        sortColumn={sortColumn}
@@ -144,4 +144,4 @@ class AccountantTableData extends Component {
   }
 }
 
-export default AccountantTableData
+export default AccountantTable
