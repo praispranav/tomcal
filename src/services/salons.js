@@ -8,7 +8,7 @@ const apiEndpoint = apiUrl+'/salon';
     return `${apiEndpoint}/${id}`;
   }
   
-  export function getSalon() {
+  export function getSalons() {
     return http.get(apiEndpoint);
   }
   
