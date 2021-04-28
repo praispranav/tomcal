@@ -7,15 +7,15 @@ const apiEndpoint = apiUrl+'/cargos';
     return `${apiEndpoint}/${id}`;
   }
   
-  export function getMateriamedicas() {
+  export function getCargos() {
     return http.get(apiEndpoint);
   }
   
-  export function getMateriamedica(Id) {
+  export function getCargo(Id) {
     return http.get(cargoUrl(Id));
   }
   
-  export function saveMateriamedica(cargo) {
+  export function saveCargo(cargo) {
     //clone
     const body = { ...cargo };
     console.log(body);
@@ -31,6 +31,6 @@ const apiEndpoint = apiUrl+'/cargos';
  }
   
   //delete cargos
-  export function deleteMateriamedica(Id) {
+  export function deleteCargo(Id) {
     return http.delete(cargoUrl(Id));
   }  

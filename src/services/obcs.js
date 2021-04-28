@@ -7,15 +7,15 @@ const apiEndpoint = apiUrl+'/obcs';
     return `${apiEndpoint}/${id}`;
   }
   
-  export function getMateriamedicas() {
+  export function getOBCs() {
     return http.get(apiEndpoint);
   }
   
-  export function getMateriamedica(Id) {
+  export function getOBC(Id) {
     return http.get(obcUrl(Id));
   }
   
-  export function saveMateriamedica(obc) {
+  export function saveOBC(obc) {
     //clone
     const body = { ...obc };
     console.log(body);
@@ -31,6 +31,6 @@ const apiEndpoint = apiUrl+'/obcs';
  }
   
   //delete obcs
-  export function deleteMateriamedica(Id) {
+  export function deleteOBC(Id) {
     return http.delete(obcUrl(Id));
   }  

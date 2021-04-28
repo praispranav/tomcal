@@ -7,15 +7,15 @@ const apiEndpoint = apiUrl+'/transports';
     return `${apiEndpoint}/${id}`;
   }
   
-  export function getMateriamedicas() {
+  export function getTransports() {
     return http.get(apiEndpoint);
   }
   
-  export function getMateriamedica(Id) {
+  export function getTransport(Id) {
     return http.get(transportUrl(Id));
   }
   
-  export function saveMateriamedica(transport) {
+  export function saveTransport(transport) {
     //clone
     const body = { ...transport };
     console.log(body);
@@ -31,6 +31,6 @@ const apiEndpoint = apiUrl+'/transports';
  }
   
   //delete transports
-  export function deleteMateriamedica(Id) {
+  export function deleteTransport(Id) {
     return http.delete(transportUrl(Id));
   }  

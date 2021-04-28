@@ -96,9 +96,10 @@ const Menu = [
 
   { path: '/tickets', icon: 'fa fa-ticket-alt', title: 'Tickets', badge: '10',
     children: [
+      { path: '/clinic/grid-tickets', title: 'new kanbanboard' },		
       { path: '/clinic/grid-tickets', title: 'Gridview of Tickets' },	
       { path: '/clinic/tickets', title: 'Tickets' },
-      { path: '/clinic/add_ticket', title: 'Add ticket' },
+      { path: '/clinic/tickets/new', title: 'Add ticket' },
       { path: '/clinic/search_ticket', title: 'Search in tickets' },  
     ]
   },
