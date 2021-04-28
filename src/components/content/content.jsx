@@ -4,7 +4,7 @@ import { PageSettings } from "./../../config/page-settings.js";
 import { Redirect } from "react-router";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-///
+//
 import configureStore from "./../../store/configureStore";
 import { Provider } from "react-redux";
 ///
@@ -75,34 +75,25 @@ import LoginV2 from "../../pages/user/login.js";
 import RegisterV3 from "./../../pages/register.js";
 import User from "./../../pages/clinic/user.js";
 import Ticket from "./../../pages/clinic/ticket.js";
-
-
-
-import ClinicSolo from "./../../pages/clinic/clinicsolo.js";
-import ClinicSoloTableData from "./../../pages/clinic/clinicsolos.js";
+import TicketsTable from "./../../pages/clinic/tickets.js";
+import ClinicSolo from './../../pages/clinic/clinicsolo.js';
+import ClinicSoloTable from './../../pages/clinic/clinicsolos.js';
 //import Appointment from './../../pages/clinic/appointment.js';
-import AppointmentTableData from "./../../pages/clinic/appointments.js";
-
-
-//import Patient from './../../pages/clinic/patient.js';
-import PatientTableData from "./../../pages/clinic/patients.js";
-import Patient from "./../../pages/clinic/patient.js";
-import UserTableData from "./../../pages/clinic/users.js";
-import TicketsTableData from "./../../pages/clinic/tickets.js";
-import reqforappointmentTable from "./../../pages/clinic/reqforappointments.js";
-import reqForAppointment from "./../../pages/clinic/reqforappointment";
-
-import Doctor from "./../../pages/clinic/doctor.js";
-import DoctorTableData from "./../../pages/clinic/doctors.js";
+import AppointmentTable from './../../pages/clinic/appointments.js';
+import reqForAppointment from './../../pages/clinic/reqforappointment.js';
+import reqforappointmentsTable from './../../pages/clinic/reqforappointments.js';
+import Patient from './../../pages/clinic/patient.js';
+import PatientTable from './../../pages/clinic/patients.js';
+import UserTable from './../../pages/clinic/users.js';
+import Doctor from './../../pages/clinic/doctor.js';
+import DoctorTable from './../../pages/clinic/doctors.js';
 //import NewKanBanBoard from './../../pages/clinic/grid-tickets.js';
 //import Label from './../../pages/label/label.js';
 //import LabelTable from './../../pages/label/labels.js';
-
 import Accountant from './../../pages/clinic/accountant.js';
 import AccountantTable from './../../pages/clinic/accountants.js';
 import Reception from './../../pages/clinic/reception.js';
 import ReceptionTable from './../../pages/clinic/receptions.js';
-
 // import Invoice from './../../pages/clinic/Invoice.js';
 // import InvoiceTable from './../../pages/clinic/invoices.js';
 // import TCMTreatment from './../../pages/clinic/tcmtreatment.js';
@@ -120,12 +111,6 @@ import ReceptionTable from './../../pages/clinic/receptions.js';
 // import SalonTable from './../../pages/clinic/salons.js';
 // import BTreatment from './../../pages/clinic/btreatment.js';
 // import BTreatmentTable from './../../pages/clinic/btreatments.js';
-
-
-// import Card from './../../pages/kanban/card.js';
-// import Listkanban from './../../pages/kanban/listkanban.js';
-// import Kanban from './../../pages/kanban/kanban.js';
-// import Scrumboard from './../../pages/kanban/scrumboard.js';
 
 
 import FormPlugins from "./../../pages/form/form-plugins";
