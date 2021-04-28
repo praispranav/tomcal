@@ -26,7 +26,7 @@ import xlsIcon from "../../assets/Icons/xls.svg";
 import pdfIcon from "../../assets/Icons/pdf.svg";
 import sharingIcon from "../../assets/Icons/sharing.svg";
 
-class DoctorTable extends Component {
+class DoctorsTable extends Component {
   
   constructor(props) {
 		super(props);
@@ -212,4 +212,4 @@ const iconStyles = {
 	marginRight: "0rem",
 };
 
-export default DoctorTable
+export default DoctorsTable
