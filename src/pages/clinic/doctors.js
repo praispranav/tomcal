@@ -212,4 +212,4 @@ const iconStyles = {
 	marginRight: "0rem",
 };
 
-export default DoctorTableData
+export default DoctorTable
