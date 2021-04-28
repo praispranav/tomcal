@@ -8,7 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 //import FloatSubMenu from './../../components/float-sub-menu/float-sub-menu';
 import Pagination from '../../common/pagination';
 import {paginate} from '../../utils/paginate';
-import UsersTable from '../../components/accountantsTable.jsx';
+import AccountantsTable from '../../components/accountantsTable.jsx';
 import SearchBox from './../../common/searchBox';
 import _ from "lodash";
 import http from "./../../services/httpService";

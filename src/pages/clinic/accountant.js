@@ -24,12 +24,12 @@ import Joi from 'joi';
 import Form from '../../common/form.jsx';
 import {apiUrl} from '../../config/config.json';
 import http from '../../services/httpService';
-import {saveDoctor,getDoctor} from './../../services/doctors';
+import {saveAccountant,getAccountant} from './../../services/accountants';
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
 const Handle = Slider.Handle;
 
 
-class Doctor extends Form {
+class Accountant extends Form {
 	constructor(props) {
 		super(props);
 
@@ -82,15 +82,6 @@ class Doctor extends Form {
 				secInsuranceNo: '',
 				secInsurance: '',
 				secInsuranceValidTill: '',
-				healthcareProviderIdentifierOrganisation: '',
-				healthcareProviderIdentifierIndividual: '',				
-				treatments: '',
-				licenseNo: '',
-				licenseValidTill: '',
-				organizationAName: '',
-				organizationAMemberNo: '',				
-				organizationBName: '',
-			    organizationBMemberNo: '',				
 				idPaper: '',
 				idPaperValidTill: '',
 				
@@ -162,30 +153,30 @@ class Doctor extends Form {
 		
 		  if (userId === "new") return;
 	
-		  const { data: user } = await getDoctor(userId);
-            const doctor = user[0];
-		    console.log(doctor);
-			 if(doctor.dateBirth)doctor.dateBirth = new Date();
+		  const { data: user } = await getAccountant(userId);
+            const accountant = user[0];
+		    console.log(accountant);
+			 if(accountant.dateBirth)accountant.dateBirth = new Date();
 		     
-			doctor.firstName =doctor.contactName.first;
-			doctor.lastName =doctor.contactName.last;
-			doctor.initials =doctor.contactName.initials;
-			// doctor.IBAN = doctor.bankInfo.IBAN;
-			// doctor.bank = doctor.bankInfo.bank;
-			// doctor.branchOfBank = doctor.bankInfo.branchOfBank;
-			// doctor.healthcareProviderIdentifierOrganisation = doctor.professionalInfo.healthcareProviderIdentifierOrganisation;
-			// doctor.healthcareProviderIdentifierIndividual = doctor.professionalInfo.healthcareProviderIdentifierIndividual;
-			// doctor.treatments = doctor.professionalInfo.treatments;
-			// doctor.licenseNo  = doctor.professionalInfo.licenseNo;
-			// doctor.licenseValidTill = doctor.professionalInfo.licenseValidTill;
-			// doctor.organizationAName = doctor.membership.organizationAName;
-			// doctor.organizationAMemberNo = doctor.membership.organizationAMemberNo;
-			// doctor.organizationBName =doctor.membership.organizationBName;
-			// doctor.organizationBMemberNo =doctor.membership.organizationBMemberNo;
-			// doctor.idPaper  =doctor.identification.idPaper;
-			// doctor.idPaperValidTill =doctor.identification.idPaperValidTill;
+			accountant.firstName =accountant.contactName.first;
+			accountant.lastName =accountant.contactName.last;
+			accountant.initials =accountant.contactName.initials;
+			// accountant.IBAN = accountant.bankInfo.IBAN;
+			// accountant.bank = accountant.bankInfo.bank;
+			// accountant.branchOfBank = accountant.bankInfo.branchOfBank;
+			// accountant.healthcareProviderIdentifierOrganisation = accountant.professionalInfo.healthcareProviderIdentifierOrganisation;
+			// accountant.healthcareProviderIdentifierIndividual = accountant.professionalInfo.healthcareProviderIdentifierIndividual;
+			// accountant.treatments = accountant.professionalInfo.treatments;
+			// accountant.licenseNo  = accountant.professionalInfo.licenseNo;
+			// accountant.licenseValidTill = accountant.professionalInfo.licenseValidTill;
+			// accountant.organizationAName = accountant.membership.organizationAName;
+			// accountant.organizationAMemberNo = accountant.membership.organizationAMemberNo;
+			// accountant.organizationBName =accountant.membership.organizationBName;
+			// accountant.organizationBMemberNo =accountant.membership.organizationBMemberNo;
+			// accountant.idPaper  =accountant.identification.idPaper;
+			// accountant.idPaperValidTill =accountant.identification.idPaperValidTill;
 
-		  this.setState({ data: this.mapToViewModel(doctor) });
+		  this.setState({ data: this.mapToViewModel(accountant) });
 
 		  console.log(this.state.data);
 		} catch (ex) {
@@ -235,13 +226,13 @@ schema = Joi.object({
 		email: Joi.string().email({ tlds: { allow: false } }),
 		IBAN: Joi.any().optional(),
 		bank: Joi.any().optional(),
+		branchOfBank: Joi.any().optional(),
 		primInsuranceNo: Joi.any().optional(),
 		primInsurance: Joi.any().optional(),
 		primInsuranceValidTill: Joi.any().optional(),
 		secInsuranceNo: Joi.any().optional(),
 		secInsurance: Joi.any().optional(),
 		secInsuranceValidTill: Joi.any().optional(),
-		branchOfBank: Joi.any().optional(),
 		healthcareProviderIdentifierOrganisation: Joi.any().optional(),
 		healthcareProviderIdentifierIndividual: Joi.any().optional(),  
 		treatments: Joi.any().optional(),
@@ -281,9 +272,9 @@ schema = Joi.object({
 		//console.log('working');
 	    try{
 			console.log(this.state.data);
-			await saveDoctor(this.state.data,this.state.imageSrc);
+			await saveAccountant(this.state.data,this.state.imageSrc);
 			//console.log(this.state.data);
-			this.props.history.push("/clinic/doctors");
+			this.props.history.push("/clinic/accountants");
 		}catch(ex){
 			//if(ex.response && ex.response.status === 404){
 			if(ex.response){
@@ -349,17 +340,17 @@ schema = Joi.object({
 				<div>
 					<ol className="breadcrumb float-xl-right">
 						<li className="breadcrumb-item"><Link to="/form/plugins">Home</Link></li>
-						<li className="breadcrumb-item"><Link to="/form/plugins">Doctors</Link></li>
-						<li className="breadcrumb-item active">Add Doctor</li>
+						<li className="breadcrumb-item"><Link to="/form/plugins">Accountants</Link></li>
+						<li className="breadcrumb-item active">Add Accountant</li>
 					</ol>
 					<h1 className="page-header">
-						Add Doctor <small>Doctor-registration-form</small>
+						Add Accountant <small>Accountant-registration-form</small>
 					</h1>
 
 					<div className="row">
 						<div className="col-xl-10">
 							<Panel>
-								<PanelHeader>Add Doctor</PanelHeader>
+								<PanelHeader>Add Accountant</PanelHeader>
 								<PanelBody className="panel-form">
 									<form className="form-horizontal form-bordered" onSubmit={this.handleSubmit} >
  
@@ -480,4 +471,4 @@ schema = Joi.object({
 	}
 }
 
-export default withRouter(Doctor);
+export default withRouter(Accountant);

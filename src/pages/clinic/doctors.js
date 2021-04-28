@@ -26,7 +26,7 @@ import xlsIcon from "../../assets/Icons/xls.svg";
 import pdfIcon from "../../assets/Icons/pdf.svg";
 import sharingIcon from "../../assets/Icons/sharing.svg";
 
-class DoctorTableData extends Component {
+class DoctorTable extends Component {
   
   constructor(props) {
 		super(props);
