@@ -54,7 +54,6 @@ class DoctorsTable extends Component {
 				</span>
 			),
 		},
-		{key:'avatar', label: 'avatar',content: user=>(<span className="icon-img sm-r-5"><img style={{width: "15px",height: "15px"}} src={user.doctors.imageSrc} alt="" /></span>) } ,	
 		{label: 'Doctorname',   path: 'doctors.username' } ,
 		{label: 'Firstname',   path: 'doctors.contactName.first' } ,   
 		{label: 'Initials',   path: 'doctors.contactName.initials' } ,   	  
