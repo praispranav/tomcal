@@ -286,6 +286,7 @@ class reqForAppointment extends Form {
 													{this.selectPatients}
 												</select>
 											</div>
+											{errors.patientNo && <div className="alert alert-danger">{errors.patientNo}</div>}
 										</div>
 
 										<div className="form-group row">
@@ -304,6 +305,7 @@ class reqForAppointment extends Form {
 													{this.selectDoctors}
 												</select>
 											</div>
+											{errors.doctorNo && <div className="alert alert-danger">{errors.doctorNo}</div>}
 										</div>
 										<div className="form-group row">
 											<label className="col-lg-4 col-form-label" htmlFor="clinicSolos">
@@ -365,7 +367,7 @@ class reqForAppointment extends Form {
 											</div>
 										</div>
 
-										<div className="form-group row">
+										{/* <div className="form-group row">
 											<label className="col-lg-4 col-form-label">Complaint</label>
 											<div className="col-lg-8">
 												<div className="row row-space-10">
@@ -379,7 +381,9 @@ class reqForAppointment extends Form {
 													/>
 												</div>
 											</div>
-										</div>
+										</div> */}
+
+                             {this.renderTextarea("complaint","Complaint",'Enter Complaint')}
 
 										<div className="form-group row">
 											<label className="col-lg-4 col-form-label" htmlFor="reqforappointmentType">
@@ -423,13 +427,11 @@ class reqForAppointment extends Form {
 											)}
 										</div>
 
-										{this.renderInput(
-											"patientNote",
-											"Note from Patient",
-											"textarea",
-											"Enter your Note for clinic"
-										)}
-										{this.renderInput("note", "Note", "textarea", "Enter Note")}
+								
+                        {this.renderTextarea("patientNote","Note from Patient",'Enter your Note for clinic')}
+						{this.renderTextarea("note","Note",'Enter Note')}
+
+									
 										<div className="form-group row">
 											<label className="col-lg-4 col-form-label" htmlFor="status">
 												Select Status

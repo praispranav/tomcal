@@ -111,7 +111,7 @@ class Form extends Component {
     );
   }
 
-  renderTextarea(name,label,rows='6',placeholder=''){
+  renderTextarea(name,label,placeholder='',rows='6'){
     const {data,errors} = this.state;
     return(
       <Textarea

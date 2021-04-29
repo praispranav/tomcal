@@ -1,5 +1,5 @@
 import React from 'react';
-const textarea = ({name,label,value,error,onChange,rows,placeholder})=>{
+const textarea = ({name,label,value,error,onChange,placeholder,rows})=>{
     return(
         <div className="form-group row">
         <label className="col-lg-4 col-form-label" htmlFor={name}>{label}</label>
