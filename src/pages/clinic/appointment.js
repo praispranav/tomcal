@@ -300,9 +300,9 @@ schema = Joi.object({
 											<div className="col-lg-8">
 												<DatePicker
 													onChange={this.handleDobChange}
-													id={data.date}
-													value={data.date}
-													selected={data.date}
+													id={data.dateBirth}
+													value={data.dateBirth}
+													selected={data.dateBirth}
 													inputProps={{ placeholder: "Datepicker" }}
 													className="form-control"
 												/>

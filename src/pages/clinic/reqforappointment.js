@@ -182,7 +182,7 @@ class reqForAppointment extends Form {
 		await this.populateClinics();
 		await this.populateDoctors();
 		await this.populateappointmentTypes();
-		await this.populatereqforappointmentStatus();
+		await this.populateappointmentStatus();
 		await this.populatesessionType();
 		await this.populatereqForAppointment();
 	}
