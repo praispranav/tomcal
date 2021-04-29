@@ -18,6 +18,15 @@ import {apiUrl} from './../../config/config.json';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+// Icons imports
+import newIcon from "../../assets/Icons/new.svg";
+import editIcon from "../../assets/Icons/edit.svg";
+import trashIcon from "../../assets/Icons/trash.svg";
+import csvIcon from "../../assets/Icons/csv.svg";
+import xlsIcon from "../../assets/Icons/xls.svg";
+import pdfIcon from "../../assets/Icons/pdf.svg";
+import sharingIcon from "../../assets/Icons/sharing.svg";
+
 class AppointmentTable extends Component {
   
   constructor(props) {
@@ -177,7 +186,7 @@ class AppointmentTable extends Component {
 				   <SearchBox value={searchQuery} onChange={this.handleSearch} />           
 					<p className="page-header float-xl-left" style={{marginBottom:5},{marginLeft:20},{marginTop:5}}>{count} entries</p> 
 
-				   <appointmentsTable users={users} 
+				   <appointmentsTable appointments={appointments} 
 				   onDelete={this.handleDelete}
 				   onSort={this.handleSort}
 				   sortColumn={sortColumn}
