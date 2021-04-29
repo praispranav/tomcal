@@ -124,7 +124,7 @@ import FormPlugins from './../../pages/form/form-plugins';
 import Logout from './../../common/logout';
 import KanBanBoard from './../../pages/kanban/kanban.js';
 
-import TicketProfile from "./../../pages/clinic/ticketprofile/TicketProfile";
+import TicketProfile from "./../../pages/ticketprofile/TicketProfile";
 
 function setTitle(path, routeArray) {
 	var pageTitle;
