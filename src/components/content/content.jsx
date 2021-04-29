@@ -81,7 +81,7 @@ import ClinicSoloTable from './../../pages/clinic/clinicsolos.js';
 //import Appointment from './../../pages/clinic/appointment.js';
 import AppointmentTable from './../../pages/clinic/appointments.js';
 import reqForAppointment from './../../pages/clinic/reqforappointment.js';
-import reqforappointmentsTable from './../../pages/clinic/reqforappointments.js';
+import reqforappointmentTable from './../../pages/clinic/reqforappointments.js';
 import Patient from './../../pages/clinic/patient.js';
 import PatientTable from './../../pages/clinic/patients.js';
 import UserTable from './../../pages/clinic/users.js';
@@ -190,7 +190,7 @@ class Content extends React.Component {
 								<ProtectedRoute
 									path="/clinic/reqforappointments/:id"
 									title="ReqForAppointment"
-									component={reqorAppointment}
+									component={reqForAppointment}
 								/>
 
 								<ProtectedRoute path="/clinic/users" title="Users" component={UserTableData} />
