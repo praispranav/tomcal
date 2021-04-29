@@ -58,7 +58,7 @@ class reqForAppointment extends Form {
 				preferedStartTime: "",
 				preferedEndTime: "",
 				complaint: "",
-				reqforappointmentType: "",
+				appointmentType: "",
 				sessionType: "",
 				patientNote: "",
 				note: "",
@@ -68,14 +68,14 @@ class reqForAppointment extends Form {
 			errors: {},
 		};
 
-		this.apointmentTypeOptions = [
+		this.appointmentTypeOptions = [
 			{ value: "clinic", label: "At Clinic" },
 			{ value: "home", label: "At home" },
 			{ value: "phone", label: "Telephone" },
 			{ value: "video", label: "Video" },
 		];
 
-		this.apointmentStatusOptions = [
+		this.appointmentStatusOptions = [
 			{ value: "approved", label: "Approved" },
 			{ value: "canceled", label: "Canceled" },
 			{ value: "active", label: "Active" },
@@ -99,14 +99,14 @@ class reqForAppointment extends Form {
 	}
 
 	async populateappointmentTypes() {
-		this.reqforappointmentTypeoptions = this.apointmentTypeOptions.map((option) => (
+		this.appointmentTypeoptions = this.appointmentTypeOptions.map((option) => (
 			<option key={option.label} value={option.value}>
 				{option.value}
 			</option>
 		));
 	}
-	async populatereqforappointmentStatus() {
-		this.apointmentStatusoptions = this.apointmentStatusOptions.map((option) => (
+	async populateappointmentStatus() {
+		this.appointmentStatusoptions = this.appointmentStatusOptions.map((option) => (
 			<option key={option.label} value={option.value}>
 				{option.value}
 			</option>
@@ -195,7 +195,7 @@ class reqForAppointment extends Form {
 		preferedStartTime: Joi.any().optional(),
 		preferedEndTime: Joi.any().optional(),
 		complaint: Joi.any().optional(),
-		reqforappointmentType: Joi.any().optional(),
+		appointmentType: Joi.any().optional(),
 		sessionType: Joi.any().optional(),
 		patientNote: Joi.any().optional(),
 		note: Joi.any().optional(),
@@ -241,7 +241,7 @@ class reqForAppointment extends Form {
 			date: new Date(reqForAppointment.date),
 			preferedStartTime: reqForAppointment.preferedStartTime,
 			preferedEndTime: reqForAppointment.preferedEndTime,
-			reqforappointmentType: reqForAppointment.reqforappointmentType,
+			appointmentType: reqForAppointment.reqforappointmentType,
 			sessionType: reqForAppointment.sessionType,
 			patientNote: reqForAppointment.patientNote,
 			note: reqForAppointment.note,
@@ -386,23 +386,23 @@ class reqForAppointment extends Form {
                              {this.renderTextarea("complaint","Complaint",'Enter Complaint')}
 
 										<div className="form-group row">
-											<label className="col-lg-4 col-form-label" htmlFor="reqforappointmentType">
+											<label className="col-lg-4 col-form-label" htmlFor="appointmentType">
 												Select Appointment-type
 											</label>
 											<div className="col-lg-8">
 												<select
-													name="reqforappointmentType"
+													name="appointmentType"
 													id="appointmentType"
 													onChange={this.handleChange}
 													className="form-control"
-													value={data.reqforappointmentType}
+													value={data.appointmentType}
 												>
 													<option value="">Select Appointment-type</option>
-													{this.reqforappointmentTypeoptions}
+													{this.appointmentTypeoptions}
 												</select>
 											</div>
-											{errors.reqforappointmentType && (
-												<div className="alert alert-danger">{errors.reqforappointmentType}</div>
+											{errors.appointmentType && (
+												<div className="alert alert-danger">{errors.appointmentType}</div>
 											)}
 										</div>
 

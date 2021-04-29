@@ -69,14 +69,14 @@ class User extends Form {
 			errors: {}
 		}
 
-		this.apointmentTypeOptions = [
+		this.appointmentTypeOptions = [
 			{ value: 'clinic', label: 'At Clinic' },
 			{ value: 'home', label: 'At home' },
 			{ value: 'phone', label: 'Telephone' },
 			{ value: 'video', label: 'Video' },
 		];
 
-		this.apointmentStatusOptions = [
+		this.appointmentStatusOptions = [
 			{ value: 'canceled<24h', label: 'Canceled < 24h' },
 			{ value: 'delayed', label: 'Delayed' },
 			{ value: 'invoiced', label: 'Invoiced' },
@@ -110,14 +110,14 @@ class User extends Form {
 	}
 
 	async populateappointmentTypes(){
-		this.apointmentTypeoptions = this.apointmentTypeOptions.map(option => (
+		this.appointmentTypeoptions = this.appointmentTypeOptions.map(option => (
 			<option key={option.label} value={option.value}>
 				{option.value}
 			</option>
 		));
 	}
 	async populateappointmentStatus(){
-		this.apointmentStatusoptions = this.apointmentStatusOptions.map(option => (
+		this.appointmentStatusoptions = this.appointmentStatusOptions.map(option => (
 			<option key={option.label} value={option.value}>
 				{option.value}
 			</option>
@@ -164,10 +164,10 @@ class User extends Form {
 
 	async componentDidMount() {
 	
-		await this.populateApointmentType();
-		await this.populateApointmentStatus();		
+		await this.populateAppointmentType();
+		await this.populateAppointmentStatus();		
 		await this.populateSessionType();
-		await this.populateApointment();
+		await this.populateAppointment();
 	
 	}
 
@@ -300,9 +300,9 @@ schema = Joi.object({
 											<div className="col-lg-8">
 												<DatePicker
 													onChange={this.handleDobChange}
-													id={data.dateBirth}
-													value={data.dateBirth}
-													selected={data.dateBirth}
+													id={data.date}
+													value={data.date}
+													selected={data.date}
 													inputProps={{ placeholder: "Datepicker" }}
 													className="form-control"
 												/>
