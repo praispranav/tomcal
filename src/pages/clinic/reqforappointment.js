@@ -75,10 +75,10 @@ class reqForAppointment extends Form {
 			{ value: "video", label: "Video" },
 		];
 
-		this.appointmentStatusOptions = [
+		this.reqforappointmentStatusOptions = [
+			{ value: "active", label: "Active" },
 			{ value: "approved", label: "Approved" },
 			{ value: "canceled", label: "Canceled" },
-			{ value: "active", label: "Active" },
 		];
 
 		this.sessionTypeOptions = [
@@ -105,8 +105,8 @@ class reqForAppointment extends Form {
 			</option>
 		));
 	}
-	async populateappointmentStatus() {
-		this.appointmentStatusoptions = this.appointmentStatusOptions.map((option) => (
+	async populatereqforappointmentStatus() {
+		this.reqforappointmentStatusoptions = this.reqforappointmentStatusOptions.map((option) => (
 			<option key={option.label} value={option.value}>
 				{option.value}
 			</option>
@@ -182,7 +182,7 @@ class reqForAppointment extends Form {
 		await this.populateClinics();
 		await this.populateDoctors();
 		await this.populateappointmentTypes();
-		await this.populateappointmentStatus();
+		await this.populatereqforappointmentStatus();
 		await this.populatesessionType();
 		await this.populatereqForAppointment();
 	}
@@ -433,7 +433,7 @@ class reqForAppointment extends Form {
 
 									
 										<div className="form-group row">
-											<label className="col-lg-4 col-form-label" htmlFor="status">
+											<label className="col-lg-4 col-form-label" htmlFor="reqforappointmentStatus">
 												Select Status
 											</label>
 											<div className="col-lg-8">
@@ -445,7 +445,7 @@ class reqForAppointment extends Form {
 													value={data.reqforappointmentStatus}
 												>
 													<option value="">Select Status</option>
-													{this.apointmentStatusoptions}
+													{this.reqforappointmentStatusoptions}
 												</select>
 											</div>
 											{errors.reqforappointmentStatus && (
