@@ -122,21 +122,66 @@ class AppointmentTable extends Component {
   
          <React.Fragment>
            <ToastContainer />
-           {/* {appointment && ( <button className="btn btn-default active m-r-5 m-b-5" style={{marginBottom:20},{marginLeft:20},{marginTop:20}}>  <Link to="/clinic/appointment/new">Add Appointment</Link>  </button>)} */}
-            <button className="btn btn-default active m-r-5 m-b-5" title="add appointment" style={{marginBottom:20},{marginLeft:20},{marginTop:20}}>  <Link to="/clinic/appointments/new"><i className="fas fa-plus"></i></Link>  </button>
-            <button className="btn btn-default active m-r-5 m-b-5" title="edit" style={{marginBottom:20},{marginLeft:20},{marginTop:20}}>  <Link to="/clinic/appointments/edit"><i className="far fa-edit"></i></Link>  </button>			
-            <button className="btn btn-default active m-r-5 m-b-5" title="delete" style={{marginBottom:20},{marginLeft:20},{marginTop:20}}>  <Link to="/clinic/appointments/del"><i className="far fa-trash-alt"></i></Link>  </button>						
-            <button className="btn btn-default active m-r-5 m-b-5" title="download" style={{marginBottom:20},{marginLeft:20},{marginTop:20}}>  <Link to="/clinic/appointments/download"><i className="ion-md-download"></i></Link>  </button>						
+						<div className="toolbar" style={toolbarStyles}>
+							<button className="btn btn-default active m-r-5 m-b-5" title="add appointment" style={btnStyles}>
+								{" "}
+								<Link to="/clinic/appointments/new">
+									<img style={iconStyles} src={newIcon} />
+								</Link>
+							</button>
+							
+							<button className="btn btn-default active m-r-5 m-b-5" title="edit appointment" style={btnStyles}>
+								{" "}
+								<Link
+									to={
+										this.state.checkedappointments
+											? `/clinic/appointments/${this.state.checkedappointments[0]}`
+											: "/clinic/appointments/"
+									}
+								>
+									<img style={iconStyles} src={editIcon} />
+								</Link>{" "}
+							</button>
+							<button
+								className="btn btn-default active m-r-5 m-b-5"
+								title="delete tickets"
+								style={btnStyles}
+								onClick={() => this.handleMassDelete(this.state.checkedappointments)}
+							>
+								{" "}
+								<img style={{ width: "25px", height: "25px" }} src={trashIcon} />
+							</button>
+							<button className="btn btn-default active m-r-5 m-b-5" title="Excel" style={btnStyles}>
+								{" "}
+								<Link to="/clinic/appointments/">
+									<img style={iconStyles} src={xlsIcon} />
+								</Link>{" "}
+							</button>
+							
+							<button className="btn btn-default active m-r-5 m-b-5" title="csv" style={btnStyles}>
+								{" "}
+								<Link to="/clinic/appointments/">
+									<img style={iconStyles} src={csvIcon} />
+								</Link>{" "}
+							</button>
+							<button className="btn btn-default active m-r-5 m-b-5" title="PDF" style={btnStyles}>
+								{" "}
+								<Link to="/clinic/appointments/">
+									<img style={iconStyles} src={pdfIcon} />
+								</Link>{" "}
+							</button>
+							
+						</div>
 				<div className="table-responsive">
      
-       <SearchBox value={searchQuery} onChange={this.handleSearch} />           
-        <p className="page-header float-xl-left" style={{marginBottom:5},{marginLeft:20},{marginTop:5}}>{count} entries</p> 
+				   <SearchBox value={searchQuery} onChange={this.handleSearch} />           
+					<p className="page-header float-xl-left" style={{marginBottom:5},{marginLeft:20},{marginTop:5}}>{count} entries</p> 
 
-       <AppointmentsTable appointments={appointments} 
-       onDelete={this.handleDelete}
-       onSort={this.handleSort}
-       sortColumn={sortColumn}
-       />
+				   <appointmentsTable users={users} 
+				   onDelete={this.handleDelete}
+				   onSort={this.handleSort}
+				   sortColumn={sortColumn}
+				   />
         
 			 </div> 
        
@@ -145,11 +190,11 @@ class AppointmentTable extends Component {
 			 <hr className="m-0" />
 			 <PanelBody>
        	<div className="d-flex align-items-center justify-content-center">
-         <Pagination 
-           itemsCount ={count}
-           pageSize={pageSize}
-           onPageChange={this.handlePageChange}
-           currentPage={currentPage}
+           <Pagination 
+             itemsCount ={count}
+             pageSize={pageSize}
+             onPageChange={this.handlePageChange}
+             currentPage={currentPage}
            />
 				</div>
 			 </PanelBody>
@@ -159,5 +204,16 @@ class AppointmentTable extends Component {
     )
   }
 }
+const toolbarStyles = {
+	background: "#c8e9f3",
+	padding: "10px",
+};
 
+const btnStyles = { background: "#348fe2", margin: "0rem" };
+
+const iconStyles = {
+	width: "25px",
+	height: "25px",
+	marginRight: "0rem",
+};
 export default AppointmentTable
