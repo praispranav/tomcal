@@ -54,7 +54,7 @@ class ReceptionsTable extends Component {
 				</span>
 			),
 		},
-		{label: 'Username',   path: 'login' } ,
+		{label: 'Username',   path: 'receptions.username' } ,
 		{key:'avatar', label: 'avatar',content: user=>(<span className="icon-img"><img src={user.imageSrc} alt="" /></span>) } ,
 		{label: 'firstname',   path: 'firstName' } ,   
 		{label: 'initials',   path: 'initials' } ,   	  

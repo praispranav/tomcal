@@ -54,7 +54,7 @@ class PractitionersTable extends Component {
 				</span>
 			),
 		},
-		{label: 'Username',   path: 'login' } ,
+		{label: 'Username',   path: 'practitioners.username' } ,
 		{label: 'firstname',   path: 'firstName' } ,   
 		{label: 'initials',   path: 'initials' } ,   	  
 		{label: 'lastname',   path: 'lastName' } ,   	  
