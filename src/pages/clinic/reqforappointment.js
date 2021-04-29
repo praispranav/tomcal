@@ -51,9 +51,9 @@ class reqForAppointment extends Form {
 			doctors: [],
 			clinics: [],
 			data: {
-				patient: "",
-				doctor: "",
-				clinic: "",
+				patientNo: "",
+				doctorNo: "",
+				clinicNo: "",
 				date: new Date(),
 				preferedStartTime: "",
 				preferedEndTime: "",
@@ -185,7 +185,6 @@ class reqForAppointment extends Form {
 		await this.populatereqforappointmentStatus();
 		await this.populatesessionType();
 		await this.populatereqForAppointment();
-	
 	}
 
 	schema = Joi.object({
@@ -427,7 +426,7 @@ class reqForAppointment extends Form {
 										{this.renderInput(
 											"patientNote",
 											"Note from Patient",
-											"text",
+											"textarea",
 											"Enter your Note for clinic"
 										)}
 										{this.renderInput("note", "Note", "textarea", "Enter Note")}
