@@ -125,6 +125,8 @@ import FormPlugins from "./../../pages/form/form-plugins";
 import Logout from "./../../common/logout";
 import KanBanBoard from "./../../pages/kanban/kanban.js";
 
+import TicketProfile from "./../../pages/ticketprofile/TicketProfile";
+
 function setTitle(path, routeArray) {
 	var pageTitle;
 	for (var i = 0; i < routeArray.length; i++) {

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Table from "./../common/table";
 import { Link, withRouter } from "react-router-dom";
 
-class DoctorsTable extends Component {
+class EmployeesTable extends Component {
 	// constructor(props) {
 	// 	super(props);
 	// 	this.state = {
@@ -25,7 +25,7 @@ class DoctorsTable extends Component {
 					}}
 				/>
 			),
-			content: (doctor) => (
+			content: (employee) => (
 				<span className="icon-img sm-r-5" style={{ marginTop: "15px" }}>
 					<input
 						type="checkbox"
@@ -36,7 +36,7 @@ class DoctorsTable extends Component {
 							borderRadius: 0,
 						}}
 						onChange={this.props.handleCheckboxChange}
-						value={doctor._id}
+						value={employee._id}
 					/>
 				</span>
 			),
@@ -54,19 +54,19 @@ class DoctorsTable extends Component {
 				</span>
 			),
 		},
-		{label: 'Doctorname',   path: 'doctors.username' } ,
-		{label: 'Firstname',   path: 'doctors.contactName.first' } ,   
-		{label: 'Initials',   path: 'doctors.contactName.initials' } ,   	  
-		{label: 'Lastname',   path: 'doctors.contactName.last' } ,   	  
-		{label: 'DOB',   path: 'doctors.dateBirth' } ,   	  
-		{label: 'Gender',   path: 'doctors.gender' } ,   	  
-		{label: 'Address1',   path: 'doctors.address1' } ,   
-		{label: 'Address2',   path: 'doctors.address2' } ,   
-		{label: 'Address3',   path: 'doctors.address3' } ,           
-		{label: 'Zip',   path: 'doctors.zip' } ,   	  
-		{label: 'City',   path: 'doctors.city' } ,   	      
-		{label: 'State',   path: 'doctors.state' } ,   	          
-		{label: 'Country',   path: 'doctors.country' } ,   	  	  
+		{label: 'Username',   path: 'employees.username' } ,
+		{label: 'Firstname',   path: 'employees.contactName.first' } ,   
+		{label: 'Initials',   path: 'employees.contactName.initials' } ,   	  
+		{label: 'Lastname',   path: 'employees.contactName.last' } ,   	  
+		{label: 'DOB',   path: 'employees.dateBirth' } ,   	  
+		{label: 'Gender',   path: 'employees.gender' } ,   	  
+		{label: 'Address1',   path: 'employees.Address.address1' } ,   
+		{label: 'Address2',   path: 'employees.Address.address2' } ,   
+		{label: 'Address3',   path: 'employees.Address.address3' } ,           
+		{label: 'Zip',   path: 'employees.Address.zip' } ,   	  
+		{label: 'City',   path: 'employees.Address.city' } ,   	      
+		{label: 'State',   path: 'employees.Address.state' } ,   	          
+		{label: 'Country',   path: 'employees.Address.country' } ,   	  	  
 		{label: 'Linkedin',   path: 'linkedin' } ,       
 		{label: 'Mobile',   path: 'phones.mobile' } ,   	  
 		{label: 'Phone',   path: 'phones.phone' } ,   	  
@@ -83,29 +83,23 @@ class DoctorsTable extends Component {
 		{label: 'Sec. Insurance Valid Till',   path: 'insurance.secInsuranceValidTill' } , 
 		{label: 'ID-Paper',   path: 'idPaper' } ,   	  
 		{label: 'ID-Paper Valid Till',   path: 'idPaperValidTill' } , 
-		{label: 'HIPIO No',   path: 'healthcareProviderIdentifierOrganisation' } ,   	  
-		{label: 'HIPII No',   path: 'healthcareProviderIdentifierIndividual' } ,   	  
 		{label: 'Treatments',   path: 'treatments' } ,   	  	
 		{label: 'LicenseNo',   path: 'licenseNo' } ,   	  
 		{label: 'License Valid Till',   path: 'licenseValidTill' } ,   	      
-		{label: 'OrganizationA Name',   path: 'organizationAName' } ,   	          
-		{label: 'OrganizationA Member No',   path: 'organizationAMemberNo' } ,   	  	  
-		{label: 'OrganizationB Name',   path: 'organizationBName' } ,   	          
-		{label: 'OrganizationB Member No',   path: 'organizationBMemberNo' } ,   	  	  
 	];
 
 	render() {
 		//console.log(this.columns) ;
-		const { doctors, onSort, sortColumn } = this.props;
+		const { employees, onSort, sortColumn } = this.props;
 		return (
 			<Table
 				columns={this.columns}
 				sortColumn={sortColumn}
 				onSort={onSort}
-				data={doctors}
+				data={employees}
 			/>
 		);
 	}
 }
 
-export default DoctorsTable;
+export default EmployeesTable;
