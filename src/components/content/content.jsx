@@ -10,15 +10,11 @@ import "react-toastify/dist/ReactToastify.css";
 import configureStore from "./../../store/configureStore";
 import {Provider} from "react-redux";
 
-
-
-
 import ProtectedRoute from "./../../common/ProtectedRoute";
 ////////////////////////////////////////////////////////////////////
 import YourDrive from './../../pages/drive/yourdrive.js';
 import TCMSession from './../../pages/clinic/add_tcmsession.js';
 import DashboardV2 from './../../pages/dashboard/dashboard-v2.js';
-//import DashboardV3 from './../../pages/dashboard/dashboard-v3.js';
 import EmailInbox from './../../pages/email/email-inbox.js';
 import EmailCompose from './../../pages/email/email-compose.js';
 import EmailDetail from './../../pages/email/email-detail.js';
@@ -77,7 +73,6 @@ import ExtraError from './../../pages/extra/extra-error.js';
 import Profile from './../../pages/user/profile.js';
 import ExtraScrumBoard from './../../pages/extra/extra-scrum-board.js';
 import ExtraCookieAcceptanceBanner from './../../pages/extra/extra-cookie-acceptance-banner.js';
-//import LoginV1 from './../../pages/user/login-v1.js';
 import LoginV2 from '../../pages/user/login.js';
 import RegisterV3 from './../../pages/register.js';
 import User from './../../pages/clinic/user.js';
@@ -128,6 +123,8 @@ import DoctorTable from './../../pages/clinic/doctors.js';
 import FormPlugins from './../../pages/form/form-plugins';
 import Logout from './../../common/logout';
 import KanBanBoard from './../../pages/kanban/kanban.js';
+
+import TicketProfile from "./../pages/ticketprofile/TicketProfile";
 
 function setTitle(path, routeArray) {
 	var pageTitle;
@@ -220,28 +217,27 @@ class Content extends React.Component {
               <Route path= '/calendar' title="Calendar" component={Calendar}   />
                <Route path= '/scheduler' title="Scheduler" component={SchedulerCal}   />
           
-            
               <Route path= '/scheduler2' title="Scheduler2" component={SchedulerfCal}   />
               <Route path= '/kanban/kanban' title="KanBanBoard" component={KanBanBoard}   />
             {/*  <Route path= '/clinic/tickets' title="NewKanBanBoard" component={NewKanBanBoard}   />  */}
             
-            
-            
-            				
+            <Route path= '/clinic/ticketprofile' title="KanBanBoard" component={TicketProfile}   />
+
 								<ProtectedRoute
 									path="/clinic/reqforappointments/:id"
 									title="ReqForAppointment"
 									component={reqForAppointment}
 								/>
 
-				
 								<ProtectedRoute
 									path="/clinic/reqforappointments"
 									title="ReqForAppointments"
 									component={reqforappointmentTable}
 								/>
-            
-            
+
+            <Provider store={store}>
+								<Route path="/user/profile" title="Extra Profile" component={Profile} />
+						</Provider>  
             
               <Route path= '/clinic/add_tcmsession' title="TCM Session" component={TCMSession}   />
               <Route path= '/email/inbox' title="Email Inbox" component={EmailInbox}   />
@@ -274,7 +270,6 @@ class Content extends React.Component {
               <Route path= '/chart/js' title="ChartJS" component={ChartJS}   />
               <Route path= '/chart/d3' title="ChartD3" component={ChartD3}   />
               <Route path= '/chart/apex' title="ChartApex" component={ChartApex}   />
-             
               <Route path= '/map' title="Map" component={Map}   />
               <Route path= '/gallery' title="Gallery" component={Gallery}   />
               <Route path= '/page-option/with-footer' title="PageWithFooter" component={PageWithFooter}   />
@@ -298,9 +293,6 @@ class Content extends React.Component {
               <Route path= '/extra/invoice' title="Extra Invoice" component={ExtraInvoice}   />
             
             
-            <Provider store={store}>
-								<Route path="/user/profile" title="Extra Profile" component={Profile} />
-							    </Provider>  
               <Route path= '/extra/scrum-board' title="Extra Scrum Board" component={ExtraScrumBoard}   />
               <Route path= '/extra/cookie-acceptance-banner' title="Extra Cookie Acceptance Banner" component={ExtraCookieAcceptanceBanner}   />
               <Route title="404" component={ExtraError}   />
