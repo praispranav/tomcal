@@ -82,8 +82,8 @@ class PractitionersTable extends Component {
 		{label: 'secInsuranceNo',   path: 'insurance.secInsuranceNo' } ,   	  
 		{label: 'secInsurance',   path: 'insurance.secInsurance' } ,   	  
 		{label: 'secInsuranceValidTill',   path: 'insurance.secInsuranceValidTill' } , 
-		{label: 'idPaper',   path: 'idPaper' } ,   	  
-		{label: 'idPaperValidTill',   path: 'idPaperValidTill' } , 
+		{label: 'idPaper',   path: 'identification.idPaper' } ,   	  
+		{label: 'idPaperValidTill',   path: 'identification.idPaperValidTill' } , 
 		{label: 'Skills',   path: 'skills' } ,     
     
 	];
