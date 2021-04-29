@@ -60,7 +60,7 @@ class reqForAppointment extends Form {
 				complaint: "",
 				appointmentType: "",
 				sessionType: "",
-				patientNote: "",
+				notePatient: "",
 				note: "",
 				reqforappointmentStatus: "",
 			},
@@ -197,7 +197,7 @@ class reqForAppointment extends Form {
 		complaint: Joi.any().optional(),
 		appointmentType: Joi.any().optional(),
 		sessionType: Joi.any().optional(),
-		patientNote: Joi.any().optional(),
+		notePatient: Joi.any().optional(),
 		note: Joi.any().optional(),
 		reqforappointmentStatus: Joi.any().optional(),
 	});
@@ -243,7 +243,7 @@ class reqForAppointment extends Form {
 			preferedEndTime: reqForAppointment.preferedEndTime,
 			appointmentType: reqForAppointment.reqforappointmentType,
 			sessionType: reqForAppointment.sessionType,
-			patientNote: reqForAppointment.patientNote,
+			notePatient: reqForAppointment.notePatient,
 			note: reqForAppointment.note,
 			reqforappointmentStatus: reqForAppointment.reqforappointmentStatus,
 		};
@@ -428,7 +428,7 @@ class reqForAppointment extends Form {
 										</div>
 
 								
-                        {this.renderTextarea("patientNote","Note from Patient",'Enter your Note for clinic')}
+                        {this.renderTextarea("notePatient","Note from Patient",'Enter your Note for clinic')}
 						{this.renderTextarea("note","Note",'Enter Note')}
 
 									

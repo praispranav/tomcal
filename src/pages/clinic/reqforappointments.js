@@ -11,7 +11,7 @@ import {
 import "bootstrap/dist/css/bootstrap.min.css";
 import Pagination from "../../common/pagination";
 import { paginate } from "../../utils/paginate";
-import reqforappointmentsTable from "../../components/reqforappointmentsTable.jsx";
+import ReqforappointmentsTable from "../../components/reqforappointmentsTable.jsx";
 import SearchBox from "./../../common/searchBox";
 import _ from "lodash";
 import http from "./../../services/httpService";
@@ -215,7 +215,7 @@ class reqforappointmentTable extends Component {
 								{count} entries
 							</p>
 
-							<reqforappointmentsTable
+							<ReqforappointmentsTable
 								reqforappointments={reqforappointments}
 								onDelete={this.handleDelete}
 								onSort={this.handleSort}
