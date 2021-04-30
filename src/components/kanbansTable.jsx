@@ -18,7 +18,7 @@ class KanbansTable extends Component {
 				</span>
 			),
 		},
-		{label: "KanbanNo", path: "listKanbanNo" },
+		{label: "KanbanNo", path: "kanbanNo" },
 		{label: "Name", path: "name" },
 		{label: "Owner", path: "username" },
 		{label: "Participants", path: "participants" },
