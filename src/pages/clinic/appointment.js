@@ -22,13 +22,13 @@ import Form from "../../common/form.jsx";
 import { apiUrl } from "../../config/config.json";
 import http from "../../services/httpService";
 import { saveAppointment, getAppointment } from "./../../services/appointments";
-import { getClinics } from "./../../services/clinics";
+import { getClinics,getClinic } from "./../../services/clinics";
 import { getDoctors } from "./../../services/doctors";
 import { getPatients } from "./../../services/patients";
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
 const Handle = Slider.Handle;
 
-class User extends Form {
+class Appointment extends Form {
   constructor(props) {
     super(props);
 
@@ -210,7 +210,7 @@ class User extends Form {
   doSubmit = async (appointment) => {
     //console.log('working');
     try {
-      await saveUser(this.state.data, this.state.imageSrc);
+      await saveAppointment(this.state.data, this.state.imageSrc);
       //console.log(this.state.data);
       this.props.history.push("/clinic/users");
     } catch (ex) {
