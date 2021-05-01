@@ -1,34 +1,20 @@
-import React from 'react';
-import { Link,withRouter} from 'react-router-dom';
-import { Panel, PanelHeader, PanelBody } from '../../components/panel/panel.jsx';
-import { UncontrolledDropdown, DropdownMenu, DropdownToggle } from 'reactstrap';
-import ReactTags from 'react-tag-autocomplete';
-import DatePicker from 'react-datepicker';
-import DateTime from 'react-datetime';
-import moment from "moment";
-//import Select from 'react-select';
-//import Select from "../../common/select";
+import React, { Component } from "react";
+import { Link, withRouter } from "react-router-dom";
+import { Panel, PanelHeader, PanelBody } from "./../../components/panel/panel.jsx";
+import { getTickets, deleteTicket, saveTicket } from "./../../services/tickets";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Pagination from "../../common/pagination";
+import { paginate } from "../../utils/paginate";
+import KanbansTable from "../../components/kanbansTable.jsx";
+import SearchBox from "./../../common/searchBox";
+import _ from "lodash";
+import http from "./../../services/httpService";
+import { apiUrl } from "./../../config/config.json";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Col, Button, Form, FormGroup, Input, Modal, Label, ModalHeader, ModalBody, Row } from "reactstrap";
 
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
-
-import Tooltip from 'rc-tooltip';
-import Slider from 'rc-slider';
-import 'rc-slider/assets/index.css';
-import 'react-datetime/css/react-datetime.css';
-import 'react-datepicker/dist/react-datepicker.css';
-import Joi from 'joi';
-import Form from '../../common/form.jsx';
-import {apiUrl} from '../../config/config.json';
-import http from '../../services/httpService';
-import {saveKanban,getKanban} from './../../services/kanbans';
-const createSliderWithTooltip = Slider.createSliderWithTooltip;
-const Handle = Slider.Handle;
-
-// Icons imports
+// Icons imoprt svg
 import newIcon from "../../assets/Icons/new.svg";
 import editIcon from "../../assets/Icons/edit.svg";
 import trashIcon from "../../assets/Icons/trash.svg";
@@ -36,339 +22,416 @@ import csvIcon from "../../assets/Icons/csv.svg";
 import xlsIcon from "../../assets/Icons/xls.svg";
 import pdfIcon from "../../assets/Icons/pdf.svg";
 
-
-class Kanban extends Form {
+class KanbansTableData extends Component {
 	constructor(props) {
 		super(props);
-
-		var maxYesterday = '';
-		var minYesterday = DateTime.moment().subtract(1, 'day');
-
-		this.minDateRange = (current) => {
-			return current.isAfter(minYesterday);
-		};
-		this.maxDateRange = (current) => {
-			return current.isAfter(maxYesterday);
-		};
-		this.minDateChange = (value) => {
-			this.setState({
-				maxDateDisabled: false
-			});
-			maxYesterday = value;
-		};
-	
 		this.state = {
-			maxDateDisabled: true,
-			profiles: [],
-			data: {
-			    name         : '',
-				narrative    : '',	  
-				businessName : '',
-				username     : '',		  
-				department   : '',
-				subDepartment: '',	  
-				locations    : '',	  
-				kanbanNo     : '',		  
-				createdOn    : new Date(),
-				deadline     : '',	  
-				documentNo   : '',	  
-				field        : '',	  
-				tags	     : '',	  
-				action       : '',	  
-				kanbanReference    : '',	  	  
-				sharingLink  : '',	  
-				assignedTo   : '',	  
-				sharedTo   	 : '',	  
-				status   	 : '',	  				
+			kanbans: [],
+			pageSize: 10,
+			currentPage: 1,
+			sortColumn: { path: "title", order: "asc" },
+			searchQuery: "",
+			errors: {},
+			checkedUsers: [],
+			toggleModal: false,
+			kanbanData: {
+				kanbanNO: this.makeKanbanNO(),
+				name: "",
+				participants: "",
+				description: "",
+				businessName: "",
+				createdOn: "",
+				department: "",
+				subDepartment: "",
+				location: "",
+				field: "",
+				tags: "",
+				note: "",
+				status: "active",				
 			},
-            selectedFile: null,
-			errors: {}
-		}
+		};
 
-		this.statusOptions = [
-			{ value: 'active', label: 'active' },		
-			{ value: 'in progress', label: 'In Progress' },
-			{ value: 'pending', label: 'Pending' },
-			{ value: 'new', label: 'New' },
-			{ value: 'archive', label: 'Archive' }
-		];
-		
-		this.handleSlider = (props) => {
-			const { value, dragging, index, ...restProps } = props;
-			return (
-				<Tooltip
-					prefixCls="rc-slider-tooltip"
-					overlay={value}
-					visible={dragging}
-					placement="top"
-					key={index}
-				>
-					<Handle value={value} {...restProps} />
-				</Tooltip>
-			);
-		}
+		// this.handleDelete = this.handleDelete.bind(this);
+		// this.handleMassDelete = this.handleMassDelete.bind(this);
+		// this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
+		this.toggle = this.toggle.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
-		this.handleChange = this.handleChange.bind(this);
-		this.onChangeImgHandler = this.onChangeImgHandler.bind(this);
 	}
 
-	async populateStatus(){
-    this.statusoptions = this.statusOptions.map(option => (
-		<option key={option.label} value={option.value}>
-			{option.value}
-		</option>
-	));
+	makeKanbanNO() {
+		let text = "KB-";
+		const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+		for (let i = 0; i <= 5; i++) text += possible.charAt(Math.floor(Math.random() * possible.length));
+		return text;
 	}
-	
-	async populateKanban() { 
-		try {
-		  const kanbanId = this.props.match.params.id;
-		
-		  if (kanbanId === "new") return;
-	
-		  const { data: kanban } = await getKanban(kanbanId);
 
-			 kanban.username = kanban.username;		  
-			 kanban.name = kanban.name;
-			 kanban.narrative = kanban.narrative;
-			 kanban.field = kanban.field;
-			 kanban.tag = kanban.tag;
-			 kanban.department = kanban.department;
-			 kanban.subDepartment = kanban.subDepartment;
-			 kanban.locations   = kanban.locations;
-			 kanban.createdOn = kanban.creadOn;
-			 kanban.deadline = kanban.deadline;
-			 kanban.status = kanban.status;
-
-		  this.setState({ data: this.mapToViewModel(kanban) });
-
-		  console.log(this.state.data);
-		} catch (ex) {
-		  if (ex.response && ex.response.status === 404)
-			this.props.history.replace("/error");
-		}
-	  }
+	toggle() {
+		this.setState((prevState) => ({
+			toggleModal: !prevState.toggleModal,
+		}));
+	}
 
 	async componentDidMount() {
-	
-		await this.populateKanban();
+		const { data } = await getKanbans();
+		this.setState({ kanbans: data });
 	}
 
-schema = Joi.object({
-		name: Joi.string(),
-		username: Joi.string(),
-		businessName: Joi.any().optional(),
-		narrative: Joi.string().optional(),
-		department: Joi.string().optional(),		
-		subDepartment: Joi.string().optional(),				
-		createdOn: Joi.date().optional(),
-		deadline: Joi.date().optional(),
-		locations: Joi.string().optional(),
-		kanbanNo: Joi.string().optional(),
-		documentNo: Joi.string().optional(),
-		field: Joi.string().optional(),
-		tags: Joi.string().optional(),
-		kanbanReference: Joi.string().optional(),
-		sharingLink: Joi.string().optional(),
-		assignedTo: Joi.string().optional(),
-		sharedTo: Joi.string().optional(),
-		status: Joi.string().optional(),			
-	});
-
-
-	handlecreatedOnChange = (e) => {
-		const errors = { ...this.state.errors };
-		const data = { ...this.state.data };
-		data['createdOn'] = e;
-		this.setState({ data });
-		console.log(this.state.data);
+	//sorting columns
+	handleSort = (sortColumn) => {
+		this.setState({ sortColumn });
+	};
+	handlePageChange = (page) => {
+		console.log(page);
+		this.setState({ currentPage: page });
 	};
 
-	handledeadlineChange = (e) => {
-		const errors = { ...this.state.errors };
-		const data = { ...this.state.data };
-		data['deadline'] = e;
-		this.setState({ data });
-		console.log(this.state.data);
+	handleSearch = (query) => {
+		console.log(query);
+		this.setState({ searchQuery: query, currentPage: 1 });
 	};
-	
-	onChangeImgHandler=event=>{
 
-		this.setState({ imageSrc: event.target.files[0] });
-	  console.log(event.target.files[0]);
-	
-	}
+	getDataPgnation = () => {
+		const { pageSize, currentPage, kanbans: Kanbans, sortColumn, searchQuery } = this.state;
 
-	doSubmit = async (kanban) => {
-	    try{
-			console.log(this.state.data);
-			await saveKanban(this.state.data,this.state.imageSrc);
-			this.props.history.push("/clinic/kanbans");
-		}catch(ex){
-			//if(ex.response && ex.response.status === 404){
-			if(ex.response){
-				const errors = {...this.state.errors};
-				errors.kanbanname = ex.response.data;
-				this.setState({errors});
-				//console.log(this.state.errors);
+		//filter maybe next time
+		let filtered = Kanbans;
+		if (searchQuery) {
+			console.log(searchQuery);
+			filtered = Kanbans.filter(
+				(el) =>
+					el.email.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
+					el.username.toLowerCase().startsWith(searchQuery.toLowerCase())
+			);
+		}
+
+		const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
+		const kanbans = paginate(sorted, currentPage, pageSize);
+		return { data: kanbans };
+	};
+
+
+    handleChange = ({currentTarget:input}) =>{
+		const kanbanData = {...this.state.kanbanData};
+		kanbanData[input.name] = input.value;
+		this.setState({kanbanData});
+	};
+
+
+
+	handleSubmit = async (e) => {
+		e.preventDefault();
+		console.log("kanbans form data: ", this.state.kanbanData);
+		try {
+			await saveKanban(this.state.kanbanData);
+		} catch (err) {
+			if (err) {
+				console.log("Error: ", err);
 			}
 		}
-		
+		this.toggle();
 	};
-	
-	mapToViewModel(kanban) {
-		return {
-            _id: kanban._id,
-            kanbanname	: kanban.kanbanname,            
-            name		: kanban.name,
-            narrative	: kanban.narrative,
-			businessName: kanban.businessName,
-            department	: kanban.department,
-            subDepartment: kanban.subDepartment,  
-            locations	: kanban.locations,
-            kanbanNo	: kanban.kanbanNo,
-            createdOn	: new Date(kanban.createdOn),			
-            deadline	: new Date(kanban.deadline),			
-            documentNo  : kanban.documentNo,
-            field       : kanban.field,
-            tags		: kanban.tags,			
-            kanbanReference: kanban.kanbanReference,
-            sharingLink : kanban.sharingLink,
-            assignedTo  : kanban.assignedTo,
-            sharedTo    : kanban.sharedTo,
-            status      : kanban.status,     
-		};
-	  }
 
 	render() {
+		const { length: count } = this.state.kanbans;
+		const { pageSize, currentPage, sortColumn, searchQuery } = this.state;
+		//if (count === 0) return <p>No data available</p>;
 
-		const { data, errors } = this.state;
+		const { data: kanbans } = this.getDataPgnation();
+
 		return (
-			<React.Fragment>
-				<div>
-					<ol className="breadcrumb float-xl-right">
-						<li className="breadcrumb-item"><Link to="/form/plugins">Home</Link></li>
-						<li className="breadcrumb-item"><Link to="/clinic/kanbans">Kanbans</Link></li>
-						<li className="breadcrumb-item active">Add Kanban</li>
-					</ol>
-					<h1 className="page-header">
-						Add Kanban-Solo <small>Kanban-registration-form</small>
-					</h1>
+			<div>
+				<ol className="breadcrumb float-xl-right">
+					<li className="breadcrumb-item">
+						<Link to="/">Home</Link>
+					</li>
+					<li className="breadcrumb-item">
+						<Link to="/">Kanbans</Link>
+					</li>
+					<li className="breadcrumb-item active">Kanbans Tables</li>
+				</ol>
+				<h1 className="page-header">Kanbans </h1>
+				<Panel>
+					<PanelHeader>Kanbans Management</PanelHeader>
 
-					<div className="row">
-						<div className="col-xl-10">
-							<Panel>
-								<PanelHeader>Add Kanban</PanelHeader>
-								<PanelBody className="panel-form">
-									<form className="form-horizontal form-bordered" onSubmit={this.handleSubmit} >
- 
-									   {this.renderInput("name","Name of kanban","text","Enter Name/Title/subject for kanban")}
-									   {this.renderInput("narrative","Narrative","text","* Tell your story/issue....")}                                    
-                                           
-									{/* <div className="form-group row">
-										<label className="col-lg-4 col-form-label">Subscription Type</label>
-										<div className="btn-group col-lg-8">
-											<div className="btn btn-secondary active">
-												<input type="radio" name="subscription" onChange={this.handleChange} value="Kanban"  checked={data.subscription === "Kanban" } />
-												<label>Kanban</label>
-											</div>
-											<div className="btn btn-secondary">
-												<input type="radio" name="subscription" onChange={this.handleChange} value="Solo" checked={data.subscription === "Solo" } />
-												<label>SoloPractice</label>
-											</div>
-										</div>
-										{errors.subscription && (<div className="alert alert-danger">{errors.subscription}</div>)}
-									</div>  */}
-
-										<div className="form-group row">
-											<label className="col-lg-4 col-form-label" htmlFor="priority" >Priority</label>
-											<div className="col-lg-8">
-												<select name="priority" id="priority" value={data.priority} onChange={this.handleChange} className="form-control" >
-													<option value="">Select Priority</option>
-													{this.priorityoptions}
-												</select>
-											</div>
-											{errors.priority && (<div className="alert alert-danger">{errors.priority}</div>)}
-										</div>
-
-										<div className="form-group row">
-											<label className="col-lg-4 col-form-label" htmlFor="category" >Category</label>
-											<div className="col-lg-8">
-												<select name="category" id="category" value={data.category} onChange={this.handleChange} className="form-control" >
-													<option value="">Select Category</option>
-													{this.categoryoptions}
-												</select>
-											</div>
-											{errors.category && (<div className="alert alert-danger">{errors.category}</div>)}
-										</div>
-										
-										{this.renderInput("department","Department","text","Enter Department")} 
-										{this.renderInput("subDepartment","Sub-Department","text","Enter Sub-department")}
-										{this.renderInput("locations","Locations","text","Enter Locations")}
-										{this.renderInput("documentNo","DocumentNo","text","Enter DocumentNo")}
-										{this.renderInput("field","Field","text","Enter field")} 
-										{this.renderInput("tags","Tags","text","Enter Tags")}
-										{this.renderInput("kanbanReference","References","text","Enter References")} 
-										{this.renderInput("assignedTo","Assigned To","text","Enter Assignees")}
-										{this.renderInput("sharedTo","Shared To","text","Enter Shared kanbans")} 
-										
-										<div className="form-group row">
-											<label className="col-lg-4 col-form-label" htmlFor="deadline" >Deadline</label>
-											<div className="col-lg-8">
-												<DatePicker
-													onChange={this.handleDobChange}
-													id={data.deadline}
-													value={data.deadline}
-													selected={data.deadline}
-													inputProps={{ placeholder: "Datepicker" }}
-													className="form-control"
-												/>
-												{errors.deadline && <div className="alert alert-danger">{errors.deadline}</div>}
-											</div>
-										</div>
-										
-										<div className="form-group row">
-											<label className="col-lg-4 col-form-label" htmlFor="imageSrc">Image</label>
-											<div className="col-lg-8">
-												<div className="row row-space-10">
-													<input type="file" id="imageSrc" name="imageSrc"													
-														className="form-control-file m-b-5"
-														onChange={this.onChangeImgHandler}
-													/>
-													{errors.imageSrc && (
-														<div className="alert alert-danger">
-															{errors.imageSrc}
-														</div>
-													)}
-												</div>
-											</div>
-										</div>
-
-										<div className="form-group row">
-											<label className="col-lg-4 col-form-label" htmlFor="status" >Status</label>
-											<div className="col-lg-8">
-												<select name="status" id="status" value={data.category} onChange={this.handleChange} className="form-control" >
-													<option value="">Select Status</option>
-													{this.statusoptions}
-												</select>
-											</div>
-											{errors.category && (<div className="alert alert-danger">{errors.status}</div>)}
-										</div>
-										
-										<div className="form-group row">
-											<div className="col-lg-8">
-												<button	type="submit" disabled={this.validate()} className="btn btn-primary width-65">Submit</button>
-											</div>
-										</div>
-									</form>
-								</PanelBody>
-							</Panel>
+					<React.Fragment>
+						<ToastContainer />
+						<div className="toolbar" style={toolbarStyles}>
+							<button
+								className="btn btn-default active m-r-5 m-b-5"
+								title="add user"
+								onClick={this.toggle}
+								style={btnStyles}
+							>
+								{" "}
+								<img style={iconStyles} src={newIcon} />
+							</button>
+							<button className="btn btn-default active m-r-5 m-b-5" title="edit" style={btnStyles}>
+								{" "}
+								{/* <Link
+									to={
+										this.state.checkedUsers ? `/clinic/users/${this.state.checkedUsers[0]}` : "/clinic/users/"
+									}
+								> */}
+								<img style={iconStyles} src={editIcon} />
+								{/* </Link>{" "} */}
+							</button>
+							<button
+								className="btn btn-default active m-r-5 m-b-5"
+								title="delete"
+								style={btnStyles}
+								// onClick={() => this.handleMassDelete(this.state.checkedUsers)}
+							>
+								{" "}
+								<img style={{ width: "25px", height: "25px" }} src={trashIcon} />
+							</button>
+							<button className="btn btn-default active m-r-5 m-b-5" title="csv" style={btnStyles}>
+								{" "}
+								{/* <Link to="/clinic/users/"> */}
+								<img style={iconStyles} src={csvIcon} />
+								{/* </Link>{" "} */}
+							</button>
 						</div>
-					</div>
+
+						<div className="table-responsive">
+							<SearchBox value={searchQuery} onChange={this.handleSearch} />
+							<p
+								className="page-header float-xl-left"
+								style={({ marginBottom: 5 }, { marginLeft: 20 }, { marginTop: 5 })}
+							>
+								{count} entries
+							</p>
+
+							<KanbansTable
+								kanbans={kanbans}
+								onDelete={this.handleDelete}
+								onSort={this.handleSort}
+								sortColumn={sortColumn}
+								handleCheckboxChange={this.handleCheckboxChange}
+							/>
+						</div>
+					</React.Fragment>
+
+					<hr className="m-0" />
+					<PanelBody>
+						<div className="d-flex align-items-center justify-content-center">
+							<Pagination
+								itemsCount={count}
+								pageSize={pageSize}
+								onPageChange={this.handlePageChange}
+								currentPage={currentPage}
+							/>
+						</div>
+					</PanelBody>
+				</Panel>
+
+				<div>
+					<Modal isOpen={this.state.toggleModal} toggle={this.toggle}>
+						<ModalHeader toggle={this.toggle}>Add Kanban</ModalHeader>
+						<ModalBody>
+							<Form onSubmit={this.handleSubmit}>
+								<Row form>
+									<Col md={6}>
+										<FormGroup>
+											<Input
+												type="text"
+												name="name"
+												placeholder="name"
+												value={this.state.kanbanData.name}
+												onChange={this.handleChange}
+												required
+											/>
+										</FormGroup>
+									</Col>
+									<Col md={6}>
+										<FormGroup>
+											<Input
+												type="text"
+												name="participants"
+												placeholder="participants"
+												value={this.state.kanbanData.participants}
+												onChange={this.handleChange}
+											/>
+										</FormGroup>
+									</Col>
+								</Row>
+								<Row form>
+									<Col md={12}>
+										<FormGroup>
+											<Input
+												type="textarea"
+												name="description"
+												placeholder="description"
+												value={this.state.kanbanData.description}
+												onChange={this.handleChange}
+											/>
+										</FormGroup>
+									</Col>
+								</Row>
+								<Row form>
+									<Col md={6}>
+										<FormGroup>
+											<Label>Created on</Label>
+											<Input
+												type="date"
+												name="createdon"
+												placeholder="created on"
+												value={this.state.kanbanData.createdOn}
+												onChange={(e) =>
+													this.setState({
+														kanbanData: { ...this.state.kanbanData, createdOn: e.target.value },
+													})
+												}
+											/>
+										</FormGroup>
+									</Col>
+								</Row>
+								<Row form>
+									<Col md={6}>
+										<FormGroup>
+											<Input
+												type="text"
+												name="department"
+												placeholder="department"
+												value={this.state.kanbanData.department}
+												onChange={this.handleChange}
+											/>
+										</FormGroup>
+									</Col>
+									<Col md={6}>
+										<FormGroup>
+											<Input
+												type="text"
+												name="sub-department"
+												placeholder="sub-department"
+												value={this.state.kanbanData.subDepartment}
+												onChange={this.handleChange}
+											/>
+										</FormGroup>
+									</Col>
+								</Row>
+								<Row form>
+									<Col md={6}>
+										<FormGroup>
+											<Input
+												type="text"
+												name="location"
+												placeholder="location"
+												value={this.state.kanbanData.location}
+												onChange={this.handleChange}
+											/>
+										</FormGroup>
+									</Col>
+									<Col md={6}>
+										<FormGroup>
+											<Input
+												type="text"
+												name="field"
+												placeholder="field"
+												value={this.state.kanbanData.field}
+												onChange={this.handleChange}
+											/>
+										</FormGroup>
+									</Col>
+								</Row>
+								<Row form>
+									<Col md={6}>
+										<FormGroup>
+											<Input
+												type="text"
+												name="tags"
+												placeholder="tags"
+												value={this.state.kanbanData.tags}
+												onChange={this.handleChange}
+											/>
+										</FormGroup>
+									</Col>
+									<Col md={6}>
+										<FormGroup>
+											<Input
+												type="text"
+												name="reference"
+												placeholder="reference"
+												value={this.state.kanbanData.reference}
+												onChange={this.handleChange}
+											/>
+										</FormGroup>
+									</Col>
+								</Row>
+
+								<Row form>
+									<Col md={6}>
+										<FormGroup>
+											<Input
+												type="text"
+												name="note"
+												placeholder="note"
+												value={this.state.kanbanData.note}
+												onChange={this.handleChange}
+											/>
+										</FormGroup>
+									</Col>
+								</Row>
+								<Row form>
+									<Col md={6}>
+										<FormGroup>
+											<Input
+												type="text"
+												name="businessName"
+												placeholder="business name"
+												value={this.state.kanbanData.businessName}
+												onChange={this.handleChange}
+											/>
+										</FormGroup>
+									</Col>
+									<Col md={6}>
+										<FormGroup>
+											<Input
+												type="select"
+												name="status"
+												placeholder="status"
+												value={this.state.kanbanData.status}
+												onChange={this.handleChange}
+											>
+												<option value="active">Active</option>
+												<option value="pending">Pending</option>
+												<option value="new">New</option>
+												<option value="archive">Archive</option>
+											</Input>
+										</FormGroup>
+									</Col>
+								</Row>
+								<Row form>
+									<Col md={6}>
+										<Button style={{ float: "right" }} type="submit" color="primary">
+											Submit
+										</Button>
+									</Col>
+									<Col md={6}>
+										<Button color="secondary" onClick={this.toggle}>
+											Cancel
+										</Button>
+									</Col>
+								</Row>
+							</Form>
+						</ModalBody>
+					</Modal>
 				</div>
-			</React.Fragment>
+			</div>
 		);
 	}
 }
 
-export default withRouter(Kanban);
+const toolbarStyles = {
+	background: "#c8e9f3",
+	padding: "10px",
+};
+
+const btnStyles = { background: "#348fe2", margin: "0rem" };
+
+const iconStyles = {
+	width: "25px",
+	height: "25px",
+	marginRight: "0rem",
+};
+
+export default KanbansTableData;
