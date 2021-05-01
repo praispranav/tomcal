@@ -22,7 +22,7 @@ import Form from "../../common/form.jsx";
 import { apiUrl } from "../../config/config.json";
 import http from "../../services/httpService";
 import { saveAppointment, getAppointment } from "./../../services/appointments";
-import { getClinics,getClinic } from "./../../services/clinics";
+import { getClinics } from "./../../services/clinics";
 import { getDoctors } from "./../../services/doctors";
 import { getPatients } from "./../../services/patients";
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
@@ -50,23 +50,22 @@ class Appointment extends Form {
 
     this.state = {
       maxDateDisabled: true,
-      countries: [],
-      profiles: [],
+ 
       data: {
         patientNo: "",
-        businessName: "",
-        date: "",
+		clinicNo: '',
+        doctorNo: '',
+        date: new Date(),
         startTime: "",
         endTime: "",
         chiefComplaint: "",
         appointmentType: "",
-        // mobilePhone: '',
         sessionType: "",
         note: "",
-        //		clinicNo: ''
-        //		doctorNo: ''
+		notePatient: "",
+		status: ""
+        
       },
-      selectedFile: null,
       errors: {},
     };
 
@@ -107,17 +106,16 @@ class Appointment extends Form {
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.onChangeImgHandler = this.onChangeImgHandler.bind(this);
   }
 
-  async populateappointmentTypes() {
+  populateAppointmentTypes() {
     this.appointmentTypeoptions = this.appointmentTypeOptions.map((option) => (
       <option key={option.label} value={option.value}>
         {option.value}
       </option>
     ));
   }
-  async populateappointmentStatus() {
+  populateAppointmentStatus() {
     this.appointmentStatusoptions = this.appointmentStatusOptions.map(
       (option) => (
         <option key={option.label} value={option.value}>
@@ -126,7 +124,7 @@ class Appointment extends Form {
       )
     );
   }
-  async populatesessionType() {
+  populateSessionType() {
     this.sessionTypeoptions = this.sessionTypeOptions.map((option) => (
       <option key={option.label} value={option.value}>
         {option.value}
@@ -134,29 +132,42 @@ class Appointment extends Form {
     ));
   }
 
+
+  async populateDoctors() {
+	const { data: doctors } = await getDoctors();
+	this.setState({ doctors });
+	this.selectDoctors = this.state.doctors.map(option => (
+		<option key={option._id} value={option._id}>
+			{option.doctors.contactName.last}
+		</option>
+	));
+}
+async populatePatients() {
+const { data: patients } = await getPatients();
+this.setState({ patients });
+this.selectPatients = this.state.patients.map(option => (
+	<option key={option._id} value={option._id}>
+		{option.patients.contactName.first+" "+option.patients.contactName.last}
+	</option>
+));
+}
+async populateClinics() {
+const { data: clinics } = await getClinics();
+this.setState({ clinics });
+this.selectClinics = this.state.clinics.map(option => (
+<option key={option._id} value={option._id}>
+	{option.companyInfo.businessName}
+</option>
+));
+}
   async populateAppointment() {
     try {
       const AppointmentId = this.props.match.params.id;
 
       if (AppointmentId === "new") return;
 
-      const { data: Appointment } = await getClinic(AppointmentId);
-
-      Appointment.username = Appointment.username;
-      Appointment.businessName = Appointment.businessName;
-      Appointment.date = Appointment.date;
-      Appointment.startTime = Appointment.startTime;
-      Appointment.endTime = Appointment.endTime;
-      Appointment.chiefComplaint = Appointment.chiefComplaint;
-      Appointment.appointmentType = Appointment.appointmentType;
-      Appointment.sessionType = Appointment.sessionType;
-      Appointment.doctorNo = Appointment.doctorNo;
-      Appointment.notePatient = Appointment.notePatient;
-      Appointment.note = Appointment.note;
-      Appointment.status = Appointment.status;
-
+      const { data: Appointment } = await getAppointment(AppointmentId);
       this.setState({ data: this.mapToViewModel(Appointment) });
-
       console.log(this.state.data);
     } catch (ex) {
       if (ex.response && ex.response.status === 404)
@@ -165,31 +176,26 @@ class Appointment extends Form {
   }
 
   async componentDidMount() {
-    await this.populateAppointmentType();
-    await this.populateAppointmentStatus();
-    await this.populateSessionType();
+    this.populateAppointmentType();
+    this.populateAppointmentStatus();
+    this.populateSessionType();
+	await this.populatePatients();
+	await this.populateClinics();
+	await this.populateDoctors();
     await this.populateAppointment();
   }
 
-  // schema = Joi.object({
-  // 	username: Joi.string().required().label('Username')
-  // 	//password: Joi.string().required().label('Password'),
-  // 	//email:Joi.string().required().label('Email'),
-  // 	//gender:Joi.string().required().label('Gender'),
-  // 	//country:Joi.string().required().label('Country')
-  // });
-  schema = Joi.object({
-    Appointmentname: Joi.string().alphanum().min(3).max(30).required(),
 
+  schema = Joi.object({
     patientNo: Joi.string(),
+	doctorNo: Joi.string().optional(),
+	clinicNo: Joi.string().required(),
     date: Joi.date().required(),
     startTime: Joi.string(),
     endTime: Joi.string().optional(),
     chiefComplaint: Joi.string().optional(),
     appointmentType: Joi.string().optional(),
     sessionType: Joi.string().optional(),
-    businessName: Joi.any().required(),
-    doctorNo: Joi.string().optional(),
     notePatient: Joi.string().optional(),
     note: Joi.string().optional(),
     status: Joi.string().optional(),
@@ -197,24 +203,17 @@ class Appointment extends Form {
 
   handledateChange = (e) => {
     const errors = { ...this.state.errors };
-    const obj = { ["date"]: e };
-
     const data = { ...this.state.data };
-    data["date"] = e;
-    //const data = {...this.state.data};
-    //data.date = e;
+    data.date = e;
     this.setState({ data });
     console.log(this.state.data);
   };
 
   doSubmit = async (appointment) => {
-    //console.log('working');
     try {
-      await saveAppointment(this.state.data, this.state.imageSrc);
-      //console.log(this.state.data);
-      this.props.history.push("/clinic/users");
+      await saveAppointment(this.state.data);
+      this.props.history.push("/clinic/appointments");
     } catch (ex) {
-      //if(ex.response && ex.response.status === 404){
       if (ex.response) {
         const errors = { ...this.state.errors };
         errors.username = ex.response.data;
@@ -227,16 +226,16 @@ class Appointment extends Form {
   mapToViewModel(Appointment) {
     return {
       _id: Appointment._id,
-      username: Appointment.username,
       date: new Date(Appointment.date),
       startTime: Appointment.startTime,
       endTime: Appointment.endTime,
       appointmentType: Appointment.appointmentType,
       sessionType: Appointment.sessionType,
       doctorNo: Appointment.doctorNo,
+	  patientNo: Appointment.patientNo,
+	  clinicNo: Appointment.clinicNo,
       notePatient: Appointment.notePatient,
       note: Appointment.note,
-      businessName: Appointment.businessName,
       status: Appointment.status,
     };
   }
@@ -252,7 +251,7 @@ class Appointment extends Form {
             <li className="breadcrumb-item">
               <Link to="/form/plugins">Clinics</Link>
             </li>
-            <li className="breadcrumb-item active">Add Appointment</li>
+            <li className="breadcrumb-item active">Add/Edit Appointment</li>
           </ol>
           <h1 className="page-header">
             Add Appointment <small>Appointment-registration-form</small>
@@ -261,7 +260,7 @@ class Appointment extends Form {
           <div className="row">
             <div className="col-xl-10">
               <Panel>
-                <PanelHeader>Add Appointment</PanelHeader>
+                <PanelHeader>Add/Edit Appointment</PanelHeader>
                 <PanelBody className="panel-form">
                   <form
                     className="form-horizontal form-bordered"
@@ -271,8 +270,8 @@ class Appointment extends Form {
                       <label className="col-lg-4 col-form-label">Patient</label>
                       <div className="col-lg-8">
                         <select
-                          name="clinicSolos"
-                          id="patients"
+                          name="patientNo"
+                          id="patientNo"
                           onChange={this.handleChange}
                           className="form-control"
                         >
@@ -280,6 +279,10 @@ class Appointment extends Form {
                           {this.selectPatients}
                         </select>
                       </div>
+					  {errors.patientNo && (
+                        <div className="alert alert-danger">
+                          {errors.patientNo}
+                        </div> )}
                     </div>
                     <div className="form-group row">
                       <label
@@ -299,28 +302,34 @@ class Appointment extends Form {
                           {this.selectDoctors}
                         </select>
                       </div>
-                    </div>
+					
+					  {errors.doctorNo && (
+                        <div className="alert alert-danger">
+                          {errors.doctorNo}
+                        </div> )}
+                     
+                      </div>
                     <div className="form-group row">
                       <label
                         className="col-lg-4 col-form-label"
-                        htmlFor="clinicSolos"
+                        htmlFor="clinicNo"
                       >
                         Select Clinic
                       </label>
                       <div className="col-lg-8">
                         <select
-                          name="clinicSolos"
-                          id="clinicSolos"
+                          name="clinicNo"
+                          id="clinicNo"
                           onChange={this.handleChange}
                           className="form-control"
                         >
                           <option value="">Select Clinic</option>
-                          {this.selectClinicSolos}
+                          {this.selectClinics}
                         </select>
                       </div>
-                      {errors.profile && (
+                      {errors.clinicNo && (
                         <div className="alert alert-danger">
-                          {errors.profile}
+                          {errors.clinicNo}
                         </div>
                       )}
                     </div>
@@ -459,24 +468,6 @@ class Appointment extends Form {
                         </div>
                       )}
                     </div>
-
-                    {/* {this.renderInput("bank","Bank","text","Enter Bank")} 
-                    {this.renderInput("branchOfBank","branch Of Bank","text","Enter branchOfBank")}
-                    {this.renderInput("IBAN","IBAN","text","Enter IBAN")}                                
-                    {this.renderInput("chamberCommerceNo","chamber Commerce No","text","Enter chamberCommerceNo")}
-                    {this.renderInput("taxPayerNo","tax Payer No","text","Enter taxPayerNo")} 
-                    {this.renderInput("website","Website","text","Enter website")} 
-                    {this.renderInput("size","Size","text","Enter size")} 
-                    {this.renderInput("healthcareProviderIdentifierOrganisation","healthcare Provider Identifier Organisation","text","Enter healthcareProviderIdentifierOrganisation")} 
-                    {this.renderInput("healthcareProviderIdentifierIndividual","healthcare Provider Identifier Individual","text","Enter healthcareProviderIdentifierIndividual")} 
-                    {this.renderInput("treatments","Treatments","text","Enter treatments")} 
-                    {this.renderInput("licenseNo","license No","text","Enter licenseNo")} 
-                    {this.renderInput("licenseValidTill","license Valid Till","text","Enter licenseValidTill")} 
-                    {this.renderInput("organizationAName","organizationA Name","text","Enter organizationAName")} 
-                    {this.renderInput("organizationAMemberNo","organizationA Member No","text","Enter organizationAMemberNo")} 
-                    {this.renderInput("organizationBName","organizationB Name","text","Enter organizationBName")} 
-                    {this.renderInput("organizationBMemberNo","organizationB MemberNo","text","Enter organizationBMemberNo")}                         
-                 */}
 
                     <div className="form-group row">
                       <div className="col-lg-8">
