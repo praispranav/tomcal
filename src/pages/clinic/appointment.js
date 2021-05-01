@@ -52,7 +52,9 @@ class Appointment extends Form {
 
     this.state = {
       maxDateDisabled: true,
- 
+      patients:[],
+	  doctors:[],
+	  clinics:[],
       data: {
         patientNo: "",
 		clinicNo: '',

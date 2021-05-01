@@ -2,34 +2,34 @@ import http from "./httpService";
 import { apiUrl } from "./../config/config.json";
 const apiEndpoint = apiUrl + "/listkanbans";
 
-function listkanbanUrl(id) {
+function listKanbanUrl(id) {
 	return `${apiEndpoint}/${id}`;
 }
 
-export function getListkanbans() {
+export function getListKanbans() {
 	return http.get(apiEndpoint);
 }
 
-export function getListkanban(Id) {
-	return http.get(listkanbanUrl(Id));
+export function getListKanban(Id) {
+	return http.get(listKanbanUrl(Id));
 }
 
-export function saveListkanban(listkanban) {
+export function saveListKanban(listKanban) {
 	//clone
-	const body = { ...listkanban };
+	const body = { ...listKanban };
 	console.log(body);
 	//update
-	if (listkanban.id) {
+	if (listKanban.id) {
 		//delete _id
 		delete body.id;
-		return http.put(listkanbanUrl(listkanban.id), body);
+		return http.put(listKanbanUrl(listKanban.id), body);
 	}
 
 	//add a new listkanban
-	return http.post(apiEndpoint, listkanban);
+	return http.post(apiEndpoint, listKanban);
 }
 
 //delete listkanbans
-export function deleteListkanban(Id) {
-	return http.delete(listkanbanUrl(Id));
+export function deleteListKanban(Id) {
+	return http.delete(listKanbanUrl(Id));
 }
