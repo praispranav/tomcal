@@ -44,11 +44,11 @@ const Menu = [
       { path: '/clinic/search_accountant', title: 'Search in Accountants' },  
       { path: '/clinic/patients', title: 'patients' },
       { path: '/clinic/patients/new', title: 'Add patient' },
-      { path: '/clinic/search_reception', title: 'Search in Patients' },  
+      { path: '/clinic/search_patient', title: 'Search in Patients' },  
       { path: '/clinic/users', title: 'users' },
       { path: '/clinic/user/new', title: 'Add user' },
-      { path: '/clinic/user/profile', title: 'Edit Profile' },	  
       { path: '/clinic/search_user', title: 'Search in Users' },  
+      { path: '/clinic/workinghours', title: 'Working Hours' },	  
     ]
   },
     
@@ -56,6 +56,7 @@ const Menu = [
     children: [
       { path: '/clinic/clinicsolos', title: 'clinicsolos' },
       { path: '/clinic/clinicsolos/new', title: 'Add clinicsolo' },
+	  
       { path: '/clinic/search_clinicsolo', title: 'Search in clinicsolos' },  
     ]
   },
@@ -71,9 +72,9 @@ const Menu = [
 
   { path: '/treatments', icon: 'fa fa-medkit', title: 'Treatments for TCM', badge: '10',
     children: [
-      { path: '/clinic/treatments', title: 'treatments' },
-      { path: '/clinic/treatments/new', title: 'Add treatment' },
-      { path: '/clinic/search_treatment', title: 'Search in treatments' },  
+      { path: '/clinic/tcmtreatments', title: 'TCMtreatments' },
+      { path: '/clinic/tcmtreatments/new', title: 'Add TCM treatment' },
+      { path: '/clinic/search_tcmtreatment', title: 'Search in TCMtreatments' },  
     ]
   },
 
@@ -91,6 +92,7 @@ const Menu = [
       { path: '/accounting/invoices/new', title: 'Add invoice' },
       { path: '/accounting/expences', title: 'Expences' },	  
       { path: '/accounting/expenses/new', title: 'Add expense' },  
+      { path: '/accounting/transactions', title: 'Transactions' },	  	  	  
     ]
   },
 
@@ -107,7 +109,6 @@ const Menu = [
   { path: '/database', icon: 'fa fa-database', title: 'database', badge: '10',
     children: [
       { path: '/clinic/treatments', title: 'treatments' },
-      { path: '/clinic/clinicsolos', title: 'clinics & Solos' },
       { path: '/clinic/currencies', title: 'currencies' },
       { path: '/clinic/titles', title: 'Titles' },
       { path: '/clinic/reservedNames', title: 'Reserved Names' },
