@@ -205,7 +205,7 @@ this.selectClinics = this.state.clinics.map(option => (
     chiefComplaint: Joi.string().optional(),
     appointmentType: Joi.string().optional(),
     sessionType: Joi.string().optional(),
-    note: Joi.string().optional(),
+    note: Joi.any().optional(),
     status: Joi.string().optional(),
   });
 
@@ -220,11 +220,14 @@ this.selectClinics = this.state.clinics.map(option => (
   doSubmit = async (appointment) => {
     try {
 	const data = { ...this.state.data };
-	data.start = moment(data.date + " "+ data.startTime);
-	data.end = moment(data.date + " "+ data.endTime);
+	data.complaint = data.chiefComplaint;
+	console.log(this.state.data);
+	data.start = new Date(data.date + " "+ data.startTime);
+	data.end = new Date(data.date + " "+ data.endTime);
 	delete data.date;
 	delete data.startTime;
 	delete data.endTime;
+	delete data.chiefComplaint;
 	const { data: clinic } = await getClinic(data.clinicNo);
 	data.clinicUser = clinic[0].user;
 	const { data: patient } = await getPatient(data.patientNo);
@@ -234,6 +237,7 @@ this.selectClinics = this.state.clinics.map(option => (
 		data.doctorUser = doctor[0].user;
 	}
     this.setState({ data });
+	console.log(this.state.data);
       await saveAppointment(this.state.data);
       this.props.history.push("/clinic/appointments");
     } catch (ex) {
