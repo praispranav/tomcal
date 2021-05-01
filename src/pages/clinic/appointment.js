@@ -201,10 +201,10 @@ this.selectClinics = this.state.clinics.map(option => (
     status: Joi.string().optional(),
   });
 
-  handledateChange = (e) => {
+  handleDateChange = (e) => {
     const errors = { ...this.state.errors };
     const data = { ...this.state.data };
-    data.date = e;
+	data["date"] = new Date(e);
     this.setState({ data });
     console.log(this.state.data);
   };
@@ -340,10 +340,10 @@ this.selectClinics = this.state.clinics.map(option => (
                       </label>
                       <div className="col-lg-8">
                         <DatePicker
-                          onChange={this.handleDobChange}
-                          id={data.dateBirth}
-                          value={data.dateBirth}
-                          selected={data.dateBirth}
+                          onChange={this.handleDateChange}
+                          id={data.date}
+                          value={data.date}
+                          selected={data.date}
                           inputProps={{ placeholder: "Datepicker" }}
                           className="form-control"
                         />
