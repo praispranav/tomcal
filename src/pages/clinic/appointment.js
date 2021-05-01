@@ -361,6 +361,10 @@ this.selectClinics = this.state.clinics.map(option => (
                       </label>
                       <div className="col-lg-8">
                         <DateTime
+						   onChange={this.handleDateChange}
+						   id={data.dstartTime}
+						   value={data.startTime}
+						   selected={data.startTime}
                           dateFormat={false}
                           inputProps={{ placeholder: "Timepicker" }}
                         />
@@ -372,6 +376,15 @@ this.selectClinics = this.state.clinics.map(option => (
                       </label>
                       <div className="col-lg-8">
                         <DateTime
+						   onChange={(e) => {
+                            console.log(e);							const data = { ...this.state.data };
+							data.endTime = e;
+							this.setState({ data });
+							console.log(this.state.data);
+						  }}
+						   id={data.endTime}
+						   value={data.endTime}
+						   selected={data.endTime}
                           dateFormat={false}
                           inputProps={{ placeholder: "Timepicker" }}
                         />
