@@ -176,7 +176,7 @@ this.selectClinics = this.state.clinics.map(option => (
   }
 
   async componentDidMount() {
-    this.populateAppointmentType();
+    this.populateAppointmentTypes();
     this.populateAppointmentStatus();
     this.populateSessionType();
 	await this.populatePatients();
@@ -459,12 +459,12 @@ this.selectClinics = this.state.clinics.map(option => (
                           className="form-control"
                         >
                           <option value="">Select Status</option>
-                          {this.selectstatus}
+                          {this.appointmentStatusoptions}
                         </select>
                       </div>
-                      {errors.profile && (
+                      {errors.status && (
                         <div className="alert alert-danger">
-                          {errors.profile}
+                          {errors.status}
                         </div>
                       )}
                     </div>
