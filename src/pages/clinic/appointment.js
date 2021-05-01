@@ -23,15 +23,9 @@ import Form from "../../common/form.jsx";
 import { apiUrl } from "../../config/config.json";
 import http from "../../services/httpService";
 import { saveAppointment, getAppointment } from "./../../services/appointments";
-<<<<<<< HEAD
 import { getClinic,getClinics } from "./../../services/clinics";
 import { getDoctor,getDoctors } from "./../../services/doctors";
 import { getPatient,getPatients } from "./../../services/patients";
-=======
-import { getClinics } from "./../../services/clinics";
-import { getDoctors } from "./../../services/doctors";
-import { getPatients } from "./../../services/patients";
->>>>>>> 3d360cedd5d6b23780bdd317b0f1aacd4852471c
 
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
 const Handle = Slider.Handle;
@@ -70,10 +64,6 @@ class Appointment extends Form {
         appointmentType: "",
         sessionType: "",
         note: "",
-<<<<<<< HEAD
-=======
-		notePatient: "",
->>>>>>> 3d360cedd5d6b23780bdd317b0f1aacd4852471c
 		status: ""
         
       },
