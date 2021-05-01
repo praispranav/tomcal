@@ -223,7 +223,7 @@ class User extends Form {
 		console.log(event.target.files[0]);
 	};
 
-	doSubmit = async (user) => {
+	doSubmit = async () => {
 
 		try {
 			await saveUser(this.state.data, this.state.imageSrc);
@@ -248,7 +248,7 @@ class User extends Form {
 			email: user.email,
 			dateBirth: new Date(user.dateBirth),
 			firstName: user.firstName,
-			lastName: user.firstName,
+			lastName: user.lastName,
 			initials: user.initials,
 			prefix: user.prefix,
 			address1: user.address1,

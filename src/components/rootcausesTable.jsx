@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Table from "./../common/table";
 import { Link, withRouter } from "react-router-dom";
 
-class KanbansTable extends Component {
+class RootcausesTable extends Component {
 	// constructor(props) {
 	// 	super(props);
 	// 	this.state = {
@@ -78,4 +78,4 @@ class KanbansTable extends Component {
 	}
 }
 
-export default KanbansTable;
+export default RootcausesTable;

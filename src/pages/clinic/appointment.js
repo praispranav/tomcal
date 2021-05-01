@@ -23,9 +23,15 @@ import Form from "../../common/form.jsx";
 import { apiUrl } from "../../config/config.json";
 import http from "../../services/httpService";
 import { saveAppointment, getAppointment } from "./../../services/appointments";
+<<<<<<< HEAD
+import { getClinic,getClinics } from "./../../services/clinics";
+import { getDoctor,getDoctors } from "./../../services/doctors";
+import { getPatient,getPatients } from "./../../services/patients";
+=======
 import { getClinics } from "./../../services/clinics";
 import { getDoctors } from "./../../services/doctors";
 import { getPatients } from "./../../services/patients";
+>>>>>>> 3d360cedd5d6b23780bdd317b0f1aacd4852471c
 
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
 const Handle = Slider.Handle;
@@ -64,7 +70,10 @@ class Appointment extends Form {
         appointmentType: "",
         sessionType: "",
         note: "",
+<<<<<<< HEAD
+=======
 		notePatient: "",
+>>>>>>> 3d360cedd5d6b23780bdd317b0f1aacd4852471c
 		status: ""
         
       },
@@ -169,6 +178,12 @@ this.selectClinics = this.state.clinics.map(option => (
       if (AppointmentId === "new") return;
 
       const { data: Appointment } = await getAppointment(AppointmentId);
+	  const startDate = new Date(Appointment.start);
+	  const endDate = new Date(Appointment.end);
+	  Appointment.date = startDate.getFullYear()-startDate.getMonth() + 1-startDate.getDate();
+	  Appointment.startTime = startDate.getHours()+":"+startDate.getMinutes();
+	  Appointment.endTime = endDate.getHours()+":"+endDate.getMinutes();
+	  Appointment.chiefComplaint = Appointment.complaint;
       this.setState({ data: this.mapToViewModel(Appointment) });
       console.log(this.state.data);
     } catch (ex) {
@@ -198,7 +213,6 @@ this.selectClinics = this.state.clinics.map(option => (
     chiefComplaint: Joi.string().optional(),
     appointmentType: Joi.string().optional(),
     sessionType: Joi.string().optional(),
-    notePatient: Joi.string().optional(),
     note: Joi.string().optional(),
     status: Joi.string().optional(),
   });
@@ -213,12 +227,27 @@ this.selectClinics = this.state.clinics.map(option => (
 
   doSubmit = async (appointment) => {
     try {
+	const data = { ...this.state.data };
+	data.start = moment(data.date + " "+ data.startTime);
+	data.end = moment(data.date + " "+ data.endTime);
+	delete data.date;
+	delete data.startTime;
+	delete data.endTime;
+	const { data: clinic } = await getClinic(data.clinicNo);
+	data.clinicUser = clinic[0].user;
+	const { data: patient } = await getPatient(data.patientNo);
+	data.patientUser = patient[0].user;
+	if(data.doctorNo) {
+		const { data: doctor } = await getDoctor(data.doctorNo);
+		data.doctorUser = doctor[0].user;
+	}
+    this.setState({ data });
       await saveAppointment(this.state.data);
       this.props.history.push("/clinic/appointments");
     } catch (ex) {
       if (ex.response) {
         const errors = { ...this.state.errors };
-        errors.username = ex.response.data;
+        errors.status = ex.response.data;
         this.setState({ errors });
         //console.log(this.state.errors);
       }
@@ -236,9 +265,9 @@ this.selectClinics = this.state.clinics.map(option => (
       doctorNo: Appointment.doctorNo,
 	  patientNo: Appointment.patientNo,
 	  clinicNo: Appointment.clinicNo,
-      notePatient: Appointment.notePatient,
       note: Appointment.note,
       status: Appointment.status,
+	  chiefComplaint: Appointment.chiefComplaint,
     };
   }
   render() {
@@ -394,20 +423,9 @@ this.selectClinics = this.state.clinics.map(option => (
                       </div>
                     </div>
 
-                    <div className="form-group row">
-                      <label className="col-lg-4 col-form-label">
-                        Complaint
-                      </label>
-                      <div className="col-lg-8">
-                        <div className="row row-space-10">
-                          <input
-                            type="textarea"
-                            className="form-control m-b-5"
-                            placeholder="Enter Complaint"
-                          />
-                        </div>
-                      </div>
-                    </div>
+                 
+
+					{this.renderTextarea("chiefComplaint","Complaint","Enter Complaint")}
 
                     <div className="form-group row">
                       <label
@@ -459,7 +477,8 @@ this.selectClinics = this.state.clinics.map(option => (
                       )}
                     </div>
 
-                    {this.renderInput("note", "Note", "text", "* Enter Note")}
+					{this.renderTextarea("note","Note","* Enter Note")}
+
                     <div className="form-group row">
                       <label
                         className="col-lg-4 col-form-label"

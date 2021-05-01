@@ -2,32 +2,29 @@ import React, { Component } from "react";
 import Table from "./../common/table";
 import { Link, withRouter } from "react-router-dom";
 
-class ProductservicesTable extends Component {
+class WorkinghoursTable extends Component {
 	columns = [
 		{
 			key: "checkbox",
 			label: <input type="check" style={checkboxStyles} />,
-			content: (listProductservice) => (
+			content: (listWorkinghour) => (
 				<span className="icon-img sm-r-5" style={{ marginTop: "15px" }}>
 					<input
 						type="checkbox"
 						style={checkboxStyles}
 						onChange={this.props.handleCheckboxChange}
-						value={listProductservice._id}
+						value={listWorkinghour._id}
 					/>
 				</span>
 			),
 		},
-		{label: "ProductserviceNo", path: "productserviceNo" },
-		{label: "Name", path: "name" },
-		{label: "Code", path: "code" },
-		{label: 'Price',   path: "price" } ,   	  
-		{label: 'Valid Till',   path: "validTill" } ,   	  
-		{label: 'Description',   path: "description" } ,   	  
-		{label: 'Note',   path: "note" } ,   	  	  		
-		{label: "ClinicNo", path: "clinicNo" },		
-		{label: "CreatedOn", path: "createdOn" },
-		{label: "Status", path: "status" },		
+		{label: "BusinessName", path: "businessName" },
+		{label: "Username", path: "username" },
+		{label: "Day", path: "day" },
+		{label: 'StartTime',   path: "startTime" } ,   	  
+		{label: 'EndTime',   path: "endTime" } ,   	  
+		{label: 'Open / Closed',   path: "openClosed" } ,   	  
+		{label: 'Open/Closed Till',   path: "openClosedTill" } ,   	  	  		
 	];
 
 	render() {
@@ -46,4 +43,4 @@ const checkboxStyles = {
 	borderRadius: 0,
 };
 
-export default ProductservicesTable;
+export default WorkinghoursTable;
