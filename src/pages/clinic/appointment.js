@@ -8,6 +8,7 @@ import {
 import { UncontrolledDropdown, DropdownMenu, DropdownToggle } from "reactstrap";
 import ReactTags from "react-tag-autocomplete";
 import DatePicker from "react-datepicker";
+import TimePicker from 'react-time-picker';
 import DateTime from "react-datetime";
 import moment from "moment";
 //import Select from 'react-select';
@@ -25,6 +26,7 @@ import { saveAppointment, getAppointment } from "./../../services/appointments";
 import { getClinics } from "./../../services/clinics";
 import { getDoctors } from "./../../services/doctors";
 import { getPatients } from "./../../services/patients";
+
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
 const Handle = Slider.Handle;
 
@@ -360,13 +362,15 @@ this.selectClinics = this.state.clinics.map(option => (
                         Select Start-Time
                       </label>
                       <div className="col-lg-8">
-                        <DateTime
-						   onChange={this.handleDateChange}
-						   id={data.dstartTime}
+					  <TimePicker
+						   onChange={(e) => {			
+							const data = { ...this.state.data };
+							data.startTime = e;
+							this.setState({ data });
+							console.log(this.state.data);
+						  }}
+						   id={data.startTime}
 						   value={data.startTime}
-						   selected={data.startTime}
-                          dateFormat={false}
-                          inputProps={{ placeholder: "Timepicker" }}
                         />
                       </div>
                     </div>
@@ -375,18 +379,15 @@ this.selectClinics = this.state.clinics.map(option => (
                         Select End-Time
                       </label>
                       <div className="col-lg-8">
-                        <DateTime
-						   onChange={(e) => {
-                            console.log(e);							const data = { ...this.state.data };
+					  <TimePicker
+						   onChange={(e) => {				
+							const data = { ...this.state.data };
 							data.endTime = e;
 							this.setState({ data });
 							console.log(this.state.data);
 						  }}
 						   id={data.endTime}
 						   value={data.endTime}
-						   selected={data.endTime}
-                          dateFormat={false}
-                          inputProps={{ placeholder: "Timepicker" }}
                         />
                       </div>
                     </div>
