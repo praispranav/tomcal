@@ -62,7 +62,8 @@ class Appointment extends Form {
         date: new Date(),
         startTime: "",
         endTime: "",
-        chiefComplaint: "",
+        //chiefComplaint: "",
+		complaint: "",
         appointmentType: "",
         sessionType: "",
         note: "",
@@ -175,7 +176,6 @@ this.selectClinics = this.state.clinics.map(option => (
 	  Appointment.date = startDate.getFullYear()-startDate.getMonth() + 1-startDate.getDate();
 	  Appointment.startTime = startDate.getHours()+":"+startDate.getMinutes();
 	  Appointment.endTime = endDate.getHours()+":"+endDate.getMinutes();
-	  Appointment.chiefComplaint = Appointment.complaint;
       this.setState({ data: this.mapToViewModel(Appointment) });
       console.log(this.state.data);
     } catch (ex) {
@@ -202,7 +202,8 @@ this.selectClinics = this.state.clinics.map(option => (
     date: Joi.date().required(),
     startTime: Joi.string(),
     endTime: Joi.string().optional(),
-    chiefComplaint: Joi.string().optional(),
+    //chiefComplaint: Joi.string().optional(),
+	complaint: Joi.string().optional(),
     appointmentType: Joi.string().optional(),
     sessionType: Joi.string().optional(),
     note: Joi.any().optional(),
@@ -220,14 +221,12 @@ this.selectClinics = this.state.clinics.map(option => (
   doSubmit = async (appointment) => {
     try {
 	const data = { ...this.state.data };
-	data.complaint = data.chiefComplaint;
 	console.log(this.state.data);
-	data.start = new Date(data.date + " "+ data.startTime);
-	data.end = new Date(data.date + " "+ data.endTime);
+	data.start = new Date(data.date + " "+ moment(data.startTime, "HH:mm:ss"));
+	data.end = new Date(data.date + " "+ moment(data.endTime, "HH:mm:ss"));
 	delete data.date;
 	delete data.startTime;
 	delete data.endTime;
-	delete data.chiefComplaint;
 	const { data: clinic } = await getClinic(data.clinicNo);
 	data.clinicUser = clinic[0].user;
 	const { data: patient } = await getPatient(data.patientNo);
@@ -263,7 +262,8 @@ this.selectClinics = this.state.clinics.map(option => (
 	  clinicNo: Appointment.clinicNo,
       note: Appointment.note,
       status: Appointment.status,
-	  chiefComplaint: Appointment.chiefComplaint,
+	  //chiefComplaint: Appointment.chiefComplaint,
+	  complaint: Appointment.complaint,
     };
   }
   render() {
@@ -421,7 +421,7 @@ this.selectClinics = this.state.clinics.map(option => (
 
                  
 
-					{this.renderTextarea("chiefComplaint","Complaint","Enter Complaint")}
+					{this.renderTextarea("complaint","Complaint","Enter Complaint")}
 
                     <div className="form-group row">
                       <label
