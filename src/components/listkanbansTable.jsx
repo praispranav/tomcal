@@ -22,7 +22,8 @@ class ListKanbansTable extends Component {
 		{ label: "ListKanbanNo", path: "listKanbanNo" },
 		{ label: "Name", path: "name" },
 		{ label: "Owner", path: "username" },
-		{ label: "Participants", path: "participants" },
+		{ label: "Color", path: "color" },
+		{ label: "Participants", path: "participants" },		
 		{ label: "Note", path: "note" },
 		{ label: "CreatedOn", path: "createdOn" },		
 	];

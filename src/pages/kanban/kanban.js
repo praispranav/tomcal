@@ -75,25 +75,9 @@ class Kanban extends Form {
 			errors: {}
 		}
 
-		this.categoryOptions = [
-			{ value: 'bug-error', label: 'Bug/Error' },
-			{ value: 'complaint', label: 'Complaint' },
-			{ value: 'disconnection', label: 'Disconnection' },
-			{ value: 'feature-request', label: 'Feature Request' },
-			{ value: 'orders', label: 'orders' },
-			{ value: 'sales', label: 'Sales' },
-			{ value: 'other', label: 'Other' }
-		];
-
-		this.priorityOptions = [
-			{ value: 'normal', label: 'normal' },
-			{ value: 'low', label: 'low' },
-			{ value: 'high', label: 'high' },
-			{ value: 'urgent', label: 'urgent' },
-		];
-
 		this.statusOptions = [
 			{ value: 'in progress', label: 'In Progress' },
+			{ value: 'active', label: 'Active' },			
 			{ value: 'pending', label: 'Pending' },
 			{ value: 'new', label: 'New' },
 			{ value: 'archive', label: 'Archive' }
@@ -116,21 +100,6 @@ class Kanban extends Form {
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleChange = this.handleChange.bind(this);
 		this.onChangeImgHandler = this.onChangeImgHandler.bind(this);
-	}
-
-	async populateCategory(){
-		this.categoryoptions = this.categoryOptions.map(option => (
-			<option key={option.label} value={option.value}>
-				{option.value}
-			</option>
-		));
-	}
-	async populatePriority(){
-    this.priorityoptions = this.priorityOptions.map(option => (
-		<option key={option.label} value={option.value}>
-			{option.value}
-		</option>
-	));
 	}
 
 	async populateStatus(){

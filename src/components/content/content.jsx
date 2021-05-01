@@ -82,7 +82,7 @@ import Ticket from "./../../pages/clinic/ticket.js";
 import TicketsTable from "./../../pages/clinic/tickets.js";
 import ClinicSolo from "./../../pages/clinic/clinicsolo.js";
 import ClinicSoloTable from "./../../pages/clinic/clinicsolos.js";
-//import Appointment from './../../pages/clinic/appointment.js';
+import Appointment from './../../pages/clinic/appointment.js';
 import AppointmentTable from "./../../pages/clinic/appointments.js";
 import reqForAppointment from "./../../pages/clinic/reqforappointment.js";
 import reqforappointmentTable from "./../../pages/clinic/reqforappointments.js";
@@ -116,10 +116,10 @@ import NewKanBanBoard from "./../../pages/clinic/grid-tickets.js";
 // import BTreatment from './../../pages/clinic/btreatment.js';
 // import BTreatmentTable from './../../pages/clinic/btreatments.js';
 
-// import Card from './../../pages/kanban/card.js';
-// import Listkanban from './../../pages/kanban/listkanban.js';
-// import Kanban from './../../pages/kanban/kanban.js';
-// import Scrumboard from './../../pages/kanban/scrumboard.js';
+import Card from './../../pages/kanban/card.js';
+import Listkanban from './../../pages/kanban/listkanban.js';
+import Kanban from './../../pages/kanban/kanban.js';
+import Scrumboard from './../../pages/kanban/scrumboard.js';
 
 import FormPlugins from "./../../pages/form/form-plugins";
 import Logout from "./../../common/logout";
@@ -216,6 +216,9 @@ class Content extends React.Component {
 
 								<Route path="/scheduler2" title="Scheduler2" component={SchedulerfCal} />
 								<Route path="/kanban/kanban" title="KanBanBoard" component={KanBanBoard} />
+								<Route path="/kanban/kanban" title="Card" component={Card} />								
+								<Route path="/kanban/kanban" title="Listkanban" component={Listkanban} />																
+								<Route path="/kanban/kanban" title="Kanban" component={Kanban} />																
 								{/*  <Route path= '/clinic/tickets' title="NewKanBanBoard" component={NewKanBanBoard}   />  */}
 
 								<ProtectedRoute
@@ -228,6 +231,18 @@ class Content extends React.Component {
 									path="/clinic/reqforappointments"
 									title="ReqForAppointments"
 									component={reqforappointmentTable}
+								/>
+
+                                <ProtectedRoute
+									path="/clinic/appointments/:id"
+									title="Appointment"
+									component={Appointment}
+								/>
+
+								<ProtectedRoute
+									path="/clinic/appointments"
+									title="ReqForAppointments"
+									component={AppointmentTable}
 								/>
 
 								<ProtectedRoute path="/clinic/grid-tickets" title="grid-tickets" component={NewKanBanBoard} />

@@ -22,8 +22,9 @@ class CardsTable extends Component {
 		{ label: "ListNo", path: "listKanbanNo" },
 		{ label: "CardNo", path: "cardNo" },
 		{ label: "Name", path: "name" },
-		{ label: "Owner", path: "cardname" },
+		{ label: "Owner", path: "username" },
 		{ label: "Participants", path: "participants" },
+		{ label: "AssignedTo", path: "assignedTo" },		
 		{ label: "Narrative", path: "narrative" },
 		{ label: "Priority", path: "priority" },
 		{ label: "Businessname", path: "businessName" },
@@ -35,11 +36,11 @@ class CardsTable extends Component {
 		{ label: "Tags", path: "tags" },
 		{ label: "Reference", path: "cardReference" },
 		{ label: "Sharinglink", path: "sharingLink" },
-		{ label: "AssignedTo", path: "assignedTo" },
-		{ label: "SharedTo", path: "sharedTo" },
+		{ label: "SharedTo", path: "sharedTo" },		
+		{ label: "SharedTill", path: "sharedTill" },		
 		{ label: "Note", path: "note" },
 		{ label: "CreatedOn", path: "createdOn" },		
-		{ status: "Status", path: "status" },		
+		{ label: "Status", path: "status" },		
 	];
 
 	render() {

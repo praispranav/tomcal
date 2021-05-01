@@ -7,10 +7,9 @@ import React, { useEffect, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import DateRange from "../../components/kanban/DateRangePicker";
 import { Panel, PanelBody, PanelHeader } from "../../components/panel/panel";
-import Actions from "./../../../src/components/kanban/Action";
-import TicketCard from "./../../../src/components/kanban/Card";
-import Filter from "./../../../src/components/kanban/Filters";
-import "./../../../src/components/kanban/style.css";
+import Ticket from "./../../../src/components/ticket/Ticket";
+import Filter from "./../../../src/components/ticket/Filters";
+import "./../../../src/components/ticket/style.css";
 
 const itemsFromBackend = [
 	{ id: "a", content: "First task", priority: "low", status: "closed" },
@@ -294,7 +293,7 @@ function KanBanBoard(props) {
 																			// {...provided.draggableProps}
 																			// {...provided.dragHandleProps}
 																			>
-																				<TicketCard
+																				<Ticket
 																					statusOptions={statusOptions}
 																					priorityOptions={priorityOptions}
 																					content={item}

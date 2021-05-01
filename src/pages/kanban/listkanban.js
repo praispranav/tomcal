@@ -89,40 +89,41 @@ class ListKanban extends Form {
 		this.handleChange = this.handleChange.bind(this);
 		this.onChangeImgHandler = this.onChangeImgHandler.bind(this);
 	}
-	}
+	
 
-	async populateStatus(){
-    this.statusoptions = this.statusOptions.map(option => (
+	populateStatus(){
+    this.statusOptions = this.statusOptions.map(option => (
 		<option key={option.label} value={option.value}>
 			{option.value}
 		</option>
 	));
 	}
-	
+
 	async populateListKanban() { 
 		try {
-		  const kanbanId = this.props.match.params.id;
+		  const listkanbanId = this.props.match.params.id;
 		
-		  if (kanbanId === "new") return;
+		  if (listkanbanId === "new") return;
 	
-		  const { data: kanban } = await getListKanban(kanbanId);
+		  const { data: listkanban } = await getListKanban(listkanbanId);
 
-			 kanban.username = kanban.username;		  
-			 kanban.name = kanban.name;
-			 kanban.participants = kanban.participants;
-			 kanban.narrative = kanban.narrative;
-			 kanban.businessName = kanban.businessName;			 
-			 kanban.department = kanban.department;
-			 kanban.subDepartment = kanban.subDepartment;
-			 kanban.locations   = kanban.locations;
-			 kanban.field = kanban.field;
-			 kanban.tag = kanban.tag;
-//			 kanban.sharingLink  = kanban.sharingLink;
-//			 kanban.sharedTo = kanban.sharedTo;
-			 kanban.createdOn = kanban.creadOn;			 
-			 kanban.status = kanban.status;
+			 listkanban.username = listkanban.username;		  
+			 listkanban.name = listkanban.name;
+			 listkanban.participants = listkanban.participants;
+			 listkanban.narrative = listkanban.narrative;
+			 listkanban.businessName = listkanban.businessName;			 
+			 listkanban.department = listkanban.department;
+			 listkanban.subDepartment = listkanban.subDepartment;
+			 listkanban.locations   = listkanban.locations;
+			 listkanban.field = listkanban.field;
+			 listkanban.tag = listkanban.tag;
+			 listkanban.color = listkanban.color;			 
+//			 listkanban.sharingLink  = listkanban.sharingLink;
+//			 listkanban.sharedTo = listkanban.sharedTo;
+			 listkanban.createdOn = listkanban.creadOn;			 
+			 listkanban.status = listkanban.status;
 
-		  this.setState({ data: this.mapToViewModel(kanban) });
+		  this.setState({ data: this.mapToViewModel(listkanban) });
 
 		  console.log(this.state.data);
 		} catch (ex) {
@@ -148,7 +149,7 @@ schema = Joi.object({
 		createdOn: Joi.date().optional(),
 		deadline: Joi.date().optional(),
 		locations: Joi.string().optional(),
-		kanbanNo: Joi.string().optional(),
+		listkanbanNo: Joi.string().optional(),
 		documentNo: Joi.string().optional(),
 		field: Joi.string().optional(),
 		tags: Joi.string().optional(),
@@ -179,16 +180,16 @@ schema = Joi.object({
 	
 	}
 
-	doSubmit = async (kanban) => {
+	doSubmit = async (listkanban) => {
 	    try{
 			console.log(this.state.data);
 			await saveListKanban(this.state.data,this.state.imageSrc);
-			this.props.history.push("/clinic/kanbans");
+			this.props.history.push("/clinic/listkanbans");
 		}catch(ex){
 			//if(ex.response && ex.response.status === 404){
 			if(ex.response){
 				const errors = {...this.state.errors};
-				errors.kanbanname = ex.response.data;
+				errors.listkanbanname = ex.response.data;
 				this.setState({errors});
 				//console.log(this.state.errors);
 			}
@@ -203,33 +204,33 @@ schema = Joi.object({
 		return listKanbanNumber;
 	}
 	
-	mapToViewModel(kanban) {
+	mapToViewModel(listkanban) {
 		return {
-            _id: kanban._id,
-            kanbanname	: kanban.kanbanname,            
-            name		: kanban.name,
-            narrative	: kanban.narrative,
-            category	: kanban.category,
-            message		: kanban.message,
-            comment		: kanban.comment,
-            reply		: kanban.reply,
-			businessName: kanban.businessName,
-			priority	: kanban.priority,
-            department	: kanban.department,
-            subDepartment: kanban.subDepartment,  
-            locations	: kanban.locations,
-            kanbanNo	: kanban.kanbanNo,
-            createdOn	: new Date(kanban.createdOn),			
-            deadline	: new Date(kanban.deadline),			
-            documentNo  : kanban.documentNo,
-            field       : kanban.field,
-            tags		: kanban.tags,			
-            action      : kanban.action,
-            kanbanReference: kanban.kanbanReference,
-            sharingLink : kanban.sharingLink,
-            assignedTo  : kanban.assignedTo,
-            sharedTo    : kanban.sharedTo,
-            status      : kanban.status,     
+            _id: listkanban._id,
+            listkanbanName	: listkanban.listkanbanName,            
+            name		: listkanban.name,
+            narrative	: listkanban.narrative,
+            category	: listkanban.category,
+            message		: listkanban.message,
+            comment		: listkanban.comment,
+            reply		: listkanban.reply,
+			businessName: listkanban.businessName,
+			priority	: listkanban.priority,
+            department	: listkanban.department,
+            subDepartment: listkanban.subDepartment,  
+            locations	: listkanban.locations,
+            listkanbanNo	: listkanban.listkanbanNo,
+            createdOn	: new Date(listkanban.createdOn),			
+            deadline	: new Date(listkanban.deadline),			
+            documentNo  : listkanban.documentNo,
+            field       : listkanban.field,
+            tags		: listkanban.tags,			
+            color       : listkanban.color,
+            listkanbanReference: listkanban.listkanbanReference,
+            sharingLink : listkanban.sharingLink,
+            assignedTo  : listkanban.assignedTo,
+            sharedTo    : listkanban.sharedTo,
+            status      : listkanban.status,     
 		};
 	  }
 
@@ -241,7 +242,7 @@ schema = Joi.object({
 				<div>
 					<ol className="breadcrumb float-xl-right">
 						<li className="breadcrumb-item"><Link to="/form/plugins">Home</Link></li>
-						<li className="breadcrumb-item"><Link to="/clinic/kanbans">ListKanbans</Link></li>
+						<li className="breadcrumb-item"><Link to="/kanban/listkanbans">ListKanbans</Link></li>
 						<li className="breadcrumb-item active">Add ListKanban</li>
 					</ol>
 					<h1 className="page-header">
@@ -319,6 +320,27 @@ schema = Joi.object({
 												{errors.deadline && <div className="alert alert-danger">{errors.deadline}</div>}
 											</div>
 										</div>
+{/*
+									<div className="form-group row">
+										<label className="col-lg-4 col-form-label">Chrome Type Colorpicker</label>
+										<div className="col-lg-8">
+											<UncontrolledDropdown>
+												<div className="input-group">
+													<input type="text" className="form-control bg-white" readOnly value={this.state.chromeBackgroundColor} />
+													<span className="input-group-append">
+														<span className="input-group-text">
+															<DropdownToggle className="p-0 border-0">
+																<i style={{width: '16px', height: '16px', display: 'block', background: this.state.chromeBackgroundColor}}></i>
+															</DropdownToggle>
+														</span>
+													</span>
+												</div>
+												<DropdownMenu>
+													<ChromePicker color={ this.state.chromeBackgroundColor } onChangeComplete={ this.handleChromeChangeComplete } />
+												</DropdownMenu> 
+											</UncontrolledDropdown>
+										</div>
+									</div>  */}
 										
 										<div className="form-group row">
 											<label className="col-lg-4 col-form-label" htmlFor="imageSrc">Image</label>
