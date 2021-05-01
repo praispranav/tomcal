@@ -363,6 +363,7 @@ this.selectClinics = this.state.clinics.map(option => (
                       </label>
                       <div className="col-lg-8">
 					  <TimePicker
+					       disableClock={true}
 						   onChange={(e) => {			
 							const data = { ...this.state.data };
 							data.startTime = e;
@@ -380,6 +381,7 @@ this.selectClinics = this.state.clinics.map(option => (
                       </label>
                       <div className="col-lg-8">
 					  <TimePicker
+					       disableClock={true}
 						   onChange={(e) => {				
 							const data = { ...this.state.data };
 							data.endTime = e;
