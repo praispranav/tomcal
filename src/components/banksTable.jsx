@@ -54,13 +54,8 @@ class KanbansTable extends Component {
 				</span>
 			),
 		},
-		{label: 'Owner',   path: 'username' } ,
+
 		{label: 'Name',   path: 'name' } ,   
-		{label: 'Participants',   path: 'participants' } ,   
-		{label: 'Department',   path: 'department' } ,   	  
-		{label: 'Field',   path: 'field' } ,   	  
-		{label: 'Tags',   path: 'tags' } ,   	  
-		{label: 'Narrative',   path: 'narrative' } ,   	  
 		{label: 'Note',   path: 'note' } ,   	  	  
 	];
 
