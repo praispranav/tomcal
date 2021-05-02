@@ -1,6 +1,6 @@
 import React, { Component, useState } from "react";
 import { Link, BrowserRouter as Router } from "react-router-dom";
-import ReactSelect from "../../components/kanban/ReactSelect";
+import Priority from "../../components/kanban/Priority";
 import Status from "../../components/kanban/Status";
 
 import {
@@ -81,7 +81,7 @@ const TicketCard = ({ statusOptions, priorityOptions, content, ...props }) => {
         </CardBody>
         <CardSubtitle className="f-s-13 my-2 m-b-10 text-muted d-flex justify-content-start align-items-center">
           Priority:{" "}
-          <ReactSelect
+          <Priority 
             className="ml-2"
             options={priorityOptions}
             selectedValue={content.priority}
