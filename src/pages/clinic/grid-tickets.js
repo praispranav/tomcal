@@ -272,47 +272,34 @@ function KanBanBoard(props) {
 						<DateRange className={datePickerClass} />
 					</PanelBody>
 				</Panel>
-				<div className="" style={{ display: "flex", flexDirection: "row" }}>
-					<DragDropContext onDragEnd={(result) => onDragEnd(result, columns, setColumns)}>
-						{filterColumn.map(([columnId, column], index) => {
+				<div className="" style={{ display: "flex", flexDirection: "column" }}>
+					<div style={rowStyles}>
+						{columnsFromBackend["1"].items.map((item) => {
 							return (
-								<div>
-									<Droppable droppableId={columnId} key={columnId}>
-										{(provided, snapshot) => {
-											return (
-												<div {...provided.droppableProps} ref={provided.innerRef}>
-													{/* <Actions name={column.name} actionN={column.number} /> */}
-													<div>
-														{column.items.map((item, index) => {
-															return (
-																<Draggable key={item.id} draggableId={item.id} index={index}>
-																	{(provided, snapshot) => {
-																		return (
-																			<div
-																			// ref={provided.innerRef}
-																			// {...provided.draggableProps}
-																			// {...provided.dragHandleProps}
-																			>
-																				<Ticket
-																					statusOptions={statusOptions}
-																					priorityOptions={priorityOptions}
-																					content={item}
-																				/>
-																			</div>
-																		);
-																	}}
-																</Draggable>
-															);
-														})}
-													</div>
-												</div>
-											);
-										}}
-									</Droppable>
+								<div style={{ width: "33%" }}>
+									<Ticket statusOptions={statusOptions} priorityOptions={priorityOptions} content={item} />
 								</div>
 							);
 						})}
-					</DragDropContext>
+					</div>
+					<div style={rowStyles}>
+						{columnsFromBackend["2"].items.map((item) => {
+							return (
+								<div style={{ width: "33%" }}>
+									<Ticket statusOptions={statusOptions} priorityOptions={priorityOptions} content={item} />
+								</div>
+							);
+						})}
+					</div>
+					<div style={rowStyles}>
+						{columnsFromBackend["3"].items.map((item) => {
+							return (
+								<div style={{ width: "33%" }}>
+									<Ticket statusOptions={statusOptions} priorityOptions={priorityOptions} content={item} />
+								</div>
+							);
+						})}
+					</div>
 				</div>
 			</div>
 		</div>
@@ -320,3 +307,50 @@ function KanBanBoard(props) {
 }
 
 export default KanBanBoard;
+
+const rowStyles = {
+	display: "flex",
+	flexDirection: "row",
+};
+{
+	/* <DragDropContext onDragEnd={(result) => onDragEnd(result, columns, setColumns)}>
+	{filterColumn.map(([columnId, column], index) => {
+		return (
+			<div>
+				<Droppable droppableId={columnId} key={columnId}>
+					{(provided, snapshot) => {
+						return (
+							<div {...provided.droppableProps} ref={provided.innerRef}>
+								{/* <Actions name={column.name} actionN={column.number} />
+								<div>
+									{column.items.map((item, index) => {
+										return (
+											<Draggable key={item.id} draggableId={item.id} index={index}>
+												{(provided, snapshot) => {
+													return (
+														<div
+														// ref={provided.innerRef}
+														// {...provided.draggableProps}
+														// {...provided.dragHandleProps}
+														>
+															<Ticket
+																statusOptions={statusOptions}
+																priorityOptions={priorityOptions}
+																content={item}
+															/>
+														</div>
+													);
+												}}
+											</Draggable>
+										);
+									})}
+								</div>
+							</div>
+						);
+					}}
+				</Droppable>
+			</div>
+		);
+	})}
+</DragDropContext>; */
+}
