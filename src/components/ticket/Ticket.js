@@ -1,7 +1,7 @@
 import React, { Component, useState } from "react";
 import { Link, BrowserRouter as Router } from "react-router-dom";
-import Priority from "../../kanban/Priority";
-import Status from "../../kanban/Status";
+import Priority from './../kanban/Priority'; 
+import Status from "./../kanban/Status";
 
 import {
   Card,
