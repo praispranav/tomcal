@@ -10,6 +10,7 @@ import {
 import ReusableTabNavs from "./ReusableTabNavs";
 import ReusableTab from "./ReusableTab";
 import { TabContent } from "reactstrap";
+import Spreadsheet from "./Spreadsheet/SpreasSheet";
 
 // import Actions from "./BasicInfoFields/Action";
 
@@ -28,6 +29,7 @@ class TicketTabs extends React.Component {
       dropdownOpen: false,
       readOnly: true,
       activeTab: 1,
+      read: true,
     };
     this.setReadOnly = this.setReadOnly.bind(this);
     this.setActiveTab = this.setActiveTab.bind(this);
@@ -104,28 +106,12 @@ class TicketTabs extends React.Component {
                       readOnly={this.state.readOnly}
                       setReadOnly={() => this.setReadOnly()}
                     />
-                    <>
-                      <h4>Reviews</h4>
-                      <p>
-                        Nullam ac sapien justo. Nam augue mauris, malesuada non
-                        magna sed, feugiat blandit ligula. In tristique
-                        tincidunt purus id iaculis. Pellentesque volutpat tortor
-                        a mauris convallis, sit amet scelerisque lectus
-                        adipiscing.
-                      </p>
-                    </>
                   </ReusableTab>
-                  <ReusableTab id={2}>
-                    <>
-                      <h4>SpreadSheet</h4>
-                      <p>
-                        Nullam ac sapien justo. Nam augue mauris, malesuada non
-                        magna sed, feugiat blandit ligula. In tristique
-                        tincidunt purus id iaculis. Pellentesque volutpat tortor
-                        a mauris convallis, sit amet scelerisque lectus
-                        adipiscing.
-                      </p>
-                    </>
+                  <ReusableTab id={2} height={"100%"} width={"100%"}>
+                    <Spreadsheet
+                      readOnly={this.state.readOnly}
+                      setReadOnly={() => this.setReadOnly()}
+                    />
                   </ReusableTab>
                   <ReusableTab id={3}>
                     <>

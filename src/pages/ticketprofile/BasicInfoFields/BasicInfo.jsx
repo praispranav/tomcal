@@ -265,14 +265,7 @@ export default function BasicInfo({ readOnly, setReadOnly }) {
               </div>
 
               <p className="text-right m-b-0">
-                {readOnly ? (
-                  <button
-                    className="btn btn-primary"
-                    onClick={() => setReadOnly((ro) => !ro)}
-                  >
-                    Edit
-                  </button>
-                ) : (
+                {!readOnly && (
                   <>
                     <button
                       className="btn btn-white m-r-5"

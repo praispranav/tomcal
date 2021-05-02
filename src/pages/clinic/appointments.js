@@ -110,7 +110,7 @@ class AppointmentTable extends Component {
   render(){
     const {length:count} = this.state.appointments; 
     const {pageSize,currentPage,sortColumn,searchQuery} = this.state;
-    if(count === 0)  return "<p>No data available</p>";
+    //if(count === 0)  return "<p>No data available</p>";
    
     const {data:appointments} = this. getDataPgnation();
 
@@ -186,7 +186,7 @@ class AppointmentTable extends Component {
 				   <SearchBox value={searchQuery} onChange={this.handleSearch} />           
 					<p className="page-header float-xl-left" style={{marginBottom:5},{marginLeft:20},{marginTop:5}}>{count} entries</p> 
 
-				   <appointmentsTable appointments={appointments} 
+				   <AppointmentsTable appointments={appointments} 
 				   onDelete={this.handleDelete}
 				   onSort={this.handleSort}
 				   sortColumn={sortColumn}

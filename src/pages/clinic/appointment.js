@@ -62,7 +62,8 @@ class Appointment extends Form {
         date: new Date(),
         startTime: "",
         endTime: "",
-        chiefComplaint: "",
+        //chiefComplaint: "",
+		complaint: "",
         appointmentType: "",
         sessionType: "",
         note: "",
@@ -175,7 +176,6 @@ this.selectClinics = this.state.clinics.map(option => (
 	  Appointment.date = startDate.getFullYear()-startDate.getMonth() + 1-startDate.getDate();
 	  Appointment.startTime = startDate.getHours()+":"+startDate.getMinutes();
 	  Appointment.endTime = endDate.getHours()+":"+endDate.getMinutes();
-	  Appointment.chiefComplaint = Appointment.complaint;
       this.setState({ data: this.mapToViewModel(Appointment) });
       console.log(this.state.data);
     } catch (ex) {
@@ -202,10 +202,11 @@ this.selectClinics = this.state.clinics.map(option => (
     date: Joi.date().required(),
     startTime: Joi.string(),
     endTime: Joi.string().optional(),
-    chiefComplaint: Joi.string().optional(),
+    //chiefComplaint: Joi.string().optional(),
+	complaint: Joi.string().optional(),
     appointmentType: Joi.string().optional(),
     sessionType: Joi.string().optional(),
-    note: Joi.string().optional(),
+    note: Joi.any().optional(),
     status: Joi.string().optional(),
   });
 
@@ -220,8 +221,9 @@ this.selectClinics = this.state.clinics.map(option => (
   doSubmit = async (appointment) => {
     try {
 	const data = { ...this.state.data };
-	data.start = moment(data.date + " "+ data.startTime);
-	data.end = moment(data.date + " "+ data.endTime);
+	console.log(this.state.data);
+	data.start = new Date(data.date + " "+ moment(data.startTime, "HH:mm:ss"));
+	data.end = new Date(data.date + " "+ moment(data.endTime, "HH:mm:ss"));
 	delete data.date;
 	delete data.startTime;
 	delete data.endTime;
@@ -234,6 +236,7 @@ this.selectClinics = this.state.clinics.map(option => (
 		data.doctorUser = doctor[0].user;
 	}
     this.setState({ data });
+	console.log(this.state.data);
       await saveAppointment(this.state.data);
       this.props.history.push("/clinic/appointments");
     } catch (ex) {
@@ -259,7 +262,8 @@ this.selectClinics = this.state.clinics.map(option => (
 	  clinicNo: Appointment.clinicNo,
       note: Appointment.note,
       status: Appointment.status,
-	  chiefComplaint: Appointment.chiefComplaint,
+	  //chiefComplaint: Appointment.chiefComplaint,
+	  complaint: Appointment.complaint,
     };
   }
   render() {
@@ -417,7 +421,7 @@ this.selectClinics = this.state.clinics.map(option => (
 
                  
 
-					{this.renderTextarea("chiefComplaint","Complaint","Enter Complaint")}
+					{this.renderTextarea("complaint","Complaint","Enter Complaint")}
 
                     <div className="form-group row">
                       <label
