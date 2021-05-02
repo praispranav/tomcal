@@ -189,6 +189,7 @@ const Menu = [
       },
 	
       { path: '/kanban/scrumboard', title: 'Kanban'},
+      { path: '/kanban/kanbans/new', title: 'New Kanban'},	  
       { path: '/kanban/kanbans', title: 'Admin Kanbans'},	  
       { path: '/kanban/listkanbans', title: 'Admin Lists of Kanbans'},	  	  
       { path: '/kanban/cards', title: 'Admin Cards'},	  	  
