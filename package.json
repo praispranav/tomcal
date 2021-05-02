@@ -101,7 +101,9 @@
     "reselect": "^4.0.0",
     "simple-line-icons": "^2.5.5",
     "switch": "0.0.0",
-    "typescript": "^4.0.3"
+    "typescript": "^4.0.3",
+    "x-data-spreadsheet": "^1.1.8",
+    "xlsx": "^0.16.9"
   },
   "resolutions": {
     "@babel/preset-env": "7.5.5"
