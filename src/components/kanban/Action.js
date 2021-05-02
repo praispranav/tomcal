@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 const Actions = ({ actionN, backgroundC }) => {
   const changeVisibility = (number) => {
-    const AllTicketsD = document.querySelectorAll(".ticketsD");
-    const ticketsD = AllTicketsD[number];
-    ticketsD.classList.forEach((classname) => {
+    const AllCardsD = document.querySelectorAll(".cardsD");
+    const cardsD = AllCardsD[number];
+    cardsD.classList.forEach((classname) => {
       classname === "false"
-        ? ticketsD.classList.remove("false")
-        : ticketsD.classList.add("false");
+        ? cardsD.classList.remove("false")
+        : cardsD.classList.add("false");
       classname === "false"
-        ? (ticketsD.style.backgroundColor = backgroundC)
-        : (ticketsD.style.backgroundColor = "#fff");
+        ? (cardsD.style.backgroundColor = backgroundC)
+        : (cardsD.style.backgroundColor = "#fff");
     });
   };
 
@@ -48,7 +48,7 @@ const Actions = ({ actionN, backgroundC }) => {
             </li>
             <li>
               <a className="dropdown-item f-s-13" href="#">
-                <i className="fas fa-ticket-alt"></i> Add Card
+                <i className="ion-md-card"></i> Add Card
               </a>
             </li>
             <li>
@@ -111,7 +111,7 @@ const Actions = ({ actionN, backgroundC }) => {
             </li>
             <li>
               <a className="dropdown-item f-s-13" href="#">
-                <i className="fas fa-ticket-alt"></i> Add Card
+                <i className="fas fa-card-alt"></i> Add Card
               </a>
             </li>
             <li>
