@@ -215,7 +215,7 @@ class Content extends React.Component {
 								<Route path="/scheduler" title="Scheduler" component={SchedulerCal} />
 
 								<Route path="/scheduler2" title="Scheduler2" component={SchedulerfCal} />
-								<Route path="/kanban/crumboard" title="Scrumboard" component={Scrumboard} />
+								<Route path="/kanban/scrumboard" title="Scrumboard" component={Scrumboard} />
 
 								<Route path="/kanban/kanban" title="Card" component={Card} />								
 								<Route path="/kanban/kanban" title="Listkanban" component={Listkanban} />																
