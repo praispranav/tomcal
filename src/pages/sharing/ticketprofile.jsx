@@ -51,29 +51,13 @@ class Ticketprofile extends React.Component {
       trigger: () => {},
     },
     {
-      label: "Share",
-      icon: "fa-share",
-      trigger: () => {},
-    },
-    {
       label: "Archive",
       icon: "fa-archive",
       trigger: () => {},
     },
-
     {
       label: "Save as PDF",
-      icon: "fas-fa-file-pdf",
-      trigger: () => {},
-    },
-    {
-      label: "Save as XLS",
-      icon: "fas-fa-file-excel",
-      trigger: () => {},
-    },
-    {
-      label: "Save as CSV",
-      icon: "fa-csv",
+      icon: "fa-pdf-file",
       trigger: () => {},
     },
   ];
