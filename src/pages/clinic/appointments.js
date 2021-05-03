@@ -45,6 +45,7 @@ class AppointmentTable extends Component {
 
   async componentDidMount(){
       const {data} = await getAppointments();
+	  console.log(data);
       this.setState({appointments:data});
     }
 
