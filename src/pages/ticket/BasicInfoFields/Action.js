@@ -1,4 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
+import "../style.css";
+
 const Actions = ({ actionN, backgroundC }) => {
   const changeVisibility = (number) => {
     const AllCardsD = document.querySelectorAll(".cardsD");
@@ -54,7 +56,6 @@ const Actions = ({ actionN, backgroundC }) => {
             <hr />
           </ul>
         </div>
-
       </div>
     </div>
   );
