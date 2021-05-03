@@ -10,12 +10,9 @@ import {
 import ReusableTabNavs from "./ReusableTabNavs";
 import ReusableTab from "./ReusableTab";
 import { TabContent } from "reactstrap";
-import Spreadsheet from "./Spreadsheet/SpreasSheet";
+import Spreadsheet from "./Spreadsheet/SpreadSheet";
+import "./index.css";
 
-
-// import Actions from "./BasicInfoFields/Action";
-
-//import { Collapse, CardHeader, CardBody, Card } from 'reactstrap';
 //import Actions from "./../../../src/components/ticket/Action";
 //import Card from "./../../../src/components/ticket/Card";
 //import Filter from "./../../../src/components/ticket/Filters";
@@ -59,8 +56,8 @@ class TicketTabs extends React.Component {
       trigger: () => {},
     },
     {
-      label: "download as PDF",
-      icon: "Share",
+      label: "Save as PDF",
+      icon: "fa-pdf-file",
       trigger: () => {},
     },
   ];
@@ -94,13 +91,13 @@ class TicketTabs extends React.Component {
                   activeTab={this.state.activeTab}
                   navprops={[
                     { label: "Basic information", background: "#FFC69F" },
-                    { label: "Data Spreadsheet", background: "#2FFF2B" },
+                    { label: "Data Spreadsheet", background: "#DED99F" },
                     { label: "Comments", background: "#FFC6FF" },
-                    { label: "Reviews", background: "#D3FF2B" },
+                    { label: "Reviews", background: "#FFF5AD" },
                     { label: "Sharing", background: "#A2F5AD" },
-                    { label: "Notes", background: "#DED99F" },
+                    { label: "Notes", background: "#FFFFC9" },
                     { label: "Fishbone", background: "#F4FF2B" },					
-                    { label: "Piechart", background: "#B09EFF" },										
+                    { label: "Piechart", background: "#B09EFF" },			
                   ]}
                 />
                 <TabContent activeTab={this.state.activeTab}>
@@ -205,7 +202,6 @@ display in the pie-chart: ticket-nr, username of the creator and username of the
                       </p>
                     </>
                   </ReusableTab>
-				  
                 </TabContent>
               </PanelBody>
             </Panel>

@@ -8,7 +8,7 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import DateRange from "../../components/kanban/DateRangePicker";
 import { Panel, PanelBody, PanelHeader } from "../../components/panel/panel";
 import Actions from "./../../../src/components/kanban/Action";
-import Card from "./../../../src/components/kanban/Card";
+import TicketCard from "./../../../src/components/kanban/Card";
 import Filter from "./../../../src/components/kanban/Filters";
 import "./../../../src/components/kanban/style.css";
 
@@ -86,7 +86,7 @@ const onDragEnd = (result, columns, setColumns) => {
   }
 };
 
-function KanbanBoard(props) {
+function KanBanBoard(props) {
   const [datePickerClass, setPickerClass] = useState("d-none");
 
   const [columns, setColumns] = useState(Object.entries(columnsFromBackend));
@@ -178,12 +178,13 @@ function KanbanBoard(props) {
       // } else {
       //   setFilterColumns(columns);
       // }
-    } else if (title === "status" && !isEmpty(value)) {
+    }
+else if (title === "category" && !isEmpty(value)) {
       switch (value) {
         case "open": {
           const filteredvalue = map(filterColumn, ([col1, col]) => {
             let { items, ...rest } = col;
-            items = filter(items, ({ status }) => status === "open");
+            items = filter(items, ({ category }) => category === "open");
 
             return [col1, { items, ...rest }];
           });
@@ -197,7 +198,7 @@ function KanbanBoard(props) {
         case "onhold": {
           const filteredvalue = map(filterColumn, ([col1, col]) => {
             let { items, ...rest } = col;
-            items = filter(items, ({ status }) => status === "onhold");
+            items = filter(items, ({ category }) => category === "onhold");
 
             return [col1, { items, ...rest }];
           });
@@ -211,7 +212,7 @@ function KanbanBoard(props) {
         case "reopen": {
           const filteredvalue = map(filterColumn, ([col1, col]) => {
             let { items, ...rest } = col;
-            items = filter(items, ({ status }) => status === "reopen");
+            items = filter(items, ({ category }) => category === "reopen");
             return [col1, { items, ...rest }];
           });
           const removeEmptyItems = filter(
@@ -224,7 +225,7 @@ function KanbanBoard(props) {
         case "closed": {
           const filteredvalue = map(filterColumn, ([col1, col]) => {
             let { items, ...rest } = col;
-            items = filter(items, ({ status }) => status === "closed");
+            items = filter(items, ({ category }) => category === "closed");
 
             return [col1, { items, ...rest }];
           });
@@ -246,18 +247,6 @@ function KanbanBoard(props) {
           setFilterColumns(columns);
         }
       }
-      // if (value !== "showall" && value !== "select") {
-      //   const filteredvalue = map(filterColumn, ([col1, col]) => {
-      //     let { items, ...rest } = col;
-      //     items = filter(items, ({ status }) => status === value);
-
-      //     return [col1, { items, ...rest }];
-      //   });
-
-      //   setFilterColumns(filteredvalue);
-      // } else {
-      //   setFilterColumns(columns);
-      // }
     }
   };
   const [priorityOptions, setpriorityOptions] = useState([
@@ -269,11 +258,18 @@ function KanbanBoard(props) {
 
   const [statusOptions, setStatusOptions] = useState([
     { value: "open", label: "Open" },
-    { value: "onhold", label: "On-Hold" },
+    { value: "onhold", label: "on-Hold" },
     { value: "closed", label: "Closed" },
     { value: "reopen", label: "Re-open" },
   ]);
 
+  const [categoryOptions, setCategoryOptions] = useState([
+    { value: "open", label: "Open" },
+    { value: "onhold", label: "on-Hold" },
+    { value: "closed", label: "Closed" },
+    { value: "reopen", label: "Re-open" },
+  ]);
+  
   useEffect(() => {
     console.log("object entries ", Object.entries(columns));
   });
@@ -303,7 +299,7 @@ function KanbanBoard(props) {
             <DateRange className={datePickerClass} />
           </PanelBody>
         </Panel>
-        <div className="CardsHo">
+        <div className="TicketCardsHo">
           <DragDropContext
             onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
           >
@@ -333,7 +329,7 @@ function KanbanBoard(props) {
                                         {...provided.draggableProps}
                                         {...provided.dragHandleProps}
                                       >
-                                        <Card
+                                        <TicketCard
                                           statusOptions={statusOptions}
                                           priorityOptions={priorityOptions}
                                           content={item}
@@ -359,4 +355,4 @@ function KanbanBoard(props) {
   );
 }
 
-export default KanbanBoard;
+export default tickets;
