@@ -91,7 +91,7 @@ import PatientTable from "./../../pages/clinic/patients.js";
 import UserTable from "./../../pages/clinic/users.js";
 import Doctor from "./../../pages/clinic/doctor.js";
 import DoctorTable from "./../../pages/clinic/doctors.js";
-import NewKanBanBoard from "./../../pages/clinic/grid-tickets.js";
+import GridTicket from "./../../pages/clinic/grid-tickets.js";
 //import Label from './../../pages/label/label.js';
 //import LabelTable from './../../pages/label/labels.js';
 //import Accountant from './../../pages/clinic/accountant.js';
@@ -123,9 +123,9 @@ import Scrumboard from './../../pages/kanban/scrumboard.js';
 
 import FormPlugins from "./../../pages/form/form-plugins";
 import Logout from "./../../common/logout";
-import KanBanBoard from "./../../pages/kanban/kanban.js";
 
-import TicketProfile from "./../../pages/ticketprofile/TicketProfile";
+
+import ticketProfile from "./../../pages/ticket/ticketprofile";
 
 function setTitle(path, routeArray) {
 	var pageTitle;
@@ -215,11 +215,11 @@ class Content extends React.Component {
 								<Route path="/scheduler" title="Scheduler" component={SchedulerCal} />
 
 								<Route path="/scheduler2" title="Scheduler2" component={SchedulerfCal} />
-								<Route path="/kanban/kanban" title="KanBanBoard" component={KanBanBoard} />
+								<Route path="/kanban/kanban" title="Scrumboard" component={Scrumboard} />
 								<Route path="/kanban/kanban" title="Card" component={Card} />								
 								<Route path="/kanban/kanban" title="Listkanban" component={Listkanban} />																
 								<Route path="/kanban/kanban" title="Kanban" component={Kanban} />																
-								{/*  <Route path= '/clinic/tickets' title="NewKanBanBoard" component={NewKanBanBoard}   />  */}
+								<Route path= '/clinic/tickets' title="GridTicket" component={GridTicket}   /> 
 
 								<ProtectedRoute
 									path="/clinic/reqforappointments/:id"
@@ -245,7 +245,15 @@ class Content extends React.Component {
 									component={AppointmentTable}
 								/>
 
-								<ProtectedRoute path="/clinic/grid-tickets" title="grid-tickets" component={NewKanBanBoard} />
+
+                                <ProtectedRoute
+									path="/ticket/ticketprofile"
+									title="ticketProfile"
+									component={ticketProfile}
+								/>
+
+
+								<ProtectedRoute path="/clinic/grid-tickets" title="grid-tickets" component={GridTicket} />
 
 								<Route path="/clinic/add_tcmsession" title="TCM Session" component={TCMSession} />
 								<Route path="/email/inbox" title="Email Inbox" component={EmailInbox} />
