@@ -117,8 +117,8 @@ import GridTicket from "./../../pages/clinic/grid-tickets.js";
 // import BTreatment from './../../pages/clinic/btreatment.js';
 // import BTreatmentTable from './../../pages/clinic/btreatments.js';
 
-//import Productservice from './../../pages/accounting/productservice.js';
-//import ProductserviceTable from './../../pages/accounting/productservices.js';
+//import Service from './../../pages/accounting/service.js';
+//import ServiceTable from './../../pages/accounting/services.js';
 
 import Card from './../../pages/kanban/card.js';
 import Listkanban from './../../pages/kanban/listkanban.js';
