@@ -355,4 +355,4 @@ else if (title === "category" && !isEmpty(value)) {
   );
 }
 
-export default tickets;
+export default KanBanBoard;
