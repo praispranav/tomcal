@@ -13,7 +13,7 @@ import { Provider } from "react-redux";
 import ProtectedRoute from "./../../common/ProtectedRoute";
 ////////////////////////////////////////////////////////////////////
 import YourDrive from "./../../pages/drive/yourdrive.js";
-import TCMSession from "./../../pages/clinic/add_tcmsession.js";
+import TCMSession from "./../../pages/clinic/tcmsession.js";
 import DashboardV2 from "./../../pages/dashboard/dashboard-v2.js";
 //import DashboardV3 from './../../pages/dashboard/dashboard-v3.js';
 import EmailInbox from "./../../pages/email/email-inbox.js";
@@ -82,6 +82,8 @@ import Ticket from "./../../pages/clinic/ticket.js";
 import TicketsTable from "./../../pages/clinic/tickets.js";
 import ClinicSolo from "./../../pages/clinic/clinicsolo.js";
 import ClinicSoloTable from "./../../pages/clinic/clinicsolos.js";
+import Salon from "./../../pages/salon/salon.js";
+import SalonTable from "./../../pages/salon/salons.js";
 import Appointment from './../../pages/clinic/appointment.js';
 import AppointmentTable from "./../../pages/clinic/appointments.js";
 import reqForAppointment from "./../../pages/clinic/reqforappointment.js";
@@ -95,7 +97,7 @@ import GridTicket from "./../../pages/clinic/grid-tickets.js";
 //import Label from './../../pages/label/label.js';
 //import LabelTable from './../../pages/label/labels.js';
 //import Accountant from './../../pages/clinic/accountant.js';
-//import AccountantsTable from './../../pages/clinic/accountants.js';
+//import AccountantTable from './../../pages/clinic/accountants.js';
 // import reception from './../../pages/clinic/reception.js';
 // import receptionTable from './../../pages/clinic/receptions.js';
 // import Invoice from './../../pages/clinic/Invoice.js';
@@ -111,8 +113,8 @@ import GridTicket from "./../../pages/clinic/grid-tickets.js";
 // import MateriaMedica from './../../pages/clinic/materiamedica.js';
 // import MateriaMedicaTable from './../../pages/clinic/materiamedicas.js';
 // import MeridianTable from './../../pages/clinic/meridians.js';
-// import Salon from './../../pages/clinic/salon.js';
-// import SalonTable from './../../pages/clinic/salons.js';
+import Salon from './../../pages/clinic/salon.js';
+import SalonTable from './../../pages/clinic/salons.js';
 // import BTreatment from './../../pages/clinic/btreatment.js';
 // import BTreatmentTable from './../../pages/clinic/btreatments.js';
 
@@ -209,7 +211,14 @@ class Content extends React.Component {
 								<ProtectedRoute path="/clinic/patients" title="Patients" component={PatientTable} />
 								<ProtectedRoute path="/clinic/doctors/:id" title="Doctor" component={Doctor} />
 								<ProtectedRoute path="/clinic/doctors" title="Doctors" component={DoctorTable} />
+								<ProtectedRoute path="/accounting/productservice/:id" title="Productservice" component={Productservice} />
+								<ProtectedRoute path="/accounting/productservice/" title="Productservices" component={ProductserviceTable} />
 
+								
+								<ProtectedRoute path="/salon/salon/:id" title="Salon" component={Salon} />
+								<ProtectedRoute path="/salon/salons" title="Salons" component={SalonTable} />
+
+								
 								<Route path="/clinic/yourdrive/" title="Your Drive" component={YourDrive} />
 								<Route path="/calendar" title="Calendar" component={Calendar} />
 								<Route path="/scheduler" title="Scheduler" component={SchedulerCal} />
@@ -217,8 +226,8 @@ class Content extends React.Component {
 								<Route path="/scheduler2" title="Scheduler2" component={SchedulerfCal} />
 								<Route path="/kanban/scrumboard" title="Scrumboard" component={Scrumboard} />
 
-								<Route path="/kanban/kanban" title="Card" component={Card} />								
-								<Route path="/kanban/kanban" title="Listkanban" component={Listkanban} />																
+								<Route path="/kanban/card" title="Card" component={Card} />								
+								<Route path="/kanban/listkanban" title="Listkanban" component={Listkanban} />																
 								<Route path="/kanban/kanban" title="Kanban" component={Kanban} />																
 								<Route path= '/clinic/tickets' title="GridTicket" component={GridTicket}   /> 
 

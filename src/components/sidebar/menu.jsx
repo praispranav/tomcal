@@ -138,11 +138,11 @@ const Menu = [
     ]
   },
   
-  { path: '/Salons', icon: 'fa fa-building', title: 'Salons', badge: '10',
+  { path: '/Salons', icon: 'fa fa-building', title: 'Salons',
     children: [
-      { path: '/clinic/salons', title: 'Salons' },
-      { path: '/clinic/salons/new', title: 'Add salon' },
-      { path: '/clinic/search_reception', title: 'Search in Salons' },  
+      { path: '/salon/salons', title: 'Salons' },
+      { path: '/salon/salons/new', title: 'Add salon' },
+      { path: '/salon/search_reception', title: 'Search in Salons' },  
     ]
   },
   
