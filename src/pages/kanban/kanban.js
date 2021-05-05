@@ -156,9 +156,6 @@ schema = Joi.object({
 		narrative: Joi.string().optional(),
 		priority: Joi.string().optional(),
 		category: Joi.string().optional(),
-		message: Joi.string().optional(),		
-		commentParent: Joi.string().optional(),		
-		reply: Joi.string().optional(),
 		department: Joi.string().optional(),		
 		subDepartment: Joi.string().optional(),				
 		createdOn: Joi.date().optional(),
@@ -173,6 +170,7 @@ schema = Joi.object({
 		sharingLink: Joi.string().optional(),
 		assignedTo: Joi.string().optional(),
 		sharedTo: Joi.string().optional(),
+		sharedTill: Joi.string().optional(),		
 		status: Joi.string().optional(),			
 	});
 
@@ -231,9 +229,6 @@ schema = Joi.object({
             name		: kanban.name,
             narrative	: kanban.narrative,
             category	: kanban.category,
-            message		: kanban.message,
-            comment		: kanban.comment,
-            reply		: kanban.reply,
 			businessName: kanban.businessName,
 			priority	: kanban.priority,
             department	: kanban.department,
@@ -250,6 +245,7 @@ schema = Joi.object({
             sharingLink : kanban.sharingLink,
             assignedTo  : kanban.assignedTo,
             sharedTo    : kanban.sharedTo,
+            sharedTill    : kanban.sharedTill,			
             status      : kanban.status,     
 		};
 	  }
