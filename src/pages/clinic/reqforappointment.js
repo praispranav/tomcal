@@ -199,7 +199,7 @@ class reqForAppointment extends Form {
 		sessionType: Joi.any().optional(),
 		notePatient: Joi.any().optional(),
 		note: Joi.any().optional(),
-		reqforappointmentStatus: Joi.any().optional(),
+		status: Joi.any().optional(),
 	});
 
 	handledateChange = (e) => {
@@ -222,7 +222,7 @@ class reqForAppointment extends Form {
      	}
     this.setState({ data });
 		try {
-			if (this.state.data.reqforappointmentStatus === "approved") {
+			if (this.state.data.status === "approved") {
 				await saveAppointment(this.state.data);
 			} else {
 				await savereqForAppointment(this.state.data);
@@ -254,7 +254,7 @@ class reqForAppointment extends Form {
 			sessionType: reqForAppointment.sessionType,
 			notePatient: reqForAppointment.notePatient,
 			note: reqForAppointment.note,
-			reqforappointmentStatus: reqForAppointment.reqforappointmentStatus,
+			status: reqForAppointment.status,
 		};
 	}
 	render() {
@@ -440,23 +440,23 @@ class reqForAppointment extends Form {
                         {this.renderTextarea("notePatient","Note from Patient",'Enter your Note for clinic')}
 									
 										<div className="form-group row">
-											<label className="col-lg-4 col-form-label" htmlFor="reqforappointmentStatus">
+											<label className="col-lg-4 col-form-label" htmlFor="status">
 												Select Status
 											</label>
 											<div className="col-lg-8">
 												<select
-													name="reqforappointmentStatus"
+													name="status"
 													id="status"
 													onChange={this.handleChange}
 													className="form-control"
-													value={data.reqforappointmentStatus}
+													value={data.status}
 												>
 													<option value="">Select Status</option>
 													{this.reqforappointmentStatusoptions}
 												</select>
 											</div>
-											{errors.reqforappointmentStatus && (
-												<div className="alert alert-danger">{errors.reqforappointmentStatus}</div>
+											{errors.status && (
+												<div className="alert alert-danger">{errors.status}</div>
 											)}
 										</div>
 
