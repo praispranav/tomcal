@@ -62,7 +62,7 @@ class reqForAppointment extends Form {
 				sessionType: "",
 				notePatient: "",
 				note: "",
-				reqforappointmentStatus: "",
+				status: "",
 			},
 			selectedFile: null,
 			errors: {},
@@ -429,8 +429,6 @@ class reqForAppointment extends Form {
 
 								
                         {this.renderTextarea("notePatient","Note from Patient",'Enter your Note for clinic')}
-						{this.renderTextarea("note","Note",'Enter Note')}
-
 									
 										<div className="form-group row">
 											<label className="col-lg-4 col-form-label" htmlFor="reqforappointmentStatus">
