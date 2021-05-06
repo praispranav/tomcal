@@ -83,7 +83,7 @@ import Ticket from "./../../pages/clinic/ticket.js";
 import TicketsTable from "./../../pages/clinic/tickets.js";
 import ClinicSolo from "./../../pages/clinic/clinicsolo.js";
 import ClinicSoloTable from "./../../pages/clinic/clinicsolos.js";
-import Salon from "./../../pages/salon/salon.js";
+//import Salon from "./../../pages/salon/salon.js";
 import SalonTable from "./../../pages/salon/salons.js";
 import Appointment from './../../pages/clinic/appointment.js';
 import AppointmentTable from "./../../pages/clinic/appointments.js";
