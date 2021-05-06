@@ -43,7 +43,7 @@ class ReqforappointmentsTable extends Component {
 				</span>
 			),
 		},
-		{ label: "Username", path: "username" },
+		{ label: "Username", path: "patientUser.username" },
 		{
 			key: "avatar",
 			label: "avatar",
@@ -53,22 +53,26 @@ class ReqforappointmentsTable extends Component {
 				</span>
 			),
 		},
-		{ label: "PatientNo", path: "patientNo" },
-		{ label: "Firstname", path: "firstName" },
-		{ label: "initials", path: "initials" },
-		{ label: "Lastname", path: "lastName" },
-		{ label: "DOB", path: "dateBirth" },
-		{ label: "gender", path: "gender" },
+		// {label: 'Username',   path: 'patientUser.username' } ,
+		{label: 'email',   path: 'patientUser.email' } ,   
+		{label: 'Firstname',   path: 'patientUser.contactName.first' } ,   
+		 {label: 'initials',   path: 'patientUser.contactName.initials' } ,   	  
+		{label: 'Lastname',   path: 'patientUser.contactName.last' } ,   	  
+		{label: 'DOB',   path: 'patientUser.dateBirth' } ,   	  
+		 {label: 'Mobile',   path: 'patientUser.phones.mobile' } ,   	  
+		{label: 'Phone',   path: 'patientUser.phones.phone' } ,   	  
+		{ label: "gender", path: "patientUser.gender" },
 		{ label: "Complaint", path: "complaint" },
 		{ label: "Date", path: "date" },
 		{ label: "PreferStartTime", path: "preferStartTime" },
 		{ label: "PreferEndtime", path: "preferEndTime" },
 		{ label: "Clinic", path: "clinicSolo" },
+		{ label: "doctor", path: "doctorUser.contactName.last" },		
 		{ label: "appointmentType", path: "appointmentType" },
 		{ label: "sessionType", path: "sessionType" },
-		{ label: "doctor", path: "doctor" },
 		{ label: "Patient-note", path: "notePatient" },
-		{ label: "Note", path: "internalNote" },
+		{ label: "Note", path: "note" },
+		{ label: "Status", path: "status" },		
 	];
 
 	render() {

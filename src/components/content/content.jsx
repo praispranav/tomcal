@@ -13,8 +13,9 @@ import { Provider } from "react-redux";
 import ProtectedRoute from "./../../common/ProtectedRoute";
 ////////////////////////////////////////////////////////////////////
 import YourDrive from "./../../pages/drive/yourdrive.js";
-import TCMSession from "./../../pages/clinic/tcmsession.js";
-import DashboardV2 from "./../../pages/dashboard/dashboard-v2.js";
+//import TCMSession from "./../../pages/clinic/tcmsession.js";
+import DashboardV2 from "./../../pages/dashboard/dashboardV2.js";
+//import Dashboard-TCM from "./../../pages/dashboard/dashboard-TCM.js";
 //import DashboardV3 from './../../pages/dashboard/dashboard-v3.js';
 import EmailInbox from "./../../pages/email/email-inbox.js";
 import EmailCompose from "./../../pages/email/email-compose.js";
@@ -113,10 +114,11 @@ import GridTicket from "./../../pages/clinic/grid-tickets.js";
 // import MateriaMedica from './../../pages/clinic/materiamedica.js';
 // import MateriaMedicaTable from './../../pages/clinic/materiamedicas.js';
 // import MeridianTable from './../../pages/clinic/meridians.js';
-import Salon from './../../pages/clinic/salon.js';
-import SalonTable from './../../pages/clinic/salons.js';
 // import BTreatment from './../../pages/clinic/btreatment.js';
 // import BTreatmentTable from './../../pages/clinic/btreatments.js';
+
+//import Service from './../../pages/accounting/service.js';
+//import ServiceTable from './../../pages/accounting/services.js';
 
 import Card from './../../pages/kanban/card.js';
 import Listkanban from './../../pages/kanban/listkanban.js';
@@ -211,8 +213,6 @@ class Content extends React.Component {
 								<ProtectedRoute path="/clinic/patients" title="Patients" component={PatientTable} />
 								<ProtectedRoute path="/clinic/doctors/:id" title="Doctor" component={Doctor} />
 								<ProtectedRoute path="/clinic/doctors" title="Doctors" component={DoctorTable} />
-								<ProtectedRoute path="/accounting/productservice/:id" title="Productservice" component={Productservice} />
-								<ProtectedRoute path="/accounting/productservice/" title="Productservices" component={ProductserviceTable} />
 
 								
 								<ProtectedRoute path="/salon/salon/:id" title="Salon" component={Salon} />
@@ -229,7 +229,7 @@ class Content extends React.Component {
 								<Route path="/kanban/card" title="Card" component={Card} />								
 								<Route path="/kanban/listkanban" title="Listkanban" component={Listkanban} />																
 								<Route path="/kanban/kanban" title="Kanban" component={Kanban} />																
-								<Route path= '/clinic/tickets' title="GridTicket" component={GridTicket}   /> 
+								<Route path='/clinic/tickets' title="GridTicket" component={GridTicket}   /> 
 
 								<ProtectedRoute
 									path="/clinic/reqforappointments/:id"
@@ -265,7 +265,6 @@ class Content extends React.Component {
 
 								<ProtectedRoute path="/clinic/grid-tickets" title="grid-tickets" component={GridTicket} />
 
-								<Route path="/clinic/add_tcmsession" title="TCM Session" component={TCMSession} />
 								<Route path="/email/inbox" title="Email Inbox" component={EmailInbox} />
 								<Route path="/email/compose" title="Email Compose" component={EmailCompose} />
 								<Route path="/email/detail" title="Email Detail" component={EmailDetail} />
