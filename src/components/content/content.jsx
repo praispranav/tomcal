@@ -84,7 +84,7 @@ import TicketsTable from "./../../pages/clinic/tickets.js";
 import ClinicSolo from "./../../pages/clinic/clinicsolo.js";
 import ClinicSoloTable from "./../../pages/clinic/clinicsolos.js";
 //import Salon from "./../../pages/salon/salon.js";
-import SalonTable from "./../../pages/salon/salons.js";
+//import SalonTable from "./../../pages/salon/salons.js";
 import Appointment from './../../pages/clinic/appointment.js';
 import AppointmentTable from "./../../pages/clinic/appointments.js";
 import reqForAppointment from "./../../pages/clinic/reqforappointment.js";
@@ -215,8 +215,8 @@ class Content extends React.Component {
 								<ProtectedRoute path="/clinic/doctors" title="Doctors" component={DoctorTable} />
 
 								
-								<ProtectedRoute path="/salon/salon/:id" title="Salon" component={Salon} />
-								<ProtectedRoute path="/salon/salons" title="Salons" component={SalonTable} />
+								{/* <ProtectedRoute path="/salon/salon/:id" title="Salon" component={Salon} />
+								<ProtectedRoute path="/salon/salons" title="Salons" component={SalonTable} /> */}
 
 								
 								<Route path="/clinic/yourdrive/" title="Your Drive" component={YourDrive} />
