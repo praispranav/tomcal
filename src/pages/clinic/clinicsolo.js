@@ -101,7 +101,7 @@ class ClinicSolo extends Form {
 	 
 
 		this.prefixOptions = [
-			{ value: 'mr', label: 'Mr.' },
+			{ value: 'mr', label: 'Mr.'},
 			{ value: 'mrs', label: 'Mrs.' },
 			{ value: 'mss', label: 'Mss.' },
 			{ value: 'ms', label: 'Ms.' },
