@@ -145,7 +145,7 @@ class AppointmentTable extends Component {
 								<Link
 									to={
 										this.state.checkedappointments
-											? `/clinic/appointments/${this.state.checkedappointments[0]}`
+											? `/clinic/appointments/${this.state.checkedAppointments[0]}`
 											: "/clinic/appointments/"
 									}
 								>
@@ -154,7 +154,7 @@ class AppointmentTable extends Component {
 							</button>
 							<button
 								className="btn btn-default active m-r-5 m-b-5"
-								title="delete tickets"
+								title="delete appointment"
 								style={btnStyles}
 								onClick={() => this.handleMassDelete(this.state.checkedappointments)}
 							>
