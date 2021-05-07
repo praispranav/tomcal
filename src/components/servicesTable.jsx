@@ -2,23 +2,23 @@ import React, { Component } from "react";
 import Table from "./../common/table";
 import { Link, withRouter } from "react-router-dom";
 
-class ProductservicesTable extends Component {
+class ServicesTable extends Component {
 	columns = [
 		{
 			key: "checkbox",
 			label: <input type="check" style={checkboxStyles} />,
-			content: (listProductservice) => (
+			content: (listService) => (
 				<span className="icon-img sm-r-5" style={{ marginTop: "15px" }}>
 					<input
 						type="checkbox"
 						style={checkboxStyles}
 						onChange={this.props.handleCheckboxChange}
-						value={listProductservice._id}
+						value={listService._id}
 					/>
 				</span>
 			),
 		},
-		{label: "ProductserviceNo", path: "productserviceNo" },
+		{label: "ServiceNo", path: "serviceNo" },
 		{label: "Name", path: "name" },
 		{label: "Code", path: "code" },
 		{label: 'Price',   path: "price" } ,   	  
@@ -32,9 +32,9 @@ class ProductservicesTable extends Component {
 
 	render() {
 		//console.log(this.columns) ;
-		const { productservices, onSort, sortColumn } = this.props;
+		const { services, onSort, sortColumn } = this.props;
 		return (
-			<Table columns={this.columns} sortColumn={sortColumn} onSort={onSort} data={productservices} />
+			<Table columns={this.columns} sortColumn={sortColumn} onSort={onSort} data={services} />
 		);
 	}
 }
@@ -46,4 +46,4 @@ const checkboxStyles = {
 	borderRadius: 0,
 };
 
-export default ProductservicesTable;
+export default ServicesTable;

@@ -17,9 +17,9 @@ import { apiUrl } from "../../config/config.json";
 import http from "../../services/httpService";
 import { saveAppointment } from "./../../services/appointments.js";
 import { savereqForAppointment, getreqForAppointment } from "./../../services/reqforappointments";
-import { getClinics } from "./../../services/clinics";
-import { getDoctors } from "./../../services/doctors";
-import { getPatients } from "./../../services/patients";
+import { getClinics,getClinic } from "./../../services/clinics";
+import { getDoctors,getDoctor } from "./../../services/doctors";
+import { getPatients,getPatient } from "./../../services/patients";
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
 const Handle = Slider.Handle;
 
@@ -62,7 +62,7 @@ class reqForAppointment extends Form {
 				sessionType: "",
 				notePatient: "",
 				note: "",
-				reqforappointmentStatus: "",
+				status: "",
 			},
 			selectedFile: null,
 			errors: {},
@@ -199,7 +199,7 @@ class reqForAppointment extends Form {
 		sessionType: Joi.any().optional(),
 		notePatient: Joi.any().optional(),
 		note: Joi.any().optional(),
-		reqforappointmentStatus: Joi.any().optional(),
+		status: Joi.any().optional(),
 	});
 
 	handledateChange = (e) => {
@@ -210,10 +210,19 @@ class reqForAppointment extends Form {
 		console.log(this.state.data);
 	};
 
-	doSubmit = async (reqforappointment) => {
-		//console.log('working');
+	doSubmit = async () => {
+		const data = { ...this.state.data };
+		const { data: clinic } = await getClinic(data.clinicNo);
+	    data.clinicUser = clinic[0].user;
+	    const { data: patient } = await getPatient(data.patientNo);
+    	data.patientUser = patient[0].user;
+    	if(data.doctorNo) {
+		const { data: doctor } = await getDoctor(data.doctorNo);
+		data.doctorUser = doctor[0].user;
+     	}
+    this.setState({ data });
 		try {
-			if (this.state.data.reqforappointmentStatus === "approved") {
+			if (this.state.data.status === "approved") {
 				await saveAppointment(this.state.data);
 			} else {
 				await savereqForAppointment(this.state.data);
@@ -245,7 +254,7 @@ class reqForAppointment extends Form {
 			sessionType: reqForAppointment.sessionType,
 			notePatient: reqForAppointment.notePatient,
 			note: reqForAppointment.note,
-			reqforappointmentStatus: reqForAppointment.reqforappointmentStatus,
+			status: reqForAppointment.status,
 		};
 	}
 	render() {
@@ -429,27 +438,25 @@ class reqForAppointment extends Form {
 
 								
                         {this.renderTextarea("notePatient","Note from Patient",'Enter your Note for clinic')}
-						{this.renderTextarea("note","Note",'Enter Note')}
-
 									
 										<div className="form-group row">
-											<label className="col-lg-4 col-form-label" htmlFor="reqforappointmentStatus">
+											<label className="col-lg-4 col-form-label" htmlFor="status">
 												Select Status
 											</label>
 											<div className="col-lg-8">
 												<select
-													name="reqforappointmentStatus"
+													name="status"
 													id="status"
 													onChange={this.handleChange}
 													className="form-control"
-													value={data.reqforappointmentStatus}
+													value={data.status}
 												>
 													<option value="">Select Status</option>
 													{this.reqforappointmentStatusoptions}
 												</select>
 											</div>
-											{errors.reqforappointmentStatus && (
-												<div className="alert alert-danger">{errors.reqforappointmentStatus}</div>
+											{errors.status && (
+												<div className="alert alert-danger">{errors.status}</div>
 											)}
 										</div>
 

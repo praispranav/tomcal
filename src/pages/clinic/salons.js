@@ -1,21 +1,22 @@
 import React,{Component} from 'react';
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
+import { Link, withRouter  } from 'react-router-dom';
+
 import { Panel, PanelHeader, PanelBody } from './../../components/panel/panel.jsx';
 import { UncontrolledButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-import axios from 'axios';
-import {getKanbans} from './../../services/kanbans';
+//import axios from 'axios';
+import {getClinics,deleteClinic} from './../../services/clinics';
 import 'bootstrap/dist/css/bootstrap.min.css';
 //import FloatSubMenu from './../../components/float-sub-menu/float-sub-menu';
 import Pagination from '../../common/pagination';
 import {paginate} from '../../utils/paginate';
-import KanbansTable from '../../components/kanbansTable.jsx';
+import SalonsTable from '../../components/salonsTable.jsx';
 import SearchBox from './../../common/searchBox';
-import _ from "lodash";
-import http from "./../../services/httpService";
-import { apiUrl } from "./../../config/config.json";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { Col, Button, Form, FormGroup, Input, Modal, Label, ModalHeader, ModalBody, Row } from "reactstrap";
+import _ from 'lodash';
+import http from './../../services/httpService';
+import {apiUrl} from './../../config/config.json';
+import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // Icons imports
 import newIcon from "../../assets/Icons/new.svg";
@@ -24,35 +25,53 @@ import trashIcon from "../../assets/Icons/trash.svg";
 import csvIcon from "../../assets/Icons/csv.svg";
 import xlsIcon from "../../assets/Icons/xls.svg";
 import pdfIcon from "../../assets/Icons/pdf.svg";
-import sharingIcon from "../../assets/Icons/sharing.svg";
 
-class KanbansTable extends Component {
+class SalonTableData extends Component {
   
   constructor(props) {
 		super(props);
       this.state = {
-        kanbans:[],
+        users:[],
         pageSize: 10,
         currentPage: 1,
         sortColumn:{path:'title',order:'asc'},
         searchQuery: "",
         errors:{},
       }
-
+    
+      this.handleDelete = this.handleDelete.bind(this);
     }
 
   async componentDidMount(){
-      //const {data:kanbans} = await axios.get("http://localhost:4500/api/kanbans");
-      const data = await getKanbans();
-      console.log(data.data);
-      this.setState({kanbans:data.data});
+      const {data} = await getClinics();
+      this.setState({users:data});
     }
 
-  handleDelete = (user)=>{
-     console.log(user);
-     const kanbans = this.state.kanbans.filter(el=>el._id!==user._id);
-     this.setState({kanbans:kanbans});
+  handleDelete = async (user)=>{
+ 
+
+     ///delete
+		const originalUsers = this.state.users;
+		const users = this.state.users.filter(User => User._id !== user._id);
+		this.setState({users});
+		try{
+			await http.delete(apiUrl+"/salon/"+ user._id);
+		}
+		catch(ex){
+			//ex.request
+			//ex.response
+
+			if(ex.response && ex.response === 404){
+				alert("already deleted");
+			}
+			
+			this.setState({users:originalUsers});
+		}
+    ////
+ 
   };
+ 
+
   //sorting columns
   handleSort = (sortColumn)=>{
     this.setState({sortColumn})
@@ -70,29 +89,29 @@ class KanbansTable extends Component {
 
 
  getDataPgnation= ()=>{
-  const {pageSize,currentPage,kanbans:Kanbans,sortColumn,searchQuery} = this.state;
+  const {pageSize,currentPage,users:Users,sortColumn,searchQuery} = this.state;
   //
   //filter maybe next time
-  let filtered = Kanbans;
+  let filtered = Users;
   if(searchQuery){
     console.log(searchQuery);
-    filtered = Kanbans.filter((el)=> el.email.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
+    filtered = Users.filter((el)=> el.email.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
     el.username.toLowerCase().startsWith(searchQuery.toLowerCase())
     );
   }
 
   //
    const sorted = _.orderBy(filtered,[sortColumn.path],[sortColumn.order]);   
-  const kanbans = paginate(sorted,currentPage,pageSize);
-  return {data:kanbans};
+  const users = paginate(sorted,currentPage,pageSize);
+  return {data:users};
  }
 
   render(){
-    const {length:count} = this.state.kanbans; 
+    const {length:count} = this.state.users; 
     const {pageSize,currentPage,sortColumn,searchQuery} = this.state;
     // if(count === 0)  return "<p>No data available</p>";
    
-    const {data:kanbans} = this. getDataPgnation();
+    const {data:users} = this. getDataPgnation();
 
 
     return(
@@ -101,31 +120,31 @@ class KanbansTable extends Component {
 			<ol className="breadcrumb float-xl-right">
 				<li className="breadcrumb-item"><Link to="/">Home</Link></li>
 				<li className="breadcrumb-item"><Link to="/">Tables</Link></li>
-				<li className="breadcrumb-item active">Data Tables</li>
+				<li className="breadcrumb-item active">Salons Table</li>
 			</ol>
-			<h1 className="page-header">Kanbans </h1>
+			<h1 className="page-header">Salons </h1>
 			<Panel>
 				<PanelHeader>
-					Kanbans Management
+					Salons Management
 				</PanelHeader>
   
-				<React.Fragment>
-					 <ToastContainer />
+         <React.Fragment>
+           <ToastContainer />
 						<div className="toolbar" style={toolbarStyles}>
-							<button className="btn btn-default active m-r-5 m-b-5" title="add kanban" style={btnStyles}>
+							<button className="btn btn-default active m-r-5 m-b-5" title="add ticket" style={btnStyles}>
 								{" "}
-								<Link to="/kanban/kanbans/new">
+								<Link to="/clinic/salons/new">
 									<img style={iconStyles} src={newIcon} />
 								</Link>
 							</button>
 							
-							<button className="btn btn-default active m-r-5 m-b-5" title="edit kanban" style={btnStyles}>
+							<button className="btn btn-default active m-r-5 m-b-5" title="edit ticket" style={btnStyles}>
 								{" "}
 								<Link
 									to={
-										this.state.checkedkanbans
-											? `/kanban/kanbans/${this.state.checkedkanbans[0]}`
-											: "/kanban/kanbans/"
+										this.state.checkedsalons
+											? `/clinic/salons/${this.state.checkedsalons[0]}`
+											: "/clinic/salons/"
 									}
 								>
 									<img style={iconStyles} src={editIcon} />
@@ -133,36 +152,30 @@ class KanbansTable extends Component {
 							</button>
 							<button
 								className="btn btn-default active m-r-5 m-b-5"
-								title="delete kanban"
+								title="delete tickets"
 								style={btnStyles}
-								onClick={() => this.handleMassDelete(this.state.checkedkanbans)}
+								onClick={() => this.handleMassDelete(this.state.checkedsalons)}
 							>
 								{" "}
 								<img style={{ width: "25px", height: "25px" }} src={trashIcon} />
 							</button>
 							<button className="btn btn-default active m-r-5 m-b-5" title="Excel" style={btnStyles}>
 								{" "}
-								<Link to="/kanban/kanbans/">
+								<Link to="/clinic/salons/">
 									<img style={iconStyles} src={xlsIcon} />
 								</Link>{" "}
 							</button>
 							
 							<button className="btn btn-default active m-r-5 m-b-5" title="csv" style={btnStyles}>
 								{" "}
-								<Link to="/kanban/kanbans/">
+								<Link to="/clinic/salons/">
 									<img style={iconStyles} src={csvIcon} />
 								</Link>{" "}
 							</button>
 							<button className="btn btn-default active m-r-5 m-b-5" title="PDF" style={btnStyles}>
 								{" "}
-								<Link to="/kanban/kanbans/">
+								<Link to="/clinic/salons/">
 									<img style={iconStyles} src={pdfIcon} />
-								</Link>{" "}
-							</button>
-							<button className="btn btn-default active m-r-5 m-b-5" title="Share to other" style={btnStyles}>
-								{" "}
-								<Link to="/kanban/kanbans/">
-									<img style={iconStyles} src={sharingIcon} />
 								</Link>{" "}
 							</button>
 							
@@ -170,27 +183,27 @@ class KanbansTable extends Component {
 				<div className="table-responsive">
      
 				   <SearchBox value={searchQuery} onChange={this.handleSearch} />           
-						<p className="page-header float-xl-left" style={{marginBottom:5},{marginLeft:20},{marginTop:5}}>{count} entries</p> 
+					<p className="page-header float-xl-left" style={{marginBottom:5},{marginLeft:20},{marginTop:5}}>{count} entries</p> 
 
-						   <kanbansTable kanbans={kanbans} 
-						   onDelete={this.handleDelete}
-						   onSort={this.handleSort}
-						   sortColumn={sortColumn}
-						   />
+				   <salonsTable users={users} 
+				   onDelete={this.handleDelete}
+				   onSort={this.handleSort}
+				   sortColumn={sortColumn}
+				   />
         
-				</div> 
-     
-        </React.Fragment>
+			 </div> 
+       
+       </React.Fragment>
 
 			 <hr className="m-0" />
 			 <PanelBody>
-				<div className="d-flex align-items-center justify-content-center">
-					<Pagination 
-					   itemsCount ={count}
-					   pageSize={pageSize}
-					   onPageChange={this.handlePageChange}
-					   currentPage={currentPage}
-					/>
+       	<div className="d-flex align-items-center justify-content-center">
+           <Pagination 
+             itemsCount ={count}
+             pageSize={pageSize}
+             onPageChange={this.handlePageChange}
+             currentPage={currentPage}
+           />
 				</div>
 			 </PanelBody>
 			</Panel>
@@ -211,5 +224,4 @@ const iconStyles = {
 	height: "25px",
 	marginRight: "0rem",
 };
-
-export default KanbansTable
+export default SalonTableData

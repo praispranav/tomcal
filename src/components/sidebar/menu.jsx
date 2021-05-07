@@ -101,6 +101,7 @@ const Menu = [
       { path: '/clinic/grid-tickets', title: 'new kanbanboard' },		
       { path: '/clinic/grid-tickets', title: 'Gridview of Tickets' },	
       { path: '/clinic/tickets', title: 'Tickets' },
+	  { path: '/ticket/ticketprofile', title: 'Ticketprofile' },	  
       { path: '/clinic/tickets/new', title: 'Add ticket' },
       { path: '/clinic/search_ticket', title: 'Search in tickets' },  
     ]
@@ -137,11 +138,11 @@ const Menu = [
     ]
   },
   
-  { path: '/Salons', icon: 'fa fa-building', title: 'Salons', badge: '10',
+  { path: '/Salons', icon: 'fa fa-building', title: 'Salons',
     children: [
-      { path: '/clinic/salons', title: 'Salons' },
-      { path: '/clinic/salons/new', title: 'Add salon' },
-      { path: '/clinic/search_reception', title: 'Search in Salons' },  
+      { path: '/salon/salons', title: 'Salons' },
+      { path: '/salon/salons/new', title: 'Add salon' },
+      { path: '/salon/search_reception', title: 'Search in Salons' },  
     ]
   },
   
@@ -175,7 +176,7 @@ const Menu = [
   },
   { path: '/kanban', icon: 'fa fa-columns', title: 'Kanban',
     children: [
-      { path: '/kanban/scrumboard', title: 'Kanbanboard',
+      { path: '/kanban/scrumboard', title: 'Scrumboard',
         children: [
           { path: '/kanban/scrumboard/menu-2-1', title: 'Menu 2.1',
             children: [
@@ -188,7 +189,8 @@ const Menu = [
         ]
       },
 	
-      { path: '/kanban/scrumboard', title: 'Kanban'},
+      { path: '/kanban/scrumboard', title: 'Kanban-scrumboard'},
+      { path: '/kanban/kanbans/new', title: 'New Kanban'},	  
       { path: '/kanban/kanbans', title: 'Admin Kanbans'},	  
       { path: '/kanban/listkanbans', title: 'Admin Lists of Kanbans'},	  	  
       { path: '/kanban/cards', title: 'Admin Cards'},	  	  

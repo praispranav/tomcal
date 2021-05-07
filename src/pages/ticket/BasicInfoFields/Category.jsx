@@ -9,21 +9,7 @@ export default function ReactSelect({ options, selectedValue, ...props }) {
       ...styles,
       minHeight: "31px",
       height: "31px",
-      color:
-        value === "feature-request"
-          ? "white"
-          : value === "disconnection"
-          ? "yellow"
-          : value === "bug-error"
-          ? "white"
-          : value === "sales"
-          ? "white"
-          : value === "complaint"
-          ? "pink"
-          : value === "orders"
-          ? "lime"
-          : "white",
-      width: "120px",
+      width: "100%",
       backgroundColor:
         value === "feature-request"
           ? "#ff5b57"
@@ -37,9 +23,25 @@ export default function ReactSelect({ options, selectedValue, ...props }) {
           ? "#f1c40f"
           : value === "orders"
           ? "#2ecc71"
+          : "BFFF00",
+    }),
+    singleValue: (styles) => ({
+      ...styles,
+      color:
+        value === "feature-request"
+          ? "white"
+          : value === "disconnection"
+          ? "white"
+          : value === "bug-error"
+          ? "white"
+          : value === "sales"
+          ? "white"
+          : value === "complaint"
+          ? "white"
+          : value === "orders"
+          ? "white"
           : "white",
     }),
-
     option: (provided) => ({
       ...provided,
       padding: "20px",
@@ -53,18 +55,19 @@ export default function ReactSelect({ options, selectedValue, ...props }) {
   };
 
   const displayItem = (selected) => {
-    const item = options.find((x) => x.value === selected);
+    const item = options?.find((x) => x.value === selected);
     return item ? item : { value: "", label: "" };
   };
 
   return (
     <Select
-      maxMenuHeight={90}
+      maxMenuHeight={300}
       onChange={onChange}
       styles={customStyles(selected)}
       options={options}
       placeholder={"Select Category"}
       value={displayItem(selected)}
+      isDisabled={props.readOnly}
       {...props}
     />
   );

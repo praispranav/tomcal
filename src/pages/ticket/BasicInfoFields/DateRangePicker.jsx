@@ -12,12 +12,12 @@ export default function RangePicker({ className, ...props }) {
       key: "selection",
     },
   });
-  const handleSelect = (date) => {
-    console.log(date); // native Date object
-  };
+  // const handleSelect = (date) => {
+  //   console.log(date); // native Date object
+  // };
   return (
     <DateRangePicker
-      className={`position-absolute daterange ${className}`}
+      className={` daterange ${className}`}
       onChange={(item) => setselectionRanges({ ...item })}
       showSelectionPreview={true}
       moveRangeOnFirstSelection={false}
@@ -25,7 +25,7 @@ export default function RangePicker({ className, ...props }) {
       maxDate={addDays(new Date(), 900)}
       months={2}
       ranges={[selectionRanges.selection]}
-      direction="horizontal"
+      direction="vertical"
     />
   );
 }

@@ -1,21 +1,14 @@
-import React, { Suspense, useRef } from "react";
-import "x-data-spreadsheet/dist/xspreadsheet.css";
+import React, { useState } from "react";
+import { useEffect } from "react/cjs/react.development";
+// import { useEffect } from "react/cjs/react.development";
 import XLSX from "xlsx";
-import Spreadsheet from "x-data-spreadsheet";
-const SpreadsheetEditor = React.lazy(() => import("./SpreadsheetEditor"));
+import SpreadsheetEditor from "./SpreadsheetEditor";
+import SpreadsheetReader from "./SpreadsheetReader";
+// const SpreadsheetEditor = React.lazy(() => import("./SpreadsheetEditor"));
+// const SpreadsheetReader = React.lazy(() => import("./SpreadsheetReader"));
 
-const SpreadSheet = ({ height, width, readOnly, sampleData }) => {
-  const [sheetState, setSheetState] = React.useState(
-    sampleData || [{ name: "Sheet" }]
-  );
-  const block = useRef(null);
-  const sheetBlock = useRef(null);
-  let options = {
-    mode: "edit",
-    showToolbar: true,
-    showGrid: true,
-    // showContextmenu: true,
-  };
+const SpreadSheet = ({ readOnly, setReadOnly }) => {
+  const [sheetState, setSheetState] = useState({});
   function stox(wb) {
     var out = [];
     wb.SheetNames.forEach(function (name) {
@@ -53,40 +46,21 @@ const SpreadSheet = ({ height, width, readOnly, sampleData }) => {
         });
         data.then((exceldata) => {
           console.log(exceldata);
-          let bc = block.current;
-          bc.innerHTML = "";
-          loadsheet(stox(exceldata));
-          // console.log(stox(exceldata));
-          // sheetBlock.current.loadData(stox(exceldata));
+          setSheetState(stox(exceldata));
+          if (readOnly) {
+            setReadOnly();
+          }
         });
       }
     }
   };
 
-  const loadsheet = (ss) => {
-    sheetBlock.current = new Spreadsheet(block?.current, {
-      view: {
-        height: () => document.documentElement.clientHeight,
-        width: () => document.documentElement.clientWidth,
-      },
-      ...options,
-    })
-      .loadData(ss)
-      .change((data) => {
-        setSheetState(data);
-        console.log(data);
-        // save data to db
-      });
-  };
+  useEffect(() => {
+    console.log(sheetState);
+  }, [sheetState]);
 
   return (
     <div style={{ height: "100%", width: "100%" }}>
-      {/* <button
-        className="btn btn-secondary my-2"
-        onClick={() => setRe((r) => !r)}
-      >
-        Toggle mode
-      </button> */}
       <div className="my-3" style={{ width: "300px" }}>
         <div className="custom-file">
           <input
@@ -100,15 +74,19 @@ const SpreadSheet = ({ height, width, readOnly, sampleData }) => {
           </label>
         </div>
       </div>
-      <Suspense fallback={<p>loading . . .</p>}>
-        <SpreadsheetEditor
-          block={block}
-          readOnly={readOnly}
-          loadsheet={(s) => loadsheet(s)}
-          sheetState={sheetState}
-          sheetBlock={sheetBlock}
-        />
-      </Suspense>
+      <>
+        {readOnly ? (
+          <SpreadsheetReader
+            sheetState={sheetState}
+            setSheetState={(ss) => setSheetState(ss)}
+          />
+        ) : (
+          <SpreadsheetEditor
+            sheetState={sheetState}
+            setSheetState={(ss) => setSheetState(ss)}
+          />
+        )}
+      </>
     </div>
   );
 };

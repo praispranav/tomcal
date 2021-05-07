@@ -21,7 +21,7 @@ export function saveTicket(ticket) {
 	//update
 	if (ticket.id) {
 		//delete _id
-		delete body.id;
+		delete body._id;
 		return http.put(ticketUrl(ticket.id), body);
 	}
 

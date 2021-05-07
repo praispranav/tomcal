@@ -9,18 +9,7 @@ export default function ReactSelect({ options, selectedValue, ...props }) {
       ...styles,
       minHeight: "31px",
       height: "31px",
-      color: "white",
-      color:
-        value === "open"
-          ? "white"
-          : value === "onhold"
-          ? "white"
-          : value === "closed"
-          ? "black"
-          : value === "reopen"
-          ? "white"
-          : "white",
-      width: "120px",
+      width: "100%",
       backgroundColor:
         value === "open"
           ? "#2ECC71"
@@ -32,7 +21,19 @@ export default function ReactSelect({ options, selectedValue, ...props }) {
           ? "#BFFF00"
           : "#2b9fc1",
     }),
-
+    singleValue: (styles) => ({
+      ...styles,
+      color:
+        value === "open"
+          ? "white"
+          : value === "onhold"
+          ? "white"
+          : value === "closed"
+          ? "black"
+          : value === "reopen"
+          ? "black"
+          : "white",
+    }),
     option: (provided) => ({
       ...provided,
       color: "black",
@@ -48,19 +49,20 @@ export default function ReactSelect({ options, selectedValue, ...props }) {
   };
 
   const displayItem = (selected) => {
-    const item = options.find((x) => x.value === selected);
+    const item = options?.find((x) => x.value === selected);
     return item ? item : { value: "", label: "" };
   };
 
   return (
     <Select
       classNamePrefix="select"
-      maxMenuHeight={90}
+      maxMenuHeight={300}
       onChange={onChange}
       styles={customStyles(selected)}
       options={options}
       placeholder={"Select Priority"}
       value={displayItem(selected)}
+      isDisabled={props.readOnly}
       {...props}
     />
   );

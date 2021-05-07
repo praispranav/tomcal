@@ -8,7 +8,7 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import DateRange from "../../components/kanban/DateRangePicker";
 import { Panel, PanelBody, PanelHeader } from "../../components/panel/panel";
 import Actions from "./../../../src/components/kanban/Action";
-import TicketCard from "./../../../src/components/kanban/Card";
+import Card from "./../../../src/components/kanban/Card";
 import Filter from "./../../../src/components/kanban/Filters";
 import "./../../../src/components/kanban/style.css";
 
@@ -86,7 +86,7 @@ const onDragEnd = (result, columns, setColumns) => {
   }
 };
 
-function KanBanBoard(props) {
+function KanbanBoard(props) {
   const [datePickerClass, setPickerClass] = useState("d-none");
 
   const [columns, setColumns] = useState(Object.entries(columnsFromBackend));
@@ -178,13 +178,12 @@ function KanBanBoard(props) {
       // } else {
       //   setFilterColumns(columns);
       // }
-    }
-else if (title === "category" && !isEmpty(value)) {
+    } else if (title === "status" && !isEmpty(value)) {
       switch (value) {
         case "open": {
           const filteredvalue = map(filterColumn, ([col1, col]) => {
             let { items, ...rest } = col;
-            items = filter(items, ({ category }) => category === "open");
+            items = filter(items, ({ status }) => status === "open");
 
             return [col1, { items, ...rest }];
           });
@@ -198,7 +197,7 @@ else if (title === "category" && !isEmpty(value)) {
         case "onhold": {
           const filteredvalue = map(filterColumn, ([col1, col]) => {
             let { items, ...rest } = col;
-            items = filter(items, ({ category }) => category === "onhold");
+            items = filter(items, ({ status }) => status === "onhold");
 
             return [col1, { items, ...rest }];
           });
@@ -212,7 +211,7 @@ else if (title === "category" && !isEmpty(value)) {
         case "reopen": {
           const filteredvalue = map(filterColumn, ([col1, col]) => {
             let { items, ...rest } = col;
-            items = filter(items, ({ category }) => category === "reopen");
+            items = filter(items, ({ status }) => status === "reopen");
             return [col1, { items, ...rest }];
           });
           const removeEmptyItems = filter(
@@ -225,7 +224,7 @@ else if (title === "category" && !isEmpty(value)) {
         case "closed": {
           const filteredvalue = map(filterColumn, ([col1, col]) => {
             let { items, ...rest } = col;
-            items = filter(items, ({ category }) => category === "closed");
+            items = filter(items, ({ status }) => status === "closed");
 
             return [col1, { items, ...rest }];
           });
@@ -247,6 +246,18 @@ else if (title === "category" && !isEmpty(value)) {
           setFilterColumns(columns);
         }
       }
+      // if (value !== "showall" && value !== "select") {
+      //   const filteredvalue = map(filterColumn, ([col1, col]) => {
+      //     let { items, ...rest } = col;
+      //     items = filter(items, ({ status }) => status === value);
+
+      //     return [col1, { items, ...rest }];
+      //   });
+
+      //   setFilterColumns(filteredvalue);
+      // } else {
+      //   setFilterColumns(columns);
+      // }
     }
   };
   const [priorityOptions, setpriorityOptions] = useState([
@@ -258,18 +269,11 @@ else if (title === "category" && !isEmpty(value)) {
 
   const [statusOptions, setStatusOptions] = useState([
     { value: "open", label: "Open" },
-    { value: "onhold", label: "on-Hold" },
+    { value: "onhold", label: "On-Hold" },
     { value: "closed", label: "Closed" },
     { value: "reopen", label: "Re-open" },
   ]);
 
-  const [categoryOptions, setCategoryOptions] = useState([
-    { value: "open", label: "Open" },
-    { value: "onhold", label: "on-Hold" },
-    { value: "closed", label: "Closed" },
-    { value: "reopen", label: "Re-open" },
-  ]);
-  
   useEffect(() => {
     console.log("object entries ", Object.entries(columns));
   });
@@ -299,7 +303,7 @@ else if (title === "category" && !isEmpty(value)) {
             <DateRange className={datePickerClass} />
           </PanelBody>
         </Panel>
-        <div className="TicketCardsHo">
+        <div className="CardsHo">
           <DragDropContext
             onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
           >
@@ -329,7 +333,7 @@ else if (title === "category" && !isEmpty(value)) {
                                         {...provided.draggableProps}
                                         {...provided.dragHandleProps}
                                       >
-                                        <TicketCard
+                                        <Card
                                           statusOptions={statusOptions}
                                           priorityOptions={priorityOptions}
                                           content={item}
@@ -355,4 +359,4 @@ else if (title === "category" && !isEmpty(value)) {
   );
 }
 
-export default tcikets;
+export default KanbanBoard;
