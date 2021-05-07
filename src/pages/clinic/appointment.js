@@ -222,8 +222,8 @@ this.selectClinics = this.state.clinics.map(option => (
     try {
 	const data = { ...this.state.data };
 	console.log(this.state.data);
-	data.start = new Date(data.date + " "+ moment(data.startTime, "HH:mm:ss"));
-	data.end = new Date(data.date + " "+ moment(data.endTime, "HH:mm:ss"));
+	data.start = moment(data.date + " "+data.startTime, "DD MM YYYY hh:mm");
+	data.end = moment(data.date + " "+data.endTime, "DD MM YYYY hh:mm");
 	delete data.date;
 	delete data.startTime;
 	delete data.endTime;
