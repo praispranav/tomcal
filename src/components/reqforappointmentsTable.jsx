@@ -36,25 +36,23 @@ class ReqforappointmentsTable extends Component {
 		},
 		{
 			key: "avatar",
-			label: "avatar",
-			content: (reqforappointment) => (
+			reqforappointment: "avatar",
+			content: (user) => (
 				<span className="icon-img sm-r-5">
-					<img style={{ width: "30px", height: "30px", borderRadius: "50%" }} src={reqforappointment.patientUser.imageSrc} alt="" />
+					<img style={{ width: "30px", height: "30px", borderRadius: "50%" }} src={user.imageSrc} alt="" />
 				</span>
 			),
 		},
 		{ label: "Username", path: "patientUser.username" },
-		
-		// {
-		// 	key: "avatar",
-		// 	label: "avatar",
-		// 	content: (user) => (
-		// 		<span className="icon-img">
-		// 			<img src={user.imageSrc} alt="" />
-		// 		</span>
-		// 	),
-		// },
-
+		{
+			key: "avatar",
+			label: "avatar",
+			content: (user) => (
+				<span className="icon-img">
+					<img src={user.imageSrc} alt="" />
+				</span>
+			),
+		},
 		// {label: 'Username',   path: 'patientUser.username' } ,
 		{label: 'email',   path: 'patientUser.email' } ,   
 		{label: 'Firstname',   path: 'patientUser.contactName.first' } ,   
