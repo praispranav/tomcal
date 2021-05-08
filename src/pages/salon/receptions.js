@@ -5,18 +5,19 @@ import { Link, withRouter  } from 'react-router-dom';
 import { Panel, PanelHeader, PanelBody } from './../../components/panel/panel.jsx';
 import { UncontrolledButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 //import axios from 'axios';
-import {getSalons,deleteSalon} from './../../services/salons';
+import {getPatients,deletePatient} from './../../services/patients';
 import 'bootstrap/dist/css/bootstrap.min.css';
 //import FloatSubMenu from './../../components/float-sub-menu/float-sub-menu';
 import Pagination from '../../common/pagination';
 import {paginate} from '../../utils/paginate';
-import SalonsTable from '../../components/salonsTable.jsx';
+import PatientsTable from '../../components/patientsTable.jsx';
 import SearchBox from './../../common/searchBox';
-import _ from 'lodash';
-import http from './../../services/httpService';
-import {apiUrl} from './../../config/config.json';
-import {ToastContainer} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import _ from "lodash";
+import http from "./../../services/httpService";
+import { apiUrl } from "./../../config/config.json";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Col, Button, Form, FormGroup, Input, Modal, Label, ModalHeader, ModalBody, Row } from "reactstrap";
 
 // Icons imports
 import newIcon from "../../assets/Icons/new.svg";
@@ -25,8 +26,9 @@ import trashIcon from "../../assets/Icons/trash.svg";
 import csvIcon from "../../assets/Icons/csv.svg";
 import xlsIcon from "../../assets/Icons/xls.svg";
 import pdfIcon from "../../assets/Icons/pdf.svg";
+import sharingIcon from "../../assets/Icons/sharing.svg";
 
-class SalonTable extends Component {
+class ReceptionTable extends Component {
   
   constructor(props) {
 		super(props);
@@ -43,7 +45,7 @@ class SalonTable extends Component {
     }
 
   async componentDidMount(){
-      const {data} = await getSalons();
+      const {data} = await getReceptions();
       this.setState({users:data});
     }
 
@@ -55,7 +57,7 @@ class SalonTable extends Component {
 		const users = this.state.users.filter(User => User._id !== user._id);
 		this.setState({users});
 		try{
-			await http.delete(apiUrl+"/salon/"+ user._id);
+			await http.delete(apiUrl+"/patients/"+ user._id);
 		}
 		catch(ex){
 			//ex.request
@@ -109,7 +111,7 @@ class SalonTable extends Component {
   render(){
     const {length:count} = this.state.users; 
     const {pageSize,currentPage,sortColumn,searchQuery} = this.state;
-    // if(count === 0)  return "<p>No data available</p>";
+    //if(count === 0)  return "<p>No data available</p>";
    
     const {data:users} = this. getDataPgnation();
 
@@ -120,31 +122,31 @@ class SalonTable extends Component {
 			<ol className="breadcrumb float-xl-right">
 				<li className="breadcrumb-item"><Link to="/">Home</Link></li>
 				<li className="breadcrumb-item"><Link to="/">Tables</Link></li>
-				<li className="breadcrumb-item active">Salons Table</li>
+				<li className="breadcrumb-item active">Receptions Table</li>
 			</ol>
-			<h1 className="page-header">Salons </h1>
+			<h1 className="page-header">Receptions </h1>
 			<Panel>
 				<PanelHeader>
-					Salons Management
+					Receptions Management
 				</PanelHeader>
   
          <React.Fragment>
-           <ToastContainer />
+					 <ToastContainer />
 						<div className="toolbar" style={toolbarStyles}>
-							<button className="btn btn-default active m-r-5 m-b-5" title="add ticket" style={btnStyles}>
+							<button className="btn btn-default active m-r-5 m-b-5" title="add reception" style={btnStyles}>
 								{" "}
-								<Link to="/clinic/salons/new">
+								<Link to="/clinic/receptions/new">
 									<img style={iconStyles} src={newIcon} />
 								</Link>
 							</button>
 							
-							<button className="btn btn-default active m-r-5 m-b-5" title="edit ticket" style={btnStyles}>
+							<button className="btn btn-default active m-r-5 m-b-5" title="edit reception" style={btnStyles}>
 								{" "}
 								<Link
 									to={
-										this.state.checkedsalons
-											? `/clinic/salons/${this.state.checkedsalons[0]}`
-											: "/clinic/salons/"
+										this.state.checkedreceptions
+											? `/clinic/receptions/${this.state.checkedreceptions[0]}`
+											: "/clinic/receptions/"
 									}
 								>
 									<img style={iconStyles} src={editIcon} />
@@ -152,30 +154,36 @@ class SalonTable extends Component {
 							</button>
 							<button
 								className="btn btn-default active m-r-5 m-b-5"
-								title="delete tickets"
+								title="delete reception"
 								style={btnStyles}
-								onClick={() => this.handleMassDelete(this.state.checkedsalons)}
+								onClick={() => this.handleMassDelete(this.state.checkedreceptions)}
 							>
 								{" "}
 								<img style={{ width: "25px", height: "25px" }} src={trashIcon} />
 							</button>
 							<button className="btn btn-default active m-r-5 m-b-5" title="Excel" style={btnStyles}>
 								{" "}
-								<Link to="/clinic/salons/">
+								<Link to="/clinic/receptions/">
 									<img style={iconStyles} src={xlsIcon} />
 								</Link>{" "}
 							</button>
 							
 							<button className="btn btn-default active m-r-5 m-b-5" title="csv" style={btnStyles}>
 								{" "}
-								<Link to="/clinic/salons/">
+								<Link to="/clinic/receptions/">
 									<img style={iconStyles} src={csvIcon} />
 								</Link>{" "}
 							</button>
 							<button className="btn btn-default active m-r-5 m-b-5" title="PDF" style={btnStyles}>
 								{" "}
-								<Link to="/clinic/salons/">
+								<Link to="/clinic/receptions/">
 									<img style={iconStyles} src={pdfIcon} />
+								</Link>{" "}
+							</button>
+							<button className="btn btn-default active m-r-5 m-b-5" title="Share to other" style={btnStyles}>
+								{" "}
+								<Link to="/clinic/receptions/">
+									<img style={iconStyles} src={sharingIcon} />
 								</Link>{" "}
 							</button>
 							
@@ -185,15 +193,14 @@ class SalonTable extends Component {
 				   <SearchBox value={searchQuery} onChange={this.handleSearch} />           
 					<p className="page-header float-xl-left" style={{marginBottom:5},{marginLeft:20},{marginTop:5}}>{count} entries</p> 
 
-				   <SalonsTable users={users} 
+				   <ReceptionsTable receptions={receptions} 
 				   onDelete={this.handleDelete}
 				   onSort={this.handleSort}
 				   sortColumn={sortColumn}
 				   />
-        
-			 </div> 
+	  </div> 
        
-       </React.Fragment>
+        </React.Fragment>
 
 			 <hr className="m-0" />
 			 <PanelBody>
@@ -212,16 +219,5 @@ class SalonTable extends Component {
     )
   }
 }
-const toolbarStyles = {
-	background: "#c8e9f3",
-	padding: "10px",
-};
 
-const btnStyles = { background: "#348fe2", margin: "0rem" };
-
-const iconStyles = {
-	width: "25px",
-	height: "25px",
-	marginRight: "0rem",
-};
-export default SalonTable
+export default ReceptionTable
