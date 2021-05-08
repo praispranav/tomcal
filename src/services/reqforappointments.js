@@ -19,10 +19,10 @@ export function savereqForAppointment(reqForAppointment) {
 	const body = { ...reqForAppointment };
 	console.log(body);
 	//update
-	if (reqForAppointment.id) {
+	if (reqForAppointment._id) {
 		//delete _id
-		delete body.id;
-		return http.put(reqForAppointmentUrl(reqForAppointment.id), body);
+		delete body._id;
+		return http.put(reqForAppointmentUrl(reqForAppointment._id), body);
 	}
 
 	//add a new appointment

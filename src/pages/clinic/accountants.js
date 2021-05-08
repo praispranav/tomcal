@@ -116,7 +116,7 @@ class AccountantTable extends Component {
            
         <p className="page-header float-xl-left" style={{marginBottom:5},{marginLeft:20},{marginTop:5}}>{count} entries</p> 
        <SearchBox value={searchQuery} onChange={this.handleSearch} />
-       <accountantsTable accountants={accountants} 
+       <AccountantsTable accountants={accountants} 
        onDelete={this.handleDelete}
        onSort={this.handleSort}
        sortColumn={sortColumn}
