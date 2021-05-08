@@ -5,7 +5,7 @@ import { Link, withRouter  } from 'react-router-dom';
 import { Panel, PanelHeader, PanelBody } from './../../components/panel/panel.jsx';
 import { UncontrolledButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 //import axios from 'axios';
-import {getSalons,deleteSalon} from './../../services/clinics';
+import {getSalons,deleteSalon} from './../../services/salons';
 import 'bootstrap/dist/css/bootstrap.min.css';
 //import FloatSubMenu from './../../components/float-sub-menu/float-sub-menu';
 import Pagination from '../../common/pagination';
