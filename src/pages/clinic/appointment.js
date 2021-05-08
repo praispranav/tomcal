@@ -171,11 +171,14 @@ this.selectClinics = this.state.clinics.map(option => (
       if (AppointmentId === "new") return;
 
       const { data: Appointment } = await getAppointment(AppointmentId);
-	  const startDate = new Date(Appointment.start);
-	  const endDate = new Date(Appointment.end);
-	  Appointment.date = startDate.getFullYear()-startDate.getMonth() + 1-startDate.getDate();
-	  Appointment.startTime = startDate.getHours()+":"+startDate.getMinutes();
-	  Appointment.endTime = endDate.getHours()+":"+endDate.getMinutes();
+	  const startDate = new Date(Appointment.startTime);
+	  const endDate = new Date(Appointment.endTime);
+	  //Appointment.date = startDate.getFullYear()-startDate.getMonth() + 1-startDate.getDate();
+    Appointment.date = moment(startDate).format("YYYY-MM-DD");
+	  //Appointment.startTime = startDate.getHours()+":"+startDate.getMinutes();
+    Appointment.startTime = moment(startDate).format("HH:mm");
+	  //Appointment.endTime = endDate.getHours()+":"+endDate.getMinutes();
+    Appointment.endTime = moment(endDate).format("HH:mm");
       this.setState({ data: this.mapToViewModel(Appointment) });
       console.log(this.state.data);
     } catch (ex) {
@@ -224,9 +227,6 @@ this.selectClinics = this.state.clinics.map(option => (
 	console.log(this.state.data);
 	data.start = moment(data.date + " "+data.startTime, "DD MM YYYY hh:mm");
 	data.end = moment(data.date + " "+data.endTime, "DD MM YYYY hh:mm");
-	delete data.date;
-	delete data.startTime;
-	delete data.endTime;
 	const { data: clinic } = await getClinic(data.clinicNo);
 	data.clinicUser = clinic[0].user;
 	const { data: patient } = await getPatient(data.patientNo);
@@ -235,6 +235,9 @@ this.selectClinics = this.state.clinics.map(option => (
 		const { data: doctor } = await getDoctor(data.doctorNo);
 		data.doctorUser = doctor[0].user;
 	}
+  delete data.date;
+	delete data.startTime;
+	delete data.endTime;
     this.setState({ data });
 	console.log(this.state.data);
       await saveAppointment(this.state.data);
