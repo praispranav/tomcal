@@ -231,6 +231,7 @@ class reqForAppointment extends Form {
 				delete data.date;
 				delete data.preferStartTime;
 				delete data.preferEndTime;
+				delete data._id;
 				await saveAppointment(this.state.data);
 
 			} else {
