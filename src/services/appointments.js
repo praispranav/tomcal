@@ -22,7 +22,7 @@ const apiEndpoint = apiUrl+'/appointments';
    //update
    if (appointment.id) {
      //delete _id
-     delete body.id;
+     delete body._id;
      return http.put(appointmentUrl(appointment.id),body);
    }
  
