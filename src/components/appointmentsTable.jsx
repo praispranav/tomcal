@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Table from "./../common/table";
 import { Link, withRouter } from "react-router-dom";
-import { getAppointments } from './../services/appointments';
 
 class AppointmentsTable extends Component {
 	// constructor(props) {
@@ -45,33 +44,33 @@ class AppointmentsTable extends Component {
 		{
 			key: "avatar",
 			label: "avatar",
-			content: (getAppointments) => (
+			content: (user) => (
 				<span className="icon-img sm-r-5">
 					<img
 						style={{ width: "30px", height: "30px", borderRadius: "50%" }}
-						src={appointment.patientUser.imageSrc}
+						src={user.imageSrc}
 						alt=""
 					/>
 				</span>
 			),
 		},
-		 {label: 'Username',   path: 'patientUser.username' } ,
+		{label: 'Username',   path: 'patientUser.username' } ,
 		{label: 'email',   path: 'patientUser.email' } ,   
 		{label: 'Firstname',   path: 'patientUser.contactName.first' } ,   
-		 {label: 'initials',   path: 'patientUser.contactName.initials' } ,   	  
+		{label: 'initials',   path: 'patientUser.contactName.initials' } ,   	  
 		{label: 'Lastname',   path: 'patientUser.contactName.last' } ,   	  
 		{label: 'DOB',   path: 'patientUser.dateBirth' } ,   	  
-		 {label: 'Mobile',   path: 'patientUser.phones.mobile' } ,   	  
+		{label: 'Mobile',   path: 'patientUser.phones.mobile' } ,   	  
 		{label: 'Phone',   path: 'patientUser.phones.phone' } ,   	  
-		//{label: 'Date',   path: 'date' } ,   	  
+		{label: 'Date',   path: 'date' } ,   	  
 		{label: 'Start-time',   path: 'startTime' } ,   	  	
 		{label: 'End-Time',   path: 'endTime' } ,   	  	  
 		{label: 'Complaint',   path: 'complaint' } ,   	  	  			
 		{label: 'Clinic',   path: 'clinicNo.businessName' } ,   	  	  	
-		 {label: 'Doctor',   path: 'doctorUser.contactName.lastName' } ,   	  	  		
+		{label: 'Doctor',   path: 'doctorUser.contactName.lastName' } ,   	  	  		
 		{label: 'Appointment-type',   path: 'appointmentType' } ,   	  	  		
 		{label: 'Session-type',   path: 'sessionType' } ,   	  	  			
-		// {label: 'Note from Patient',   path: 'notePatient' } ,   	  	  		
+		{label: 'Note from Patient',   path: 'notePatient' } ,   	  	  		
 		{label: 'Note',   path: 'note' } ,   	  	  
 		{label: 'Status',   path: 'status' } ,   	  	  	
 	];

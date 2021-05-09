@@ -216,7 +216,7 @@ class Content extends React.Component {
 								<Route path="/scheduler" title="Scheduler" component={SchedulerCal} />
 
 								<Route path="/scheduler2" title="Scheduler2" component={SchedulerfCal} />
-								<Route path="/kanban/kanban" title="KanBanBoard" component={KanBanBoard} />
+								{/* <Route path="/kanban/kanban" title="KanBanBoard" component={KanBanBoard} /> */}
 								<Route path="/kanban/kanban" title="Card" component={Card} />
 								<Route path="/kanban/kanban" title="Listkanban" component={Listkanban} />
 								<Route path="/kanban/kanban" title="Kanban" component={Kanban} />
@@ -244,7 +244,7 @@ class Content extends React.Component {
 
 								<ProtectedRoute path="/kanban/scrumboard" title="scrumboard" component={Scrumboard} />
 
-								<ProtectedRoute path="/clinic/grid-tickets" title="grid-tickets" component={NewKanBanBoard} />
+								{/* <ProtectedRoute path="/clinic/grid-tickets" title="grid-tickets" component={NewKanBanBoard} /> */}
 
 								<ProtectedRoute path="/ticket/ticketprofile" title="ticketProfile" component={ticketProfile} />
 

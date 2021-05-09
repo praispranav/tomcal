@@ -223,6 +223,7 @@ class reqForAppointment extends Form {
     this.setState({ data });
 		try {
 			if (this.state.data.status === "approved") {
+				await savereqForAppointment(this.state.data);
 				const data = { ...this.state.data };
 				let [hour, minute] = data.preferStartTime.split(":");
                 data.start = moment(data.date).add({hours: hour, minutes: minute}).toString(); 
@@ -232,7 +233,8 @@ class reqForAppointment extends Form {
 				delete data.preferStartTime;
 				delete data.preferEndTime;
 				delete data._id;
-				await saveAppointment(this.state.data);
+				//this.setState({ data });
+				await saveAppointment(data);
 
 			} else {
 				await savereqForAppointment(this.state.data);
@@ -370,6 +372,12 @@ class reqForAppointment extends Form {
 													name="preferStartTime"
 													dateFormat={false}
 													value={data.preferStartTime}
+													onChange={(e) => {			
+														const data = { ...this.state.data };
+														data.preferStartTime = e;
+														this.setState({ data });
+												
+													  }}
 													inputProps={{ placeholder: "Timepicker" }}
 												/>
 											</div>
@@ -381,6 +389,12 @@ class reqForAppointment extends Form {
 													name="preferEndTime"
 													dateFormat={false}
 													value={data.preferEndTime}
+													onChange={(e) => {			
+														const data = { ...this.state.data };
+														data.preferEndTime = e;
+														this.setState({ data });
+												
+													  }}
 													inputProps={{ placeholder: "Timepicker" }}
 												/>
 											</div>
