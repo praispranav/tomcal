@@ -47,11 +47,7 @@ class AppointmentsTable extends Component {
 			label: "avatar",
 			content: (appointment) => (
 				<span className="icon-img sm-r-5">
-					<img
-						style={{ width: "30px", height: "30px", borderRadius: "50%" }}
-						src={appointment.patientUser.imageSrc}
-						alt=""
-					/>
+					<img style={{ width: "30px", height: "30px", borderRadius: "50%" }} src={user.imageSrc} alt="" />
 				</span>
 			),
 		},

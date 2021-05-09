@@ -225,17 +225,12 @@ this.selectClinics = this.state.clinics.map(option => (
     try {
 	const data = { ...this.state.data };
 	console.log(this.state.data);
-	//data.start = moment(data.date + " "+data.startTime, "DD MM YYYY hh:mm");
-	//data.end = moment(data.date + " "+data.endTime, "DD MM YYYY hh:mm");
-
-
-
+	
   let [hour, minute] = data.startTime.split(":");
   data.start = moment(data.date).add({hours: hour, minutes: minute}).toString(); 
   [hour, minute] = data.endTime.split(":");
   data.end = moment(data.date).add({hours: hour, minutes: minute}).toString(); 
-  //data.start = new Date(data.date + " "+data.startTime);
-	//data.end = new Date(data.date + " "+data.endTime);
+  
 	const { data: clinic } = await getClinic(data.clinicNo);
 	data.clinicUser = clinic[0].user;
 	const { data: patient } = await getPatient(data.patientNo);

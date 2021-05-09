@@ -8,7 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 //import FloatSubMenu from './../../components/float-sub-menu/float-sub-menu';
 import Pagination from '../../common/pagination';
 import {paginate} from '../../utils/paginate';
-import UsersTable from '../../components/employeesTable.jsx';
+import EmployeesTable from '../../components/employeesTable.jsx';
 import SearchBox from './../../common/searchBox';
 import _ from "lodash";
 import http from "./../../services/httpService";
@@ -26,7 +26,7 @@ import xlsIcon from "../../assets/Icons/xls.svg";
 import pdfIcon from "../../assets/Icons/pdf.svg";
 import sharingIcon from "../../assets/Icons/sharing.svg";
 
-class EmployeeTable extends Component {
+class EmployeesTable extends Component {
   
   constructor(props) {
 		super(props);
@@ -116,7 +116,7 @@ class EmployeeTable extends Component {
            
         <p className="page-header float-xl-left" style={{marginBottom:5},{marginLeft:20},{marginTop:5}}>{count} entries</p> 
        <SearchBox value={searchQuery} onChange={this.handleSearch} />
-       <employeesTable employees={employees} 
+       <EmployeesTable employees={employees} 
        onDelete={this.handleDelete}
        onSort={this.handleSort}
        sortColumn={sortColumn}
@@ -144,4 +144,4 @@ class EmployeeTable extends Component {
   }
 }
 
-export default EmployeeTable
+export default EmployeesTable

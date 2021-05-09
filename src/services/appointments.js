@@ -20,10 +20,10 @@ const apiEndpoint = apiUrl+'/appointments';
     const body = { ...appointment };
     console.log(body);
    //update
-   if (appointment.id) {
+   if (appointment._id) {
      //delete _id
      delete body._id;
-     return http.put(appointmentUrl(appointment.id),body);
+     return http.put(appointmentUrl(appointment._id),body);
    }
  
    //add a new appointment
