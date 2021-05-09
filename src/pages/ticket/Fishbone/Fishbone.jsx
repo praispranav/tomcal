@@ -71,6 +71,11 @@ export default function Fishbone() {
         causeElements[i].style.color = "black";
       }
     }
+    let fishbone = document.getElementsByClassName("fishboneChart");
+    console.log(fishbone);
+    let legend = fishbone[0].childNodes[2];
+    console.log(legend);
+    legend.style.display = "none";
   }, []);
 
   return (
