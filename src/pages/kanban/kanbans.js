@@ -172,7 +172,7 @@ class KanbansTable extends Component {
 				   <SearchBox value={searchQuery} onChange={this.handleSearch} />           
 						<p className="page-header float-xl-left" style={{marginBottom:5},{marginLeft:20},{marginTop:5}}>{count} entries</p> 
 
-						   <kanbansTable kanbans={kanbans} 
+						   <KanbansTable kanbans={kanbans} 
 						   onDelete={this.handleDelete}
 						   onSort={this.handleSort}
 						   sortColumn={sortColumn}

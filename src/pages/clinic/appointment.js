@@ -57,17 +57,17 @@ class Appointment extends Form {
 	  clinics:[],
       data: {
         patientNo: "",
-		clinicNo: '',
+	    	clinicNo: '',
         doctorNo: '',
         date: new Date(),
         startTime: "",
         endTime: "",
         //chiefComplaint: "",
-		complaint: "",
+	    	complaint: "",
         appointmentType: "",
         sessionType: "",
         note: "",
-		status: ""
+	    	status: ""
         
       },
       errors: {},
@@ -171,11 +171,14 @@ this.selectClinics = this.state.clinics.map(option => (
       if (AppointmentId === "new") return;
 
       const { data: Appointment } = await getAppointment(AppointmentId);
-	  const startDate = new Date(Appointment.start);
-	  const endDate = new Date(Appointment.end);
-	  Appointment.date = startDate.getFullYear()-startDate.getMonth() + 1-startDate.getDate();
-	  Appointment.startTime = startDate.getHours()+":"+startDate.getMinutes();
-	  Appointment.endTime = endDate.getHours()+":"+endDate.getMinutes();
+	  const startDate = new Date(Appointment.startTime);
+	  const endDate = new Date(Appointment.endTime);
+	  //Appointment.date = startDate.getFullYear()-startDate.getMonth() + 1-startDate.getDate();
+    Appointment.date = moment(startDate).format("YYYY-MM-DD");
+	  //Appointment.startTime = startDate.getHours()+":"+startDate.getMinutes();
+    Appointment.startTime = moment(startDate).format("HH:mm");
+	  //Appointment.endTime = endDate.getHours()+":"+endDate.getMinutes();
+    Appointment.endTime = moment(endDate).format("HH:mm");
       this.setState({ data: this.mapToViewModel(Appointment) });
       console.log(this.state.data);
     } catch (ex) {
@@ -222,11 +225,12 @@ this.selectClinics = this.state.clinics.map(option => (
     try {
 	const data = { ...this.state.data };
 	console.log(this.state.data);
-	data.start = new Date(data.date + " "+ moment(data.startTime, "HH:mm:ss"));
-	data.end = new Date(data.date + " "+ moment(data.endTime, "HH:mm:ss"));
-	delete data.date;
-	delete data.startTime;
-	delete data.endTime;
+	
+  let [hour, minute] = data.startTime.split(":");
+  data.start = moment(data.date).add({hours: hour, minutes: minute}).toString(); 
+  [hour, minute] = data.endTime.split(":");
+  data.end = moment(data.date).add({hours: hour, minutes: minute}).toString(); 
+  
 	const { data: clinic } = await getClinic(data.clinicNo);
 	data.clinicUser = clinic[0].user;
 	const { data: patient } = await getPatient(data.patientNo);
@@ -235,6 +239,9 @@ this.selectClinics = this.state.clinics.map(option => (
 		const { data: doctor } = await getDoctor(data.doctorNo);
 		data.doctorUser = doctor[0].user;
 	}
+  delete data.date;
+	delete data.startTime;
+	delete data.endTime;
     this.setState({ data });
 	console.log(this.state.data);
       await saveAppointment(this.state.data);
@@ -258,8 +265,8 @@ this.selectClinics = this.state.clinics.map(option => (
       appointmentType: Appointment.appointmentType,
       sessionType: Appointment.sessionType,
       doctorNo: Appointment.doctorNo,
-	  patientNo: Appointment.patientNo,
-	  clinicNo: Appointment.clinicNo,
+  	  patientNo: Appointment.patientNo,
+	    clinicNo: Appointment.clinicNo,
       note: Appointment.note,
       status: Appointment.status,
 	  //chiefComplaint: Appointment.chiefComplaint,
@@ -299,6 +306,7 @@ this.selectClinics = this.state.clinics.map(option => (
                         <select
                           name="patientNo"
                           id="patientNo"
+                          value={data.patientNo}
                           onChange={this.handleChange}
                           className="form-control"
                         >
@@ -322,6 +330,7 @@ this.selectClinics = this.state.clinics.map(option => (
                         <select
                           name="doctorNo"
                           id="doctorNo"
+                          value={data.doctorNo}
                           onChange={this.handleChange}
                           className="form-control"
                         >
@@ -347,6 +356,7 @@ this.selectClinics = this.state.clinics.map(option => (
                         <select
                           name="clinicNo"
                           id="clinicNo"
+                          value={data.clinicNo}
                           onChange={this.handleChange}
                           className="form-control"
                         >
@@ -434,6 +444,7 @@ this.selectClinics = this.state.clinics.map(option => (
                         <select
                           name="appointmentType"
                           id="appointmentType"
+                          value={data.appointmentType}
                           onChange={this.handleChange}
                           className="form-control"
                         >
@@ -459,6 +470,7 @@ this.selectClinics = this.state.clinics.map(option => (
                         <select
                           name="sessionType"
                           id="sessionType"
+                          value={data.sessionType}
                           onChange={this.handleChange}
                           className="form-control"
                         >
@@ -486,6 +498,7 @@ this.selectClinics = this.state.clinics.map(option => (
                         <select
                           name="status"
                           id="status"
+                          value={data.status}
                           onChange={this.handleChange}
                           className="form-control"
                         >

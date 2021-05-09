@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Table from "./../common/table";
 import { Link, withRouter } from "react-router-dom";
+import { getAppointments } from './../services/appointments';
 
 class AppointmentsTable extends Component {
 	// constructor(props) {
@@ -44,11 +45,11 @@ class AppointmentsTable extends Component {
 		{
 			key: "avatar",
 			label: "avatar",
-			content: (user) => (
+			content: (getAppointments) => (
 				<span className="icon-img sm-r-5">
 					<img
 						style={{ width: "30px", height: "30px", borderRadius: "50%" }}
-						src={user.imageSrc}
+						src={appointment.patientUser.imageSrc}
 						alt=""
 					/>
 				</span>

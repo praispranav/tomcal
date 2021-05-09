@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 import { Panel, PanelHeader, PanelBody } from './../../components/panel/panel.jsx';
 import { UncontrolledButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import axios from 'axios';
-import {getListlistkanbans} from './../../services/listkanbans';
+import {getListkanbans} from './../../services/listkanbans';
 import 'bootstrap/dist/css/bootstrap.min.css';
 //import FloatSubMenu from './../../components/float-sub-menu/float-sub-menu';
 import Pagination from '../../common/pagination';
 import {paginate} from '../../utils/paginate';
-import ListlistkanbansTable from '../../components/listkanbansTable.jsx';
+import ListkanbansTable from '../../components/listkanbansTable.jsx';
 import SearchBox from './../../common/searchBox';
 import _ from "lodash";
 import http from "./../../services/httpService";
@@ -26,7 +26,7 @@ import xlsIcon from "../../assets/Icons/xls.svg";
 import pdfIcon from "../../assets/Icons/pdf.svg";
 import sharingIcon from "../../assets/Icons/sharing.svg";
 
-class ListlistkanbansTable extends Component {
+class ListkanbansTable extends Component {
   
   constructor(props) {
 		super(props);
@@ -43,7 +43,7 @@ class ListlistkanbansTable extends Component {
 
   async componentDidMount(){
       //const {data:listkanbans} = await axios.get("http://localhost:4500/api/listkanbans");
-      const data = await getListlistkanbans();
+      const data = await getListkanbans();
       console.log(data.data);
       this.setState({listkanbans:data.data});
     }
@@ -70,13 +70,13 @@ class ListlistkanbansTable extends Component {
 
 
  getDataPgnation= ()=>{
-  const {pageSize,currentPage,listkanbans:Listlistkanbans,sortColumn,searchQuery} = this.state;
+  const {pageSize,currentPage,listkanbans:Listkanbans,sortColumn,searchQuery} = this.state;
   //
   //filter maybe next time
-  let filtered = Listlistkanbans;
+  let filtered = Listkanbans;
   if(searchQuery){
     console.log(searchQuery);
-    filtered = Listlistkanbans.filter((el)=> el.email.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
+    filtered = Listkanbans.filter((el)=> el.email.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
     el.username.toLowerCase().startsWith(searchQuery.toLowerCase())
     );
   }
@@ -103,10 +103,10 @@ class ListlistkanbansTable extends Component {
 				<li className="breadcrumb-item"><Link to="/">Tables</Link></li>
 				<li className="breadcrumb-item active">Data Tables</li>
 			</ol>
-			<h1 className="page-header">Listlistkanbans </h1>
+			<h1 className="page-header">Listkanbans </h1>
 			<Panel>
 				<PanelHeader>
-					Listlistkanbans Management
+					Listkanbans Management
 				</PanelHeader>
   
 				<React.Fragment>
@@ -172,7 +172,7 @@ class ListlistkanbansTable extends Component {
 				   <SearchBox value={searchQuery} onChange={this.handleSearch} />           
 						<p className="page-header float-xl-left" style={{marginBottom:5},{marginLeft:20},{marginTop:5}}>{count} entries</p> 
 
-						   <listkanbansTable listkanbans={listkanbans} 
+						   <ListkanbansTable listkanbans={listkanbans} 
 						   onDelete={this.handleDelete}
 						   onSort={this.handleSort}
 						   sortColumn={sortColumn}
@@ -212,4 +212,4 @@ const iconStyles = {
 	marginRight: "0rem",
 };
 
-export default ListlistkanbansTable
+export default ListkanbansTable

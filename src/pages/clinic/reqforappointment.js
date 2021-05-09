@@ -55,8 +55,8 @@ class reqForAppointment extends Form {
 				doctorNo: "",
 				clinicNo: "",
 				date: new Date(),
-				preferedStartTime: "",
-				preferedEndTime: "",
+				preferStartTime: "",
+				preferEndTime: "",
 				complaint: "",
 				appointmentType: "",
 				sessionType: "",
@@ -192,8 +192,8 @@ class reqForAppointment extends Form {
 		doctorNo: Joi.any(),
 		clinicNo: Joi.any(),
 		date: Joi.any(),
-		preferedStartTime: Joi.any().optional(),
-		preferedEndTime: Joi.any().optional(),
+		preferStartTime: Joi.any().optional(),
+		preferEndTime: Joi.any().optional(),
 		complaint: Joi.any().optional(),
 		appointmentType: Joi.any().optional(),
 		sessionType: Joi.any().optional(),
@@ -223,7 +223,17 @@ class reqForAppointment extends Form {
     this.setState({ data });
 		try {
 			if (this.state.data.status === "approved") {
+				const data = { ...this.state.data };
+				let [hour, minute] = data.preferStartTime.split(":");
+                data.start = moment(data.date).add({hours: hour, minutes: minute}).toString(); 
+                [hour, minute] = data.preferEndTime.split(":");
+                data.end = moment(data.date).add({hours: hour, minutes: minute}).toString(); 
+				delete data.date;
+				delete data.preferStartTime;
+				delete data.preferEndTime;
+				delete data._id;
 				await saveAppointment(this.state.data);
+
 			} else {
 				await savereqForAppointment(this.state.data);
 			}
@@ -248,8 +258,8 @@ class reqForAppointment extends Form {
 			doctorNo: reqForAppointment.doctorNo,
 			clinicNo: reqForAppointment.clinicNo,
 			date: new Date(reqForAppointment.date),
-			preferedStartTime: reqForAppointment.preferedStartTime,
-			preferedEndTime: reqForAppointment.preferedEndTime,
+			preferStartTime: reqForAppointment.preferStartTime,
+			preferEndTime: reqForAppointment.preferEndTime,
 			appointmentType: reqForAppointment.reqforappointmentType,
 			sessionType: reqForAppointment.sessionType,
 			notePatient: reqForAppointment.notePatient,
@@ -357,9 +367,9 @@ class reqForAppointment extends Form {
 											<label className="col-lg-4 col-form-label">Select Prefer Start-Time</label>
 											<div className="col-lg-8">
 												<DateTime
-													name="preferedStartTime"
+													name="preferStartTime"
 													dateFormat={false}
-													value={data.preferedStartTime}
+													value={data.preferStartTime}
 													inputProps={{ placeholder: "Timepicker" }}
 												/>
 											</div>
@@ -368,9 +378,9 @@ class reqForAppointment extends Form {
 											<label className="col-lg-4 col-form-label">Select Prefer End-Time</label>
 											<div className="col-lg-8">
 												<DateTime
-													name="preferedEndTime"
+													name="preferEndTime"
 													dateFormat={false}
-													value={data.preferedEndTime}
+													value={data.preferEndTime}
 													inputProps={{ placeholder: "Timepicker" }}
 												/>
 											</div>

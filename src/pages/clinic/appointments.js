@@ -37,6 +37,7 @@ class AppointmentTable extends Component {
         currentPage: 1,
         sortColumn:{path:'title',order:'asc'},
         searchQuery: "",
+		checkedFields: [],
         errors:{},
       }
     
@@ -72,6 +73,41 @@ class AppointmentTable extends Component {
     ////
  
   };
+
+
+	// delete multiple  appointments
+	handleMassDelete = (CheckedAppointments) => {
+		const originalAppointments = this.state.appointments;
+		CheckedAppointments.map(async (appointment) => {
+			const appointments = this.state.appointments.filter((Appointment) => Appointment._id !== appointment);
+			this.setState({ appointments });
+			try {
+				await http.delete(apiUrl + "/appointments/" + appointment);
+			} catch (ex) {
+				if (ex.response && ex.response === 404) {
+					alert("already deleted");
+				}
+
+				this.setState({ appointment: originalAppointments });
+			}
+			console.log("appointments: ", this.state.appointments);
+		});
+	};
+
+
+	handleCheckboxChange =  ({ target: { checked, value } }) => {
+		if (checked) {
+        const checkedFields = [...this.state.checkedFields,value];
+        this.setState({checkedFields:checkedFields});
+		} else {
+          const checkedFields = [...this.state.checkedFields];
+          this.setState({ checkedFields:checkedFields.filter((e) => e !== value)});
+		}
+	};
+
+
+
+
 
 
   //sorting columns
@@ -110,12 +146,12 @@ class AppointmentTable extends Component {
 
   render(){
     const {length:count} = this.state.appointments; 
-    const {pageSize,currentPage,sortColumn,searchQuery} = this.state;
+    const {pageSize,currentPage,sortColumn,searchQuery,checkedFields} = this.state;
     //if(count === 0)  return "<p>No data available</p>";
    
     const {data:appointments} = this. getDataPgnation();
 
-
+   console.log(checkedFields);
     return(
      
       <div>
@@ -144,8 +180,8 @@ class AppointmentTable extends Component {
 								{" "}
 								<Link
 									to={
-										this.state.checkedappointments
-											? `/clinic/appointments/${this.state.checkedappointments[0]}`
+										checkedFields
+											? `/clinic/appointments/${checkedFields[0]}`
 											: "/clinic/appointments/"
 									}
 								>
@@ -154,9 +190,9 @@ class AppointmentTable extends Component {
 							</button>
 							<button
 								className="btn btn-default active m-r-5 m-b-5"
-								title="delete tickets"
+								title="delete appointment"
 								style={btnStyles}
-								onClick={() => this.handleMassDelete(this.state.checkedappointments)}
+								onClick={() => this.handleMassDelete(checkedFields)}
 							>
 								{" "}
 								<img style={{ width: "25px", height: "25px" }} src={trashIcon} />
@@ -191,6 +227,7 @@ class AppointmentTable extends Component {
 				   onDelete={this.handleDelete}
 				   onSort={this.handleSort}
 				   sortColumn={sortColumn}
+				   handleCheckboxChange={this.handleCheckboxChange}
 				   />
         
 			 </div> 

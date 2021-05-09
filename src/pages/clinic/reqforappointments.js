@@ -38,7 +38,7 @@ class ReqforappointmentTable extends Component {
 			sortColumn: { path: "title", order: "asc" },
 			searchQuery: "",
 			errors: {},
-			checkedReqforappointments: [],
+			checkedFields: [],
 		};
 
 		this.handleDelete = this.handleDelete.bind(this);
@@ -73,7 +73,7 @@ class ReqforappointmentTable extends Component {
 		const originalRequests = this.state.reqforappointments;
 		CheckedRequests.map(async (request) => {
 			const requests = this.state.reqforappointments.filter((Request) => Request._id !== request);
-			this.setState({ requests });
+			this.setState({ reqforappointments:requests });
 			try {
 				await http.delete(apiUrl + "/reqforappointments/" + request);
 			} catch (ex) {
@@ -86,6 +86,32 @@ class ReqforappointmentTable extends Component {
 			console.log("Requests for appointments: ", this.state.reqforappointments);
 		});
 	};
+
+	//check box change
+	// handleCheckboxChange = ({ target: { checked, value } }) => {
+	// 	if (checked) {
+	// 		this.setState(({ checkedReqforappointments }) => ({
+	// 			checkedReqforappointments: [...checkedReqforappointments, value],
+	// 		}));
+	// 	} else {
+	// 		this.setState(({ checkedReqforappointments }) => ({
+	// 			checkedReqforappointments: checkedReqforappointments.filter((e) => e !== value),
+	// 		}));
+	// 	}
+	// 	console.log("checked users: ", this.state.checkedReqforappointments);
+	// };
+
+	handleCheckboxChange =  ({ target: { checked, value } }) => {
+		if (checked) {
+        const checkedFields = [...this.state.checkedFields,value];
+        this.setState({checkedFields:checkedFields});
+		} else {
+          const checkedFields = [...this.state.checkedFields];
+          this.setState({ checkedFields:checkedFields.filter((e) => e !== value)});
+		}
+	};
+
+
 
 	//sorting columns
 	handleSort = (sortColumn) => {
@@ -121,7 +147,7 @@ class ReqforappointmentTable extends Component {
 
 	render() {
 		const { length: count } = this.state.reqforappointments;
-		const { pageSize, currentPage, sortColumn, searchQuery } = this.state;
+		const { pageSize, currentPage, sortColumn, searchQuery,checkedFields } = this.state;
 		// if (count === 0) return <p>No data available</p>;
 
 		const { data: reqforappointments } = this.getDataPgnation();
@@ -163,8 +189,8 @@ class ReqforappointmentTable extends Component {
 								{" "}
 								<Link
 									to={
-										this.state.checkedReqforappointments
-											? `/clinic/reqforappointments/${this.state.checkedReqforappointments[0]}`
+										checkedFields
+											? `/clinic/reqforappointments/${checkedFields[0]}`
 											: "/clinic/reqforappointments/"
 									}
 								>
@@ -175,7 +201,7 @@ class ReqforappointmentTable extends Component {
 								className="btn btn-default active m-r-5 m-b-5"
 								title="delete Request for Appointment"
 								style={btnStyles}
-								onClick={() => this.handleMassDelete(this.state.checkedReqforappointments)}
+								onClick={() => this.handleMassDelete(checkedFields)}
 							>
 								{" "}
 								<img style={{ width: "25px", height: "25px" }} src={trashIcon} />
@@ -220,6 +246,7 @@ class ReqforappointmentTable extends Component {
 								onDelete={this.handleDelete}
 								onSort={this.handleSort}
 								sortColumn={sortColumn}
+								handleCheckboxChange={this.handleCheckboxChange}
 							/>
 						</div>
 					</React.Fragment>
