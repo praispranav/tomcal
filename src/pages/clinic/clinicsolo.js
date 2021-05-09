@@ -382,12 +382,12 @@ schema = Joi.object({
 										
 										<div className="btn-group col-lg-8">
 											<div className="custom-control custom-radio custom-control-inline">
-												<input type="radio" name="subscription" id="customRadioInline1" class="custom-control-input"  onChange={this.handleChange} value="Clinic"  checked={data.subscription === "Clinic" } />
-												<label class="custom-control-label" for="customRadioInline1"> Clinic</label>
+												<input type="radio" name="subscription" id="customRadioInline1" className="custom-control-input"  onChange={this.handleChange} value="Clinic"  checked={data.subscription === "Clinic" } />
+												<label className="custom-control-label" htmlFor="customRadioInline1"> Clinic</label>
 											</div>
 											<div className="custom-control custom-radio custom-control-inline">
 												<input type="radio" name="subscription" id="customRadioInline2" class="custom-control-input" onChange={this.handleChange} value="Solo" checked={data.subscription === "Solo" } />
-												<label class="custom-control-label" for="customRadioInline2"> SoloPractice</label>
+												<label className="custom-control-label" htmlFor="customRadioInline2"> SoloPractice</label>
 											</div>
 										</div>
 										{errors.subscription && (<div className="alert alert-danger">{errors.subscription}</div>)}

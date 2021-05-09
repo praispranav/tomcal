@@ -75,7 +75,7 @@ class PatientsTable extends Component {
 		{label: 'IBAN',   path: 'patients.bankInfo.IBAN' } ,   
 		{label: 'Bank',   path: 'patients.bankInfo.bank' } ,   
 		{label: 'Branch Bank',   path: 'patients.bankInfo.branchOfBank' } ,   
-		{label: 'Clinic',   path: 'clinicSolo' } ,   
+		{label: 'Clinic',   path: 'clinicNo' } ,   
 		{label: 'primInsuranceNo',   path: 'patients.insurance.primInsuranceNo' } ,   	  
 		{label: 'primInsurance',   path: 'patients.insurance.primInsurance' } ,   	  
 		{label: 'primInsuranceValidTill',   path: 'patients.insurance.primInsuranceValidTill' } , 

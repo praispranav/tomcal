@@ -355,16 +355,17 @@ class Content extends React.Component {
 								<Route path="/extra/search" title="Extra Search Results" component={ExtraSearch} />
 								<Route path="/extra/invoice" title="Extra Invoice" component={ExtraInvoice} />
 
-								<Provider store={store}>
-									<Route path="/user/profile" title="Extra Profile" component={Profile} />
-								</Provider>
 								<Route path="/extra/scrum-board" title="Extra Scrum Board" component={ExtraScrumBoard} />
 								<Route
 									path="/extra/cookie-acceptance-banner"
 									title="Extra Cookie Acceptance Banner"
 									component={ExtraCookieAcceptanceBanner}
 								/>
+								<Provider store={store}>
+									<Route path="/user/profile" title="Extra Profile" component={Profile} />
 								<Route title="404" component={ExtraError} />
+								</Provider>
+							
 							</Switch>
 						</React.Fragment>
 					</div>
