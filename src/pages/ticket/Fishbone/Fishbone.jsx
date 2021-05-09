@@ -1,7 +1,6 @@
 import React, { useLayoutEffect, useRef, useState } from "react";
 import FishboneChart from "fishbone-chart";
 import { Panel, PanelBody } from "../../../components/panel/panel";
-import "./fishbone.scss";
 export default function Fishbone() {
   const fishboneRef = useRef(null);
   //   console.log(
