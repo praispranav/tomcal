@@ -93,6 +93,7 @@ import UserTable from "./../../pages/clinic/users.js";
 import Doctor from "./../../pages/clinic/doctor.js";
 import DoctorTable from "./../../pages/clinic/doctors.js";
 import GridTicket from "./../../pages/clinic/grid-tickets.js";
+import KanbansDataTable from "./../../pages/kanban/kanbans.js";
 //import Label from './../../pages/label/label.js';
 //import LabelTable from './../../pages/label/labels.js';
 //import Accountant from './../../pages/clinic/accountant.js';
@@ -216,10 +217,12 @@ class Content extends React.Component {
 								<Route path="/scheduler" title="Scheduler" component={SchedulerCal} />
 
 								<Route path="/scheduler2" title="Scheduler2" component={SchedulerfCal} />
-								<Route path="/kanban/kanban" title="KanBanBoard" component={KanBanBoard} />
+								{/* <Route path="/kanban/kanban" title="KanBanBoard" component={KanBanBoard} /> */}
 								<Route path="/kanban/kanban" title="Card" component={Card} />
 								<Route path="/kanban/kanban" title="Listkanban" component={Listkanban} />
-								<Route path="/kanban/kanban" title="Kanban" component={Kanban} />
+								<Route path="/kanban/kanbans" title="Kanbans" component={KanbansDataTable} />
+								<Route path="/kanban/kanbans/:id" title="Kanban" component={Kanban} />
+
 								{/*  <Route path= '/clinic/tickets' title="NewKanBanBoard" component={NewKanBanBoard}   />  */}
 
 								<ProtectedRoute
@@ -244,7 +247,7 @@ class Content extends React.Component {
 
 								<ProtectedRoute path="/kanban/scrumboard" title="scrumboard" component={Scrumboard} />
 
-								<ProtectedRoute path="/clinic/grid-tickets" title="grid-tickets" component={NewKanBanBoard} />
+								{/* <ProtectedRoute path="/clinic/grid-tickets" title="grid-tickets" component={NewKanBanBoard} /> */}
 
 								<ProtectedRoute path="/ticket/ticketprofile" title="ticketProfile" component={ticketProfile} />
 

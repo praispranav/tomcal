@@ -100,8 +100,8 @@ class CardsTable extends Component {
       <div>
 			<ol className="breadcrumb float-xl-right">
 				<li className="breadcrumb-item"><Link to="/">Home</Link></li>
-				<li className="breadcrumb-item"><Link to="/">Tables</Link></li>
-				<li className="breadcrumb-item active">Data Tables</li>
+				<li className="breadcrumb-item"><Link to="kanbans/">Kanbans</Link></li>
+				<li className="breadcrumb-item active">Liskanbans</li>
 			</ol>
 			<h1 className="page-header">Cards </h1>
 			<Panel>
@@ -172,7 +172,7 @@ class CardsTable extends Component {
 				   <SearchBox value={searchQuery} onChange={this.handleSearch} />           
 						<p className="page-header float-xl-left" style={{marginBottom:5},{marginLeft:20},{marginTop:5}}>{count} entries</p> 
 
-						   <cardsTable cards={cards} 
+						   <CardsTable cards={cards} 
 						   onDelete={this.handleDelete}
 						   onSort={this.handleSort}
 						   sortColumn={sortColumn}
