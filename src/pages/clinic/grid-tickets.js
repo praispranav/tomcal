@@ -245,6 +245,18 @@ function GridTicket(props) {
 		{ value: "sales", label: "Sales" },
 		{ value: "other", label: "Other" },
 	]);
+	
+	const [dateOptions, setDateOptions] = useState([
+		{ value: "alldays", label: "All days" },	
+		{ value: "today", label: "To day" },
+		{ value: "yesterday", label: "Yesterday" },
+		{ value: "thisweek", label: "This week" },
+		{ value: "quarter1", label: "Quarter 1" },
+		{ value: "quarter2", label: "Quarter 2" },
+		{ value: "quarter3", label: "Quarter 3" },
+		{ value: "quarter4", label: "Quarter 4" },
+		{ value: "thisyear", label: "This Year" },
+	]);
 
 	useEffect(() => {
 		console.log("object entries ", Object.entries(columns));
@@ -261,6 +273,7 @@ function GridTicket(props) {
 						<Filter
 							statusOptions={statusOptions}
 							priorityOptions={priorityOptions}
+							categoryOptions={categoryOptions}							
 							onChangeDateRange={() => {
 								if (datePickerClass !== "") {
 									setPickerClass("");
