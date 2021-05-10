@@ -95,6 +95,7 @@ import UserTable from "./../../pages/clinic/users.js";
 import Doctor from "./../../pages/clinic/doctor.js";
 import DoctorTable from "./../../pages/clinic/doctors.js";
 import GridTicket from "./../../pages/clinic/grid-tickets.js";
+import KanbansDataTable from "./../../pages/kanban/kanbans.js";
 //import Label from './../../pages/label/label.js';
 //import LabelTable from './../../pages/label/labels.js';
 //import Accountant from './../../pages/clinic/accountant.js';

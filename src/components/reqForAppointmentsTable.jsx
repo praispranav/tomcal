@@ -34,7 +34,7 @@ class ReqforappointmentsTable extends Component {
 				</span>
 			),
 		},
-		{
+	/* 	{
 			key: "avatar",
 			reqforappointment: "avatar",
 			content: (user) => (
@@ -42,7 +42,7 @@ class ReqforappointmentsTable extends Component {
 					<img style={{ width: "30px", height: "30px", borderRadius: "50%" }} src={user.imageSrc} alt="" />
 				</span>
 			),
-		},
+		}, */
 		{ label: "Username", path: "patientUser.username" },
 		{
 			key: "avatar",
@@ -66,7 +66,7 @@ class ReqforappointmentsTable extends Component {
 		{ label: "Date", path: "date" },
 		{ label: "PreferStartTime", path: "preferStartTime" },
 		{ label: "PreferEndtime", path: "preferEndTime" },
-		{ label: "Clinic", path: "clinicSolo" },
+		{ label: "Clinic", path: "clinicNo.companyInfo.businessName" },
 		{ label: "doctor", path: "doctorUser.contactName.last" },		
 		{ label: "appointmentType", path: "appointmentType" },
 		{ label: "sessionType", path: "sessionType" },
