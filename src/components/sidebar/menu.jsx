@@ -34,7 +34,7 @@ const Menu = [
   { path: '/Users', icon: 'fa fa-address-book', title: 'Users', badge: '10',
     children: [
       { path: '/clinic/doctors', title: 'Doctors' },
-      { path: '/clinic/add_doctor', title: 'Add doctor' },
+      { path: '/clinic/doctors/new', title: 'Add doctor' },
       { path: '/clinic/search_doctor', title: 'Search in Doctors' },  
       { path: '/clinic/receptions', title: 'receptions' },
       { path: '/clinic/receptions/new', title: 'Add reception' },
@@ -48,7 +48,6 @@ const Menu = [
       { path: '/clinic/users', title: 'users' },
       { path: '/clinic/user/new', title: 'Add user' },
       { path: '/clinic/search_user', title: 'Search in Users' },  
-      { path: '/clinic/workinghours', title: 'Working Hours' },	  
     ]
   },
     
@@ -56,7 +55,7 @@ const Menu = [
     children: [
       { path: '/clinic/clinicsolos', title: 'clinicsolos' },
       { path: '/clinic/clinicsolos/new', title: 'Add clinicsolo' },
-	  
+      { path: '/clinic/workinghours', title: 'Working Hours' },	  	  
       { path: '/clinic/search_clinicsolo', title: 'Search in clinicsolos' },  
     ]
   },
@@ -153,11 +152,11 @@ const Menu = [
       { path: '/clinic/search_product', title: 'Search in Products' },  
     ]
   },
-  { path: '/Treatments', icon: 'fa fa-calendar', title: 'Treatments', badge: '10',
+  { path: '/Treatments', icon: 'fa fa-calendar', title: 'Salons Treatments', badge: '10',
     children: [
-      { path: '/clinic/treatments-b', title: 'Treatments for Salon' },
-      { path: '/clinic/add_treatmentb', title: 'Add Treatment' },
-      { path: '/clinic/search_treatmentb', title: 'Search in Treatments for Salon' },  
+      { path: '/salon/treatments-b', title: 'Treatments for Salon' },
+      { path: '/salon/add_treatmentb', title: 'Add Treatment' },
+      { path: '/salon/search_treatmentb', title: 'Search in Treatments for Salon' },  
     ]
   },
   { path: '/labels', icon: 'fa fa-ticket-alt', title: 'Labels',
