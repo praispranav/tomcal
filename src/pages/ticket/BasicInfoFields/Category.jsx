@@ -12,17 +12,17 @@ export default function ReactSelect({ options, selectedValue, ...props }) {
       width: "100%",
       backgroundColor:
         value === "feature-request"
-          ? "#ff5b57"
+          ? "#E911DB"
           : value === "disconnection"
-          ? "#f1c40f"
+          ? "#8411E9"
           : value === "bug-error"
-          ? "#2ecc71"
+          ? "#1F11E9"
           : value === "sales"
-          ? "#2b9fc1"
+          ? "#11A8E9"
           : value === "complaint"
-          ? "#f1c40f"
+          ? "#11E9BE"
           : value === "orders"
-          ? "#2ecc71"
+          ? "#11E93C"
           : "BFFF00",
     }),
     singleValue: (styles) => ({
