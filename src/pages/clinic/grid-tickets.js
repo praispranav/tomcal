@@ -85,7 +85,7 @@ const onDragEnd = (result, columns, setColumns) => {
 	}
 };
 
-function KanBanBoard(props) {
+function GridTicket(props) {
 	const [datePickerClass, setPickerClass] = useState("d-none");
 
 	const [columns, setColumns] = useState(Object.entries(columnsFromBackend));
@@ -237,10 +237,13 @@ function KanBanBoard(props) {
 	]);
 
 	const [categoryOptions, setCategoryOptions] = useState([
-		{ value: "open", label: "Open" },
-		{ value: "onhold", label: "on-Hold" },
-		{ value: "closed", label: "Closed" },
-		{ value: "reopen", label: "Re-open" },
+		{ value: "bug-error", label: "Bug/Error" },
+		{ value: "complaint", label: "Complaint" },
+		{ value: "disconnection", label: "Disconnection" },
+		{ value: "feature-request", label: "Feature Request" },
+		{ value: "orders", label: "Orders" },
+		{ value: "sales", label: "Sales" },
+		{ value: "other", label: "Other" },
 	]);
 
 	useEffect(() => {
@@ -306,7 +309,7 @@ function KanBanBoard(props) {
 	);
 }
 
-export default KanBanBoard;
+export default GridTicket;
 
 const rowStyles = {
 	display: "flex",
