@@ -17,12 +17,12 @@ import Joi from 'joi';
 import Form from '../../common/form.jsx';
 import {apiUrl} from '../../config/config.json';
 import http from '../../services/httpService';
-import {saveHomeopathySession,getHomeopathySession} from './../../services/homeopathysessions';
+import {saveTCMSession,getTCMSession} from './../../services/tcmsessions';
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
 const Handle = Slider.Handle;
 
 
-class HomeopathySession extends Form {
+class TCMSession extends Form {
 	constructor(props) {
 		super(props);
 
@@ -97,6 +97,19 @@ class HomeopathySession extends Form {
 			{ value: 'other', label: 'other' },
 		];
 
+		this.tongueOptions = [
+			{  value: 'female', label: 'Female' },
+			{  value: 'male', label: 'Male' },
+			{  value: 'transgender', label: 'Transgender' }
+		];
+		
+		this.pulseOptions = [
+			{ value: 'cured', label: 'cured' },
+			{ value: 'in treatment', label: 'in teratment' },
+			{ value: 'died', label: 'died' },
+			{ value: 'other', label: 'other' },
+		];
+
 		this.currentTreatmentOptions = [
 			{ value: 'ayurveda', label: 'ayurveda' },
 			{ value: 'homeopathy', label: 'homeopathy' },
@@ -152,13 +165,6 @@ class HomeopathySession extends Form {
 			{ value: 'poor', label: 'poor' },
 			{ value: 'craving', label: 'craving' },			
 		];
-
-		this.vomittingOptions = [
-			{ value: 'no', label: 'no' },
-			{ value: 'yes', label: 'yes' },
-			{ value: 'yeswithblood', label: 'yes with blood' },	
-		];
-
 		this.vomittingOptions = [
 			{ value: 'no', label: 'no' },
 			{ value: 'yes', label: 'yes' },
@@ -301,7 +307,6 @@ class HomeopathySession extends Form {
 			{ value: 'clear', label: 'clear' },			
 			{ value: 'odor', label: 'odor' },
 		];
-
 		this.naturePainOptions = [
 			{ value: 'distending', label: 'distending' },
 			{ value: 'sharp/pricking like needles', label: 'sharp/pricking like needles' },
@@ -333,7 +338,7 @@ class HomeopathySession extends Form {
 			{ value: 'melancholy', label: 'melancholy' },			
 			{ value: 'angry', label: 'angry' },			
 		];
-		
+
 		this.respirationOptions = [
 			{ value: 'normal', label: 'normal' },
 			{ value: 'lower', label: 'lower' },
@@ -376,11 +381,11 @@ class HomeopathySession extends Form {
 	}
 
 
-	async populateMateriaMedicas() {
-		const { data: materiamedicas } = await http.get(apiUrl+"/materimedicas");
-		this.setState({ materiamedicas: materiamedicas });
+	async populateCountries() {
+		const { data: countries } = await http.get(apiUrl+"/countries");
+		this.setState({ countries: countries });
 		//this.selectCountries = this.state.countries.map((country)=>({label: country.name, value: country.name}) );
-		this.selectMateriaMedicas = this.state.materiamedicas.map((materiamedica) => ({ _id: materiamedica._id,label: materiamedica.name, value: materiamedica.name }));
+		this.selectCountries = this.state.countries.map((country) => ({ _id: country._id,label: country.name, value: country.name }));
 	}
 	async populateAccounType() {
 	const { data: profiles } = await http.get(apiUrl+"/profiles");
@@ -392,6 +397,19 @@ class HomeopathySession extends Form {
 		</option>
 	));
 	}
+	async populatePulses(){
+		this.pulseoptions = this.pulseOptions.map(option => (
+			<option key={option.label} value={option.value}>
+				{option.value}
+			</option>
+		));
+	}
+	async populateTongues(){
+    this.tongueoptions = this.tongueOptions.map(option => (
+		<option key={option.label} value={option.value}>
+			{option.value}
+		</option>
+	));
 	}
 
 	async populateUser() { 
@@ -419,11 +437,18 @@ class HomeopathySession extends Form {
 
 
 	async componentDidMount() {
+	
 		
 		//await this.populateProfiles();
 		await this.populateFamilyRoleOptions();
 		await this.populatefamilyDiseaseStatusOptions();
 		await this.populateMateriaMedicas();
+		await this.populateAcuPoints();	
+		await this.populateFormulas();			
+		await this.populatePatient();	
+		await this.populateTCMTreatments();			
+		await this.populateTongues();	
+		await this.populatePulses();			
 	}
 
 	// schema = Joi.object({
@@ -435,113 +460,27 @@ class HomeopathySession extends Form {
 	// });
 
 schema = Joi.object({
-		  userNo: Joi.string().optional(),
-		  clinicNo: Joi.string().optional(),
-		  doctorNo: Joi.string().optional(),
-		  businessName: Joi.string().optional(),
-		  appointmentType: Joi.string().optional(),
-		  sessionType: Joi.string().optional(),
-		  chiefComplaint: Joi.string().optional(),
-		  symptoms: Joi.string().optional(),
-		  WesternDisease: Joi.string().optional(),
-		  currentTreatment: Joi.string().optional(),
-		  diseasesIllnesses: Joi.string().optional(),
-		  surgeries: Joi.string().optional(),
-		  medicamentsSupplements: Joi.string().optional(),
-		  allergies: Joi.string().optional(),
-		  pregnancies: Joi.string().optional(),
-		  familyRole: Joi.string().optional(),
-		  familyDisease: Joi.string().optional(),
-		  familyDiseaseYear: Joi.string().optional(),
-		  familyDiseaseState: Joi.string().optional(),
-		  medicalHistoryNote: Joi.string().optional(),
-		  socialRelationship: Joi.string().optional(),
-		  habits: Joi.string().optional(),
-		  occupation: Joi.string().optional(),
-		  occupationState: Joi.string().optional(),
-		  sport: Joi.string().optional(),
-		  sportFrequency: Joi.string().optional(),
-		  hobbies: Joi.string().optional(),
-		  smoking: Joi.string().optional(),
-		  sugar: Joi.string().optional(),
-		  alcohol: Joi.string().optional(),
-		  tea: Joi.string().optional(),
-		  coffee: Joi.string().optional(),
-		  heroin: Joi.string().optional(),
-		  vitality: Joi.string().optional(),
-		  appearance: Joi.string().optional(),
-		  appearanceNote: Joi.string().optional(),
-		  faceColorLustre: Joi.string().optional(),
-		  tongueShape: Joi.string().optional(),
-		  tongueColor: Joi.string().optional(),
-		  tongueQuality: Joi.string().optional(),
-		  tongueNote: Joi.string().optional(),
-		  respiration: Joi.string().optional(),
-		  speech: Joi.string().optional(),
-		  cough: Joi.string().optional(),
-		  odor: Joi.string().optional(),
-		  appetite: Joi.string().optional(),
-		  appetiteNote: Joi.string().optional(),
-		  vomiting: Joi.string().optional(),
-		  vomitingNote: Joi.string().optional(),
-		  diet: Joi.string().optional(),
-		  dietNote: Joi.string().optional(),
-		  taste: Joi.string().optional(),
-		  thirst: Joi.string().optional(),
-		  defecation: Joi.string().optional(),
-		  urination: Joi.string().optional(),
-		  urineColor: Joi.string().optional(),
-		  sleeping: Joi.string().optional(),
-		  thermalFeeling: Joi.string().optional(),
-		  perspiration: Joi.string().optional(),
-		  head: Joi.string().optional(),
-		  eyes: Joi.string().optional(),
-		  ears: Joi.string().optional(),
-		  nose: Joi.string().optional(),
-		  throat: Joi.string().optional(),
-		  painLocation: Joi.string().optional(),
-		  painNature: Joi.string().optional(),
-		  menstruationHistory: Joi.string().optional(),
-		  leukorrhea: Joi.string().optional(),
-		  emotionalStatus: Joi.string().optional(),
-		  emotionalNote: Joi.string().optional(),
-		  interviewNote: Joi.string().optional(),
-		  pulseSpeed: Joi.string().optional(),
-		  pulseDepth: Joi.string().optional(),
-		  pulseStrength: Joi.string().optional(),
-		  pulseShape: Joi.string().optional(),
-		  pulseTension: Joi.string().optional(),
-		  pulseRhythm: Joi.string().optional(),
-		  pulseNote: Joi.string().optional(),
-		  physicalAppearance: Joi.string().optional(),
-		  physicalPalpationEpigastrium: Joi.string().optional(),
-		  physicalPalpationEpigastriumNote: Joi.string().optional(),
-		  physicalPalpationAbdomen: Joi.string().optional(),
-		  physicalPalpationAcupoint: Joi.string().optional(),
-		  rangeMotion: Joi.string().optional(),
-		  painLevel: Joi.string().optional(),
-		  physicalExaminationNote: Joi.string().optional(),
-		  HomeoDiagnosis: Joi.string().optional(),
-		  principleTreatment: Joi.string().optional(),
-		  materiaMedica: Joi.string().optional(),
-		  potency: Joi.string().optional(),
-		  dietTherapy: Joi.string().optional(),
-		  recommendation: Joi.string().optional(),
+		username: Joi.string()
+		firstName: Joi.string(),
+		//.pattern(new RegExp('^[a-zA-Z]{3,30}$')),
+		lastName: Joi.string(),
+		//.pattern(new RegExp('^[a-zA-Z]{3,30}$')),
+		businessName: Joi.any().required(),
+		chiefComplaint: Joi.string().required(),
+		symptoms: Joi.string().required(),
+		westernDiseaseSyndrome: Joi.string().optional(),
+		currentTreatment: Joi.any().optional(),
+		date: Joi.date().optional(),
+		diseaseIllness: Joi.string().optional(),
+		currentTreatment: Joi.any().optional(),
+	
+		// birth_year: Joi.number()
+		// 	.integer()
+		// 	.min(1900)
+		// 	.max(2013),
+	
 	});
 
-
-	handleDobChange = (e) => {
-		const errors = { ...this.state.errors };
-		const obj = { ['dateBirth']: e };
-
-		const data = { ...this.state.data };
-		data['dateBirth'] = e;
-		//const data = {...this.state.data};
-		//data.dateBirth = e;
-		this.setState({ data });
-		console.log(this.state.data);
-	};
-	
 	onChangeImgHandler=event=>{
 
 		this.setState({ imageSrc: event.target.files[0] });
@@ -570,102 +509,121 @@ schema = Joi.object({
 	};
 	
 	
-	mapToViewModel(homeopathysession) {
+	mapToViewModel(user) {
 		return {
-		  _id: homeopathysession._id,
-		  userNo: homeopathysession.userNo,
-		  clinicNo: homeopathysession.clinicNo,
-		  doctorNo: homeopathysession.doctorNo,
-		  businessName: homeopathysession.businessName,
-		  appointmentType: homeopathysession.appointmentType,
-		  sessionType: homeopathysession.sessionType,
-		  chiefComplaint: homeopathysession.chiefComplaint,
-		  symptoms: homeopathysession.symptoms,
-		  WesternDisease: homeopathysession.WesternDisease,
-		  currentTreatment: homeopathysession.currentTreatment,
-		  diseasesIllnesses: homeopathysession.diseasesIllnesses,
-		  surgeries: homeopathysession.surgeries,
-		  medicamentsSupplements: homeopathysession.medicamentsSupplements,
-		  allergies: homeopathysession.allergies,
-		  pregnancies: homeopathysession.pregnancies,
-		  familyRole: homeopathysession.familyRole,
-		  familyDisease: homeopathysession.familyDisease,
-		  familyDiseaseYear: homeopathysession.familyDiseaseYear,
-		  familyDiseaseState: homeopathysession.familyDiseaseState,
-		  medicalHistoryNote: homeopathysession.medicalHistoryNote,
-		  socialRelationship: homeopathysession.socialRelationship,
-		  habits: homeopathysession.habits,
-		  occupation: homeopathysession.occupation,
-		  occupationState: homeopathysession.occupationState,
-		  sport: homeopathysession.sport,
-		  sportFrequency: homeopathysession.sportFrequency,
-		  hobbies: homeopathysession.hobbies,
-		  smoking: homeopathysession.smoking,
-		  sugar: homeopathysession.sugar,
-		  alcohol: homeopathysession.alcohol,
-		  tea: homeopathysession.tea,
-		  coffee: homeopathysession.coffee,
-		  heroin: homeopathysession.heroin,
-		  vitality: homeopathysession.vitality,
-		  appearance: homeopathysession.appearance,
-		  appearanceNote: homeopathysession.appearanceNote,
-		  faceColorLustre: homeopathysession.faceColorLustre,
-		  tongueShape: homeopathysession.tongueShape,
-		  tongueColor: homeopathysession.tongueColor,
-		  tongueQuality: homeopathysession.tongueQuality,
-		  tongueNote: homeopathysession.tongueNote,
-		  respiration: homeopathysession.respiration,
-		  speech: homeopathysession.speech,
-		  cough: homeopathysession.cough,
-		  odor: homeopathysession.odor,
-		  appetite: homeopathysession.appetite,
-		  appetiteNote: homeopathysession.appetiteNote,
-		  vomiting: homeopathysession.vomiting,
-		  vomitingNote: homeopathysession.vomitingNote,
-		  diet: homeopathysession.diet,
-		  dietNote: homeopathysession.dietNote,		  
-		  taste: homeopathysession.taste,
-		  thirst: homeopathysession.thirst,		  
-		  defecation: homeopathysession.defecation,
-		  urination: homeopathysession.urination,		  
-		  urineColor: homeopathysession.urineColor,		  
-		  sleeping: homeopathysession.sleeping,
-		  thermalFeeling: homeopathysession.thermalFeeling,		  
-		  perspiration: homeopathysession.perspiration,		  
-		  head: homeopathysession.head,
-		  eyes: homeopathysession.eyes,
-		  ears: homeopathysession.ears,
-		  nose: homeopathysession.nose,
-		  throat: homeopathysession.throat,		  
-		  painLocation: homeopathysession.painLocation,		  
-		  painNature: homeopathysession.painNature,
-		  menstruationHistory: homeopathysession.menstruationHistory,
-		  leukorrhea: homeopathysession.leukorrhea,		  
-		  emotionalStatus: homeopathysession.emotionalStatus,		  
-		  emotionalNote: homeopathysession.emotionalNote,		  
-		  interviewNote: homeopathysession.interviewNote ,		  
-		  pulseSpeed: homeopathysession.pulseSpeed,
-		  pulseDepth: homeopathysession.pulseDepth,		  
-		  pulseStrength: homeopathysession.pulseStrength,		  
-		  pulseShape: homeopathysession.pulseShape,
-		  pulseTension: homeopathysession.pulseTension,
-		  pulseRhythm: homeopathysession.pulseRhythm,
-		  pulseNote: homeopathysession.pulseNote,		  
-		  physicalAppearance: homeopathysession.physicalAppearance,
-		  physicalPalpationEpigastrium: homeopathysession.physicalPalpationEpigastrium,
-		  physicalPalpationEpigastriumNote: homeopathysession.physicalPalpationEpigastriumNote,		  
-		  physicalPalpationAbdomen: homeopathysession.physicalPalpationAbdomen,
-		  physicalPalpationAcupoint: homeopathysession.physicalPalpationAcupoint,
-		  rangeMotion: homeopathysession.rangeMotion,
-		  painLevel: homeopathysession.painLevel,		  		  
-		  physicalExaminationNote: homeopathysession.physicalExaminationNote,		  
-		  HomeoDiagnosis: homeopathysession.HomeoDiagnosis,
-		  principleTreatment: homeopathysession.principleTreatment,		  
-		  materiaMedica: homeopathysession.materiaMedica,
-		  potency: homeopathysession.potency,
-		  dietTherapy: homeopathysession.dietTherapy,		  
-		  recommendation: homeopathysession.recommendation,		  		  
-		  createdOn: new Date(user.date),		  
+		  _id: user._id,
+		  username: user.username,
+		  profile: user.profile,
+		  email: user.email,
+		  createdOn: new Date(user.date),
+		  firstName: user.firstName,
+		  lastName: user.firstName,
+		  initials: user.initials,
+		  prefix: user.prefix,
+		  country: user.country,
+		  appointmentType: user.appointmentType,
+		  sessionType: user.sessionType,
+		  chiefComplaint: user.chiefComplaint,
+		  symptoms: user.symptoms,
+		  WesternDisease: user.WesternDisease,
+		  currentTreatment: user.currentTreatment,
+		  diseasesIllnesses: user.diseasesIllnesses,
+		  surgeries: user.surgeries,
+		  medicamentsSupplements: user.medicamentsSupplements,
+		  allergies: user.allergies,
+		  pregnancies: user.pregnancies,
+		  familyRole: user.familyRole,
+		  familyDisease: user.familyDisease,
+		  familyDiseaseYear: user.familyDiseaseYear,
+		  familyDiseaseState: user.familyDiseaseState,
+		  medicalHistoryNote: user.medicalHistoryNote,
+		  socialRelationship: user.socialRelationship,
+		  habits: user.habits,
+		  occupation: user.occupation,
+		  occupationState: user.occupationState,
+		  sport: user.sport,
+		  sportFrequency: user.sportFrequency,
+		  hobbies: user.hobbies,
+		  smoking: user.smoking,
+		  sugar: user.sugar,
+		  alcohol: user.alcohol,
+		  tea: user.tea,
+		  coffee: user.coffee,
+		  heroin: user.heroin,
+		  vitality: user.vitality,
+		  appearance: user.appearance,
+		  appearanceNote: user.appearanceNote,
+		  faceColorLustre: user.faceColorLustre,
+		  tongueShape: user.tongueShape,
+		  tongueColor: user.tongueColor,
+		  tongueQuality: user.tongueQuality,
+		  tongueNote: user.tongueNote,
+		  respiration: user.respiration,
+		  speech: user.speech,
+		  cough: user.cough,
+		  odor: user.odor,
+		  appetite: user.appetite,
+		  appetiteNote: user.appetiteNote,
+		  vomiting: user.vomiting,
+		  vomitingNote: user.vomitingNote,
+		  diet: user.diet,
+		  dietNote: user.dietNote,		  
+		  taste: user.taste,
+		  thirst: user.thirst,		  
+		  defecation: user.defecation,
+		  urination: user.urination,		  
+		  urineColor: user.urineColor,		  
+		  sleeping: user.sleeping,
+		  thermalFeeling: user.thermalFeeling,		  
+		  perspiration: user.perspiration,		  
+		  head: user.head,
+		  eyes: user.eyes,
+		  ears: user.ears,
+		  nose: user.nose,
+		  throat: user.throat,		  
+		  painLocation: user.painLocation,		  
+		  painNature: user.painNature,
+		  menstruationHistory: user.menstruationHistory,
+		  leukorrhea: user.leukorrhea,		  
+		  emotionalStatus: user.emotionalStatus,		  
+		  emotionalNote: user.emotionalNote,		  
+		  interviewNote: user.interviewNote ,		  
+		  pulseSpeed: user.pulseSpeed,
+		  pulseDepth: user.pulseDepth,		  
+		  pulseStrength: user.pulseStrength,		  
+		  pulseShape: user.pulseShape,
+		  pulseTension: user.pulseTension,
+		  pulseRhythm: user.pulseRhythm,
+		  pulseNote: user.pulseNote,		  
+		  physicalAppearance: user.physicalAppearance,
+		  physicalPalpationEpigastrium: user.physicalPalpationEpigastrium,
+		  physicalPalpationEpigastriumNote: user.physicalPalpationEpigastriumNote,		  
+		  physicalPalpationAbdomen: user.physicalPalpationAbdomen,
+		  physicalPalpationAcupoint: user.physicalPalpationAcupoint,
+		  rangeMotion: user.rangeMotion,
+		  painLevel: user.painLevel,		  		  
+		  physicalExaminationNote: user.physicalExaminationNote,		  
+		  TCMDiagnosis: user.TCMDiagnosis,
+		  principleTreatment: user.principleTreatment,		  
+		  acuPoints: user.acuPoints,		  
+		  stimulationDuration: user.stimulationDuration,
+		  stimulationMethod: user.stimulationMethod,
+		  needleManipulation: user.needleManipulation,		  
+		  acuTreatmentNote: user.acuTreatmentNote,		  
+		  TDP: user.TDP,		  
+		  TDPNote: user.TDPNote,				  
+		  moxibustion: user.moxibustion,		  
+		  tuina: user.tuina,		  		  
+		  herbalFormula1: user.herbalFormula1,		  
+		  materiaMedica1: user.materiaMedica1,
+		  mmDosage1: user.mmDosage1,
+		  mmUnit1: user.mmUnit1,
+		  herbalFormula2: user.herbalFormula2,		  
+		  materiaMedica2: user.materiaMedica2,
+		  mmDosage2: user.mmDosage2,
+		  mmUnit2: user.mmUnit2,		  
+		  dietTherapy: user.dietTherapy,		  
+		  recommendation: user.recommendation,		  		  
 		};
 	  }
 
@@ -678,11 +636,11 @@ schema = Joi.object({
 				<div>
 					<ol className="breadcrumb float-xl-right">
 						<li className="breadcrumb-item"><Link to="/form/plugins">Home</Link></li>
-						<li className="breadcrumb-item"><Link to="clinic/medicalfiles">Medical Files</Link></li>
-						<li className="breadcrumb-item active">Add Homeosession</li>
+						<li className="breadcrumb-item"><Link to="/clinic/medicalfiles">Medical Files</Link></li>
+						<li className="breadcrumb-item active">Add TCMSession</li>
 					</ol>
 					<h1 className="page-header">
-						Add User <small>User-registration-form</small>
+						Add TCMSession
 					</h1>
 
 					<div className="row">
@@ -786,8 +744,30 @@ schema = Joi.object({
 
 							
 										{this.renderInput("email", "Email", "email", "Enter email")}
+
 										{this.renderInput("password", "Password", "password", "Enter Password")}
 									
+
+										{this.renderSelect(
+											"country",
+											"Country",
+											this.state.countries
+										)}
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="dateBirth" >Date of Birth</label>
+											<div className="col-lg-8">
+												<DatePicker
+													onChange={this.handleDobChange}
+													id={data.dateBirth}
+													value={data.dateBirth}
+													selected={data.dateBirth}
+													inputProps={{ placeholder: "Datepicker" }}
+													className="form-control"
+												/>
+												{errors.dateBirth && <div className="alert alert-danger">{errors.dateBirth}</div>}
+											</div>
+										</div>
 
 										<div className="form-group row">
 											<div className="col-lg-8">
@@ -805,4 +785,4 @@ schema = Joi.object({
 	}
 }
 
-export default withRouter(HomeopathySession);
+export default withRouter(TCMSession);

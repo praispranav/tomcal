@@ -85,7 +85,7 @@ const onDragEnd = (result, columns, setColumns) => {
 	}
 };
 
-function KanBanBoard(props) {
+function GridTicket(props) {
 	const [datePickerClass, setPickerClass] = useState("d-none");
 
 	const [columns, setColumns] = useState(Object.entries(columnsFromBackend));
@@ -237,10 +237,25 @@ function KanBanBoard(props) {
 	]);
 
 	const [categoryOptions, setCategoryOptions] = useState([
-		{ value: "open", label: "Open" },
-		{ value: "onhold", label: "on-Hold" },
-		{ value: "closed", label: "Closed" },
-		{ value: "reopen", label: "Re-open" },
+		{ value: "bug-error", label: "Bug/Error" },
+		{ value: "complaint", label: "Complaint" },
+		{ value: "disconnection", label: "Disconnection" },
+		{ value: "feature-request", label: "Feature Request" },
+		{ value: "orders", label: "Orders" },
+		{ value: "sales", label: "Sales" },
+		{ value: "other", label: "Other" },
+	]);
+	
+	const [dateOptions, setDateOptions] = useState([
+		{ value: "alldays", label: "All days" },	
+		{ value: "today", label: "To day" },
+		{ value: "yesterday", label: "Yesterday" },
+		{ value: "thisweek", label: "This week" },
+		{ value: "quarter1", label: "Quarter 1" },
+		{ value: "quarter2", label: "Quarter 2" },
+		{ value: "quarter3", label: "Quarter 3" },
+		{ value: "quarter4", label: "Quarter 4" },
+		{ value: "thisyear", label: "This Year" },
 	]);
 
 	useEffect(() => {
@@ -258,6 +273,7 @@ function KanBanBoard(props) {
 						<Filter
 							statusOptions={statusOptions}
 							priorityOptions={priorityOptions}
+							categoryOptions={categoryOptions}							
 							onChangeDateRange={() => {
 								if (datePickerClass !== "") {
 									setPickerClass("");
@@ -306,7 +322,7 @@ function KanBanBoard(props) {
 	);
 }
 
-export default KanBanBoard;
+export default GridTicket;
 
 const rowStyles = {
 	display: "flex",

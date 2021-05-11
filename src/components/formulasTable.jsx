@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Table from "./../common/table";
 import { Link, withRouter } from "react-router-dom";
 
-class KanbansTable extends Component {
+class FormulasTable extends Component {
 	// constructor(props) {
 	// 	super(props);
 	// 	this.state = {
@@ -25,7 +25,7 @@ class KanbansTable extends Component {
 					}}
 				/>
 			),
-			content: (kanban) => (
+			content: (formula) => (
 				<span className="icon-img sm-r-5" style={{ marginTop: "15px" }}>
 					<input
 						type="checkbox"
@@ -36,7 +36,7 @@ class KanbansTable extends Component {
 							borderRadius: 0,
 						}}
 						onChange={this.props.handleCheckboxChange}
-						value={kanban._id}
+						value={formula._id}
 					/>
 				</span>
 			),
@@ -54,28 +54,42 @@ class KanbansTable extends Component {
 				</span>
 			),
 		},
-		{label: 'Owner',   path: 'username' } ,
-		{label: 'Name',   path: 'name' } ,   
-		{label: 'Participants',   path: 'participants' } ,   
-		{label: 'Department',   path: 'department' } ,   	  
-		{label: 'Field',   path: 'field' } ,   	  
-		{label: 'Tags',   path: 'tags' } ,   	  
-		{label: 'Narrative',   path: 'narrative' } ,   	  
-		{label: 'Note',   path: 'note' } ,   	  	  
+		{label: 'Name',   path: 'formulas.name' } ,   	  		
+		{label: 'pinyin',   path: 'formulas.pinyin' } ,   	  
+		{label: 'chinese',   path: 'formulas.chineseSPL' } ,   	      		
+		{label: 'english',   path: 'formulas.english' } ,   	  
+		{label: 'korean',   path: 'formulas.korean' } ,   	  
+		{label: 'japanese',   path: 'formulas.japanese' } ,   
+		{label: 'vietnamese',   path: 'formulas.vietnamese' } ,   
+		{label: 'Category',   path: 'formulas.category' } ,           
+		{label: 'functionality',   path: 'formulas.functionality' } ,   	  	  		
+		{label: 'ingredients',   path: 'formulas.ingredients' } ,   	          		
+		{label: 'Contraindication',   path: 'formulas.contraIndication' } , 		
+		{label: 'suggestion',   path: 'formulas.suggestion' } ,   	  
+		{label: 'indication',   path: 'formulas.indication' } , 
+		{label: 'modification',   path: 'formulas.modification' } , 		
+		{label: 'tongue',   path: 'formulas.tongue' } ,   	  	  		
+		{label: 'pulse',   path: 'formulas.pulse' } ,   	          		
+		{label: 'caution',   path: 'formulas.caution' } ,   	  
+		{label: 'videoLink',   path: 'formulas.videoLink' } ,   	  
+		{label: 'sharingLink',   path: 'formulas.sharingLink' } , 
+		{label: 'reference',   path: 'formulas.reference' } ,   
+		{label: 'note',   path: 'formulas.note' } ,   
+		{label: 'Status',   path: 'formulas.status' } ,   		
 	];
 
 	render() {
 		//console.log(this.columns) ;
-		const { kanbans, onSort, sortColumn } = this.props;
+		const { formulas, onSort, sortColumn } = this.props;
 		return (
 			<Table
 				columns={this.columns}
 				sortColumn={sortColumn}
 				onSort={onSort}
-				data={kanbans}
+				data={formulas}
 			/>
 		);
 	}
 }
 
-export default KanbansTable;
+export default FormulasTable;

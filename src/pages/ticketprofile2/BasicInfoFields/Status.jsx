@@ -11,39 +11,33 @@ export default function ReactSelect({ options, selectedValue, ...props }) {
       height: "31px",
       width: "100%",
       backgroundColor:
-        value === "feature-request"
-          ? "#E911DB"
-          : value === "disconnection"
-          ? "#8411E9"
-          : value === "bug-error"
-          ? "#1F11E9"
-          : value === "sales"
-          ? "#11A8E9"
-          : value === "complaint"
-          ? "#11E9BE"
-          : value === "orders"
-          ? "#11E93C"
-          : "BFFF00",
+        value === "open"
+          ? "#2ECC71"
+          : value === "onhold"
+          ? "black"
+          : value === "closed"
+          ? "gray"
+          : value === "reopen"
+          ? "#BFFF00"
+          : "#2b9fc1",
     }),
     singleValue: (styles) => ({
       ...styles,
       color:
-        value === "feature-request"
+        value === "open"
           ? "white"
-          : value === "disconnection"
+          : value === "onhold"
           ? "white"
-          : value === "bug-error"
-          ? "white"
-          : value === "sales"
-          ? "white"
-          : value === "complaint"
-          ? "white"
-          : value === "orders"
-          ? "white"
+          : value === "closed"
+          ? "black"
+          : value === "reopen"
+          ? "black"
           : "white",
     }),
     option: (provided) => ({
       ...provided,
+      color: "black",
+      // color: 'white',
       padding: "20px",
       minHeight: "25px",
       height: "25px",
@@ -61,11 +55,12 @@ export default function ReactSelect({ options, selectedValue, ...props }) {
 
   return (
     <Select
+      classNamePrefix="select"
       maxMenuHeight={300}
       onChange={onChange}
       styles={customStyles(selected)}
       options={options}
-      placeholder={"Select Category"}
+      placeholder={"Select Priority"}
       value={displayItem(selected)}
       isDisabled={props.readOnly}
       {...props}

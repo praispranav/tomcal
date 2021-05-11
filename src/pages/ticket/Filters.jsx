@@ -2,14 +2,20 @@ import map from "lodash/map";
 import Moment from "moment";
 import React, { useState } from "react";
 
-const Filter = ({ statusOptions, priorityOptions, onfilter, ...props }) => {
+const Filter = ({ dateOptions,statusOptions, priorityOptions, onfilter, ...props }) => {
+  dateOptions = [
+    { value: "", label: "Date" },
+    { value: "showall", label: "Show All" },
+    ...dateOptions,
+  ];
+
   statusOptions = [
-    { value: "", label: "Select" },
+    { value: "", label: "Status" },
     { value: "showall", label: "Show All" },
     ...statusOptions,
   ];
   priorityOptions = [
-    { value: "", label: "Select" },
+    { value: "", label: "Priority" },
     { value: "showall", label: "Show All" },
     ...priorityOptions,
   ];
@@ -63,7 +69,15 @@ const Filter = ({ statusOptions, priorityOptions, onfilter, ...props }) => {
   return (
     <div className="filters">
       <div className="d-flex  dropdown flex-wrap">
-        <button className="btn btn-light addList mb-1">Add List</button>
+        <button className="btn btn-light addList sm-1">Add Ticket</button>
+        <select
+          className="custom-select filterbtn mb-1 "
+          onChange={(e) => onfilter("date", e.target.value)}
+        >
+          {map(dateOptions, (item) => (
+            <option value={item.value}>{item.label}</option>
+          ))}
+        </select>
         <select
           className="custom-select filterbtn mb-1 "
           onChange={(e) => onfilter("status", e.target.value)}
@@ -100,20 +114,18 @@ const Filter = ({ statusOptions, priorityOptions, onfilter, ...props }) => {
          
         </DateRangePicker> */}
       </div>
-      <div className="d-flex search mb-1">
-        <input
-          className=" mr-sm-2 fitersearch"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-        />
-        <button
-          className="btn btn-outline-success searchbtn my-2 my-sm-0"
-          type="submit"
-        >
-          <i className="fa fa-search"></i>
-        </button>
-      </div>
+				<div className="table-responsive">
+     
+				   <SearchBox value={searchQuery} onChange={this.handleSearch} />           
+					<p className="page-header float-xl-left" style={{marginBottom:5},{marginLeft:20},{marginTop:5}}>{count} entries</p> 
+
+				   <ClinicsolosTable users={users} 
+				   onDelete={this.handleDelete}
+				   onSort={this.handleSort}
+				   sortColumn={sortColumn}
+				   />
+        
+	   		    </div> 
     </div>
   );
 };

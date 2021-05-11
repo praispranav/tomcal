@@ -3,6 +3,13 @@ import Table from "./../common/table";
 import { Link, withRouter } from "react-router-dom";
 
 class UsersTable extends Component {
+	// constructor(props) {
+	// 	super(props);
+	// 	this.state = {
+	// 		values: [],
+	// 	};
+	// }
+
 	columns = [
 		//   {path: '_id', label: 'Id'},
 		{
@@ -39,7 +46,11 @@ class UsersTable extends Component {
 			label: "avatar",
 			content: (user) => (
 				<span className="icon-img sm-r-5">
-					<img style={{ width: "20px", height: "20px", borderRadius: "50%" }} src={user.imageSrc} alt="" />
+					<img
+						style={{ width: "20px", height: "20px", borderRadius: "50%" }}
+						src={user.imageSrc}
+						alt=""
+					/>
 				</span>
 			),
 		},
@@ -61,12 +72,20 @@ class UsersTable extends Component {
 		{ label: "Mobile", path: "mobile" },
 		{ label: "Phone", path: "phone" },
 		{ label: "Skype", path: "skype" },
+
 	];
 
 	render() {
 		//console.log(this.columns) ;
 		const { users, onSort, sortColumn } = this.props;
-		return <Table columns={this.columns} sortColumn={sortColumn} onSort={onSort} data={users} />;
+		return (
+			<Table
+				columns={this.columns}
+				sortColumn={sortColumn}
+				onSort={onSort}
+				data={users}
+			/>
+		);
 	}
 }
 
