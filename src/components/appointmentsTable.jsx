@@ -44,11 +44,12 @@ class AppointmentsTable extends Component {
 		{
 			key: "avatar",
 			label: "avatar",
-			content: (user) => (
+			content: (appointment) => (
+				
 				<span className="icon-img sm-r-5">
 					<img
 						style={{ width: "30px", height: "30px", borderRadius: "50%" }}
-						src={user.imageSrc}
+						//src={appointment.patientUser.imageSrc}
 						alt=""
 					/>
 				</span>
@@ -66,8 +67,8 @@ class AppointmentsTable extends Component {
 		{label: 'Start-time',   path: 'startTime' } ,   	  	
 		{label: 'End-Time',   path: 'endTime' } ,   	  	  
 		{label: 'Complaint',   path: 'complaint' } ,   	  	  			
-		{label: 'Clinic',   path: 'clinicNo.businessName' } ,   	  	  	
-		{label: 'Doctor',   path: 'doctorUser.contactName.lastName' } ,   	  	  		
+		{label: 'Clinic',   path: 'clinicNo.companyInfo.businessName' } ,   	  	  	
+		{label: 'Doctor',   path: 'doctorUser.contactName.last' } ,   	  	  		
 		{label: 'Appointment-type',   path: 'appointmentType' } ,   	  	  		
 		{label: 'Session-type',   path: 'sessionType' } ,   	  	  			
 		{label: 'Note from Patient',   path: 'notePatient' } ,   	  	  		

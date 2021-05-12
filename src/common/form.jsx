@@ -16,6 +16,7 @@ class Form extends Component {
     const { error } = this.schema.validate(this.state.data,options) ;
     console.log(error);
     if (!error) return null;
+    //if (!error) return false;
     const errors = {};
     for (let item of error.details) errors[item.path[0]] = item.message;
     return errors;
@@ -29,7 +30,7 @@ class Form extends Component {
     const errors = {};
     for (let item of error.details) errors[item.path[0]] = item.message;
     return errors;
-  };
+  }; 
 	
   validateProperty = ({name,value}) => {
     const obj = { [name]: value };

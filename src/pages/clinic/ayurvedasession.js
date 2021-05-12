@@ -17,12 +17,12 @@ import Joi from 'joi';
 import Form from '../../common/form.jsx';
 import {apiUrl} from '../../config/config.json';
 import http from '../../services/httpService';
-import {saveTCMSession,getTCMSession} from './../../services/tcmsessions';
+import {saveAyurvedaSession,getAyurvedaSession} from './../../services/tcmsessions';
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
 const Handle = Slider.Handle;
 
 
-class TCMSession extends Form {
+class AyurvedaSession extends Form {
 	constructor(props) {
 		super(props);
 
@@ -473,12 +473,6 @@ class TCMSession extends Form {
 			{ value: 'fullness like a rubber bag', label: 'fullness like a rubber bag' },									
 		];
 
-		this.palpationAcuPointsOptions = [
-			{ value: 'normal', label: 'normal' },
-			{ value: 'hard', label: 'hard' },			
-			{ value: 'soft', label: 'soft' },									
-		];
-
 		this.rangeMotionOptions = [
 			{ value: 'cervical', label: 'cervical' },
 			{ value: 'lumbar', label: 'lumbar' },			
@@ -489,21 +483,6 @@ class TCMSession extends Form {
 			{ value: 'ankle', label: 'ankle' },																					
 		];
 
-		this.needleManipulationOptions = [
-			{ value: 'even', label: 'even' },
-			{ value: 'tonify', label: 'tonify' },			
-			{ value: 'reduce', label: 'reduce' },									
-			{ value: 'cutanousneedle', label: 'Cutanous Needle' },												
-			{ value: 'imbeddingneedle', label: 'Imbedding Needle' },															
-			{ value: 'bleeding3edgedneedle', label: 'Bleeding with three-edged needle' },																		
-			{ value: 'warmingneedle', label: 'Warming Needle' },																					
-		];
-
-		this.stimulationMethodOptions = [
-			{ value: 'normal', label: 'normal' },
-			{ value: 'hard', label: 'hard' },			
-			{ value: 'soft', label: 'soft' },									
-		];
 		
 		this.handleSlider = (props) => {
 			const { value, dragging, index, ...restProps } = props;
@@ -810,114 +789,6 @@ class TCMSession extends Form {
 		));
 	}
 	
-	async populateTongueShapeOptions(){
-    this.tongueShapeoptions = this.tongueShapeOptions.map(option => (
-		<option key={option.label} value={option.value}>
-			{option.value}
-		</option>
-	));
-	}
-
-	async populateTongueColorOptions(){
-		this.tongueColoroptions = this.tongueColorOptions.map(option => (
-			<option key={option.label} value={option.value}>
-				{option.value}
-			</option>
-		));
-	}
-	
-	async populateTongueQualityOptions(){
-		this.tongueQualityoptions = this.tongueQualityOptions.map(option => (
-			<option key={option.label} value={option.value}>
-				{option.value}
-			</option>
-		));
-	}
-	
-	async populatePulseQualityOptions(){
-		this.pulseQualityoptions = this.pulseQualityOptions.map(option => (
-			<option key={option.label} value={option.value}>
-				{option.value}
-			</option>
-		));
-	}
-
-	async populatePulseStrengthOptions(){
-		this.pulseStrengthoptions = this.pulseStrengthOptions.map(option => (
-			<option key={option.label} value={option.value}>
-				{option.value}
-			</option>
-		));
-	}
-	async populatePulseDepthOptions(){
-		this.pulsedepthoptions = this.pulsedepthOptions.map(option => (
-			<option key={option.label} value={option.value}>
-				{option.value}
-			</option>
-		));
-	}
-	async populatePulseTensionOptions(){
-		this.pulsetensionoptions = this.pulseTensionOptions.map(option => (
-			<option key={option.label} value={option.value}>
-				{option.value}
-			</option>
-		));
-	}
-	async populatePulseRhythmOptions(){
-		this.pulseRhythmoptions = this.pulseRhythmOptions.map(option => (
-			<option key={option.label} value={option.value}>
-				{option.value}
-			</option>
-		));
-	}
-	
-	async populatePhysicalAppearanceQualityOptions(){
-    this.physicalAppearanceQualityoptions = this.physicalAppearanceQualityOptions.map(option => (
-		<option key={option.label} value={option.value}>
-			{option.value}
-		</option>
-	));
-	}
-
-	async populatePalpationEpigastriumOptions(){
-		this.palpationEpigastriumoptions = this.palpationEpigastriumOptions.map(option => (
-			<option key={option.label} value={option.value}>
-				{option.value}
-			</option>
-		));
-	}
-	async populatePalpationAbdomenOptions(){
-		this.palpationAbdomenoptions = this.palpationAbdomenOptions.map(option => (
-			<option key={option.label} value={option.value}>
-				{option.value}
-			</option>
-		));
-	}
-
-	async populatePalpationAcuPointsOptions(){
-		this.palpationAcuPointsoptions = this.palpationAcuPointsOptions.map(option => (
-			<option key={option.label} value={option.value}>
-				{option.value}
-			</option>
-		));
-	}
-	
-	async populateNeedleManipulationOptions(){
-    this.needleManipulationoptions = this.needleManipulationOptions.map(option => (
-		<option key={option.label} value={option.value}>
-			{option.value}
-		</option>
-	));
-	}
-
-	async populateStimulationMethodOptions(){
-		this.stimulationMethodoptions = this.stimulationMethodOptions.map(option => (
-			<option key={option.label} value={option.value}>
-				{option.value}
-			</option>
-		));
-	}
-	
 	async populatePulses(){
 		this.pulseoptions = this.pulseOptions.map(option => (
 			<option key={option.label} value={option.value}>
@@ -932,7 +803,7 @@ class TCMSession extends Form {
 		</option>
 	));
 	}
-	
+
 	async populateUser() { 
 		try {
 		  const userId = this.props.match.params.id;
@@ -1005,12 +876,7 @@ class TCMSession extends Form {
 		await this.populatePhysicalAppearanceQualityOptions();		
 		await this.populatePalpationEpigastriumOptions();	
 		await this.populatePalpationAbdomenOptions();		
-		await this.populatePalpationAcuPointsOptions();		
-		await this.populateNeedleManipulationOptions();
-		await this.populateStimulationMethodOptions();
-	
-		await this.populateAcuPoints();	
-		await this.populateFormulas();			
+
 		await this.populatePatient();	
 		await this.populateTCMTreatments();			
 	}
@@ -1110,12 +976,13 @@ schema = Joi.object({
 		  rangeMotion: Joi.string().optional(),
 		  painLevel: Joi.string().optional(),
 		  physicalExaminationNote: Joi.string().optional(),
-		  HomeoDiagnosis: Joi.string().optional(),
+		  AyurvedaDiagnosis: Joi.string().optional(),
 		  principleTreatment: Joi.string().optional(),
 		  materiaMedica: Joi.string().optional(),
 		  potency: Joi.string().optional(),
 		  dietTherapy: Joi.string().optional(),
 		  recommendation: Joi.string().optional(),
+	
 	});
 
 	onChangeImgHandler=event=>{
@@ -1145,12 +1012,14 @@ schema = Joi.object({
 		
 	};
 	
+	
 	mapToViewModel(user) {
 		return {
 		  _id: user._id,
 		  username: user.username,
 		  profile: user.profile,
 		  email: user.email,
+		  createdOn: new Date(user.date),
 		  firstName: user.firstName,
 		  lastName: user.firstName,
 		  initials: user.initials,
@@ -1223,7 +1092,6 @@ schema = Joi.object({
 		  emotionalStatus: user.emotionalStatus,		  
 		  emotionalNote: user.emotionalNote,		  
 		  interviewNote: user.interviewNote ,		  
-		  
 		  pulseSpeed: user.pulseSpeed,
 		  pulseDepth: user.pulseDepth,		  
 		  pulseStrength: user.pulseStrength,		  
@@ -1239,12 +1107,9 @@ schema = Joi.object({
 		  rangeMotion: user.rangeMotion,
 		  painLevel: user.painLevel,		  		  
 		  physicalExaminationNote: user.physicalExaminationNote,		  
-		  TCMDiagnosis: user.TCMDiagnosis,
+		  AyurvedaDiagnosis: user.AyurvedaDiagnosis,
 		  principleTreatment: user.principleTreatment,		  
 		  acuPoints: user.acuPoints,		  
-		  stimulationDuration: user.stimulationDuration,
-		  stimulationMethod: user.stimulationMethod,
-		  needleManipulation: user.needleManipulation,		  
 		  acuTreatmentNote: user.acuTreatmentNote,		  
 		  TDP: user.TDP,		  
 		  TDPNote: user.TDPNote,				  
@@ -1260,7 +1125,6 @@ schema = Joi.object({
 		  mmUnit2: user.mmUnit2,		  
 		  dietTherapy: user.dietTherapy,		  
 		  recommendation: user.recommendation,		  		  
-		  createdOn: new Date(user.date),		  
 		};
 	  }
 
@@ -1274,10 +1138,10 @@ schema = Joi.object({
 					<ol className="breadcrumb float-xl-right">
 						<li className="breadcrumb-item"><Link to="/form/plugins">Home</Link></li>
 						<li className="breadcrumb-item"><Link to="/clinic/medicalfiles">Medical Files</Link></li>
-						<li className="breadcrumb-item active">Add TCMSession</li>
+						<li className="breadcrumb-item active">Add AyurvedaSession</li>
 					</ol>
 					<h1 className="page-header">
-						Add TCMSession
+						Add AyurvedaSession
 					</h1>
 
 					<div className="row">
@@ -1422,4 +1286,4 @@ schema = Joi.object({
 	}
 }
 
-export default withRouter(TCMSession);
+export default withRouter(AyurvedaSession);

@@ -130,7 +130,7 @@ class HomeopathySession extends Form {
 			{ value: 'unemployed', label: 'unemployed' },
 		];
 
-		this.thermalFeelingStatusOptions = [
+		this.thermalFeelingOptions = [
 			{ value: 'normal', label: 'normal' },
 			{ value: 'chilly', label: 'chilly' },
 			{ value: 'hotflush', label: 'hot flush' },
@@ -355,6 +355,106 @@ class HomeopathySession extends Form {
 			{ value: 'dry', label: 'dry' },						
 			{ value: 'feeble', label: 'feeble' },			
 		];
+
+		this.odorOptions = [
+			{ value: 'normal', label: 'normal' },
+			{ value: 'stinky', label: 'stinky' },
+			{ value: 'foul', label: 'foul' },			
+			{ value: 'sour', label: 'sour' },			
+		];
+
+		this.vitalityOptions = [
+			{ value: 'normal', label: 'normal' },
+			{ value: 'dispirited', label: 'dispirited' },
+			{ value: 'hyperactive depressed', label: 'hyperactive depressed' },			
+			{ value: 'anxious', label: 'anxious' },			
+			{ value: 'stressed', label: 'stressed' },						
+		];
+
+		this.appearanceOptions = [
+			{ value: 'normal', label: 'normal' },
+			{ value: 'heavy', label: 'heavy' },
+			{ value: 'fat', label: 'fat' },			
+			{ value: 'medium', label: 'medium' },			
+			{ value: 'slim', label: 'slim' },						
+			{ value: 'strong', label: 'strong' },
+			{ value: 'weak', label: 'weak' },			
+		];
+
+		this.colorLustreFaceOptions = [
+			{ value: 'normal', label: 'normal' },
+			{ value: 'pale', label: 'pale' },
+			{ value: 'yellow', label: 'yellow' },			
+			{ value: 'red', label: 'red' },			
+			{ value: 'blue', label: 'blue' },						
+			{ value: 'dark-gray', label: 'dark-gray' },
+		];
+
+		this.tongueShapeOptions = [
+			{ value: 'normal', label: 'normal' },
+			{ value: 'deviated', label: 'deviated' },
+			{ value: 'toothmarks', label: 'toothmarks' },			
+			{ value: 'cracked in the center vertically', label: 'cracked in the center vertically' },			
+			{ value: 'long', label: 'long' },						
+			{ value: 'thin', label: 'thin' },
+			{ value: 'stiff', label: 'stiff' },
+			{ value: 'flappy', label: 'flappy' },			
+			{ value: 'cracked over the whole tongue', label: 'cracked over the whole tongue' },			
+		];
+
+		this.tongueColorOptions = [
+			{ value: 'normal', label: 'normal' },
+			{ value: 'white swollen', label: 'white swollen' },
+			{ value: 'thin rigid', label: 'thin rigid' },			
+			{ value: 'flaccid pale', label: 'flaccid pale' },			
+			{ value: 'red thick', label: 'red thick' },						
+			{ value: 'greasy', label: 'greasy' },
+			{ value: 'yellow cracked', label: 'yellow cracked' },
+			{ value: 'white coating', label: 'white coating' },						
+			{ value: 'yellow coating', label: 'yellow coating' },						
+			{ value: 'gray coating', label: 'gray coating' },			
+			{ value: 'black coating', label: 'black coating' },			
+			{ value: 'purple', label: 'purple' },					
+		];
+
+		this.tongueQualityOptions = [
+			{ value: 'normal', label: 'normal' },
+			{ value: 'thin', label: 'thin' },			
+			{ value: 'thick', label: 'thick' },									
+			{ value: 'dry', label: 'dry' },		
+			{ value: 'wet/moist', label: 'wet/moist' },
+			{ value: 'peeled', label: 'peeled' },					
+		];
+
+		this.physicalAppearanceQualityOptions = [
+			{ value: 'normal', label: 'normal' },
+			{ value: 'discoloration', label: 'discoloration' },			
+			{ value: 'swelling', label: 'swelling' },									
+			{ value: 'edema', label: 'edema' },		
+			{ value: 'atrophy', label: 'atrophy' },				
+		];
+
+		this.palpationEpigastriumOptions = [
+			{ value: 'normal', label: 'normal' },
+			{ value: 'hard', label: 'hard' },			
+			{ value: 'soft', label: 'soft' },									
+		];
+
+		this.palpationAbdomenOptions = [
+			{ value: 'normal', label: 'normal' },
+			{ value: 'distension and fullness', label: 'distension and fullness' },			
+			{ value: 'fullness like a rubber bag', label: 'fullness like a rubber bag' },									
+		];
+
+		this.rangeMotionOptions = [
+			{ value: 'cervical', label: 'cervical' },
+			{ value: 'lumbar', label: 'lumbar' },			
+			{ value: 'shoulder', label: 'shoulder' },									
+			{ value: 'elbow', label: 'elbow' },												
+			{ value: 'hip', label: 'hip' },															
+			{ value: 'knee', label: 'knee' },																		
+			{ value: 'ankle', label: 'ankle' },																					
+		];
 		
 		this.handleSlider = (props) => {
 			const { value, dragging, index, ...restProps } = props;
@@ -392,6 +492,277 @@ class HomeopathySession extends Form {
 		</option>
 	));
 	}
+	async populateFamilyRoleOptions(){
+		this.familyRoleoptions = this.familyRoleOptions.map(option => (
+			<option key={option.label} value={option.value}>
+				{option.value}
+			</option>
+		));
+	}
+	
+	async populateFamilyDiseaseStatusOptions(){
+		this.familyDiseaseStatusoptions = this.familyDiseaseStatusOptions.map(option => (
+			<option key={option.label} value={option.value}>
+				{option.value}
+			</option>
+		));
+	}
+	
+	async populateSocialRelationshipOptions(){
+    this.socialRelationshipoptions = this.socialRelationshipOptions.map(option => (
+		<option key={option.label} value={option.value}>
+			{option.value}
+		</option>
+	));
+	}
+
+	async populateEmploymentStatusOptions(){
+		this.employmentStatusoptions = this.employmentStatusOptions.map(option => (
+			<option key={option.label} value={option.value}>
+				{option.value}
+			</option>
+		));
+	}
+	
+	async populateThermalFeelingOptions(){
+		this.thermalFeelingoptions = this.thermalFeelingOptions.map(option => (
+			<option key={option.label} value={option.value}>
+				{option.value}
+			</option>
+		));
+	}
+	
+	async populateCurrentTreatmentOptions(){
+		this.currentTreatmentoptions = this.currentTreatmentOptions.map(option => (
+			<option key={option.label} value={option.value}>
+				{option.value}
+			</option>
+		));
+	}
+	
+	async populatePerspirationOptions(){
+    this.perspirationoptions = this.perspirationOptions.map(option => (
+		<option key={option.label} value={option.value}>
+			{option.value}
+		</option>
+	));
+	}
+
+	async populateFamilyRoleOptions(){
+		this.familyRoleoptions = this.familyRoleOptions.map(option => (
+			<option key={option.label} value={option.value}>
+				{option.value}
+			</option>
+		));
+	}
+	async populateAppetiteOptions(){
+		this.appetiteoptions = this.appetiteOptions.map(option => (
+			<option key={option.label} value={option.value}>
+				{option.value}
+			</option>
+		));
+	}
+	async populateVomittingOptions(){
+		this.vomittingoptions = this.vomittingOptions.map(option => (
+			<option key={option.label} value={option.value}>
+				{option.value}
+			</option>
+		));
+	}
+	
+	async populateSocialRelationshipOptions(){
+    this.socialRelationshipoptions = this.socialRelationshipOptions.map(option => (
+		<option key={option.label} value={option.value}>
+			{option.value}
+		</option>
+	));
+	}
+
+	async populateDietOptions(){
+		this.dietoptions = this.dietOptions.map(option => (
+			<option key={option.label} value={option.value}>
+				{option.value}
+			</option>
+		));
+	}
+	
+	async populateTasteOptions(){
+		this.tasteoptions = this.tasteOptions.map(option => (
+			<option key={option.label} value={option.value}>
+				{option.value}
+			</option>
+		));
+	}
+	
+	async populateThirstOptions(){
+		this.thirstoptions = this.thirstOptions.map(option => (
+			<option key={option.label} value={option.value}>
+				{option.value}
+			</option>
+		));
+	}
+	
+	async populateDefecationOptions(){
+    this.defecationoptions = this.defecationOptions.map(option => (
+		<option key={option.label} value={option.value}>
+			{option.value}
+		</option>
+	));
+	}
+
+	async populateUrinationOptions(){
+		this.urinationoptions = this.urinationOptions.map(option => (
+			<option key={option.label} value={option.value}>
+				{option.value}
+			</option>
+		));
+	}
+
+	async populateUrinationColorOptions(){
+		this.urinationColoroptions = this.urinationColorOptions.map(option => (
+			<option key={option.label} value={option.value}>
+				{option.value}
+			</option>
+		));
+	}
+	
+	async populateSleepOptions(){
+		this.sleepoptions = this.sleepOptions.map(option => (
+			<option key={option.label} value={option.value}>
+				{option.value}
+			</option>
+		));
+	}
+	
+	async populateHeadOptions(){
+    this.headoptions = this.headOptions.map(option => (
+		<option key={option.label} value={option.value}>
+			{option.value}
+		</option>
+	));
+	}
+
+	async populateEyesOptions(){
+		this.eyesoptions = this.eyesOptions.map(option => (
+			<option key={option.label} value={option.value}>
+				{option.value}
+			</option>
+		));
+	}
+	
+	async populateEarOptions(){
+		this.earoptions = this.earOptions.map(option => (
+			<option key={option.label} value={option.value}>
+				{option.value}
+			</option>
+		));
+	}
+	
+	async populateNoseOptions(){
+		this.noseoptions = this.noseOptions.map(option => (
+			<option key={option.label} value={option.value}>
+				{option.value}
+			</option>
+		));
+	}
+	
+	async populateThroatOptions(){
+    this.throatoptions = this.throatOptions.map(option => (
+		<option key={option.label} value={option.value}>
+			{option.value}
+		</option>
+	));
+	}
+
+	async populateMenstruationOptions(){
+		this.menstruationoptions = this.menstruationOptions.map(option => (
+			<option key={option.label} value={option.value}>
+				{option.value}
+			</option>
+		));
+	}
+	async populateleukorrheaOptions(){
+		this.leukorrheaoptions = this.leukorrheaOptions.map(option => (
+			<option key={option.label} value={option.value}>
+				{option.value}
+			</option>
+		));
+	}
+	async populateNaturePainOptions(){
+		this.naturePainoptions = this.naturePainOptions.map(option => (
+			<option key={option.label} value={option.value}>
+				{option.value}
+			</option>
+		));
+	}
+	
+	async populateEmotionalStatusOptions(){
+    this.emotionalStatusoptions = this.emotionalStatusOptions.map(option => (
+		<option key={option.label} value={option.value}>
+			{option.value}
+		</option>
+	));
+	}
+
+	async populateRespirationOptions(){
+		this.respirationoptions = this.respirationOptions.map(option => (
+			<option key={option.label} value={option.value}>
+				{option.value}
+			</option>
+		));
+	}
+	
+	async populateSpeechOptions(){
+		this.speechoptions = this.speechOptions.map(option => (
+			<option key={option.label} value={option.value}>
+				{option.value}
+			</option>
+		));
+	}
+	
+	async populateCoughOptions(){
+		this.coughoptions = this.coughOptions.map(option => (
+			<option key={option.label} value={option.value}>
+				{option.value}
+			</option>
+		));
+	}
+	
+	async populateOdorOptions(){
+    this.odoroptions = this.odorOptions.map(option => (
+		<option key={option.label} value={option.value}>
+			{option.value}
+		</option>
+	));
+	}
+
+	async populateVitalityOptions(){
+		this.vitalityoptions = this.vitalityOptions.map(option => (
+			<option key={option.label} value={option.value}>
+				{option.value}
+			</option>
+		));
+	}
+
+	async populateAppearanceOptions(){
+		this.appearanceoptions = this.appearanceOptions.map(option => (
+			<option key={option.label} value={option.value}>
+				{option.value}
+			</option>
+		));
+	}
+	
+	async populateColorLustreFaceOptions(){
+		this.colorLustreFaceoptions = this.colorLustreFaceOptions.map(option => (
+			<option key={option.label} value={option.value}>
+				{option.value}
+			</option>
+		));
+	}
+
+
+
+	
 	}
 
 	async populateUser() { 
@@ -421,9 +792,44 @@ class HomeopathySession extends Form {
 	async componentDidMount() {
 		
 		//await this.populateProfiles();
+		await this.populateMateriaMedicas();		
 		await this.populateFamilyRoleOptions();
 		await this.populatefamilyDiseaseStatusOptions();
-		await this.populateMateriaMedicas();
+		await this.populateCurrentTreatmentOptions();
+		await this.populateSocialRelationshipOptions();
+		await this.populateEmploymentStatusOptions();
+		await this.populateThermalFeelingOptions();		
+		await this.populatePerspirationOptions();		
+		await this.populateAppetiteOptions();
+		await this.populateVomittingOptions();
+		await this.populateDietOptions();		
+		await this.populateTasteOptions();		
+		await this.populateThirstOptions();
+		await this.populateDefecationOptions();
+		await this.populateUrinationOptions();
+		await this.populateUrinationColorOptions();		
+		await this.populateSleepOptions();
+		await this.populateHeadOptions();		
+		await this.populateEyeOptions();		
+		await this.populateEarOptions();
+		await this.populateNoseOptions();
+		await this.populateThroatOptions();
+		await this.populateMenstruationOptions();
+		await this.populateLeukorrheaOptions();
+		await this.populateNaturePainOptions();		
+		await this.populateEmotionalStatusOptions();		
+		await this.populateRespirationOptions();		
+		await this.populateSpeechOptions();				
+		await this.populateCoughOptions();		
+		await this.populateOdorOptions();
+		await this.populateVitalityOptions();		
+		await this.populateAppearanceOptions();
+		await this.populateColorLustreFaceOptions();				
+		await this.populatePhysicalAppearanceQualityOptions();		
+		await this.populatePalpationEpigastriumOptions();	
+		await this.populatePalpationAbdomenOptions();				
+		await this.populateRangeMotionOptions();
+		
 	}
 
 	// schema = Joi.object({
@@ -472,10 +878,6 @@ schema = Joi.object({
 		  appearance: Joi.string().optional(),
 		  appearanceNote: Joi.string().optional(),
 		  faceColorLustre: Joi.string().optional(),
-		  tongueShape: Joi.string().optional(),
-		  tongueColor: Joi.string().optional(),
-		  tongueQuality: Joi.string().optional(),
-		  tongueNote: Joi.string().optional(),
 		  respiration: Joi.string().optional(),
 		  speech: Joi.string().optional(),
 		  cough: Joi.string().optional(),
@@ -506,18 +908,10 @@ schema = Joi.object({
 		  emotionalStatus: Joi.string().optional(),
 		  emotionalNote: Joi.string().optional(),
 		  interviewNote: Joi.string().optional(),
-		  pulseSpeed: Joi.string().optional(),
-		  pulseDepth: Joi.string().optional(),
-		  pulseStrength: Joi.string().optional(),
-		  pulseShape: Joi.string().optional(),
-		  pulseTension: Joi.string().optional(),
-		  pulseRhythm: Joi.string().optional(),
-		  pulseNote: Joi.string().optional(),
 		  physicalAppearance: Joi.string().optional(),
 		  physicalPalpationEpigastrium: Joi.string().optional(),
 		  physicalPalpationEpigastriumNote: Joi.string().optional(),
 		  physicalPalpationAbdomen: Joi.string().optional(),
-		  physicalPalpationAcupoint: Joi.string().optional(),
 		  rangeMotion: Joi.string().optional(),
 		  painLevel: Joi.string().optional(),
 		  physicalExaminationNote: Joi.string().optional(),
@@ -610,10 +1004,6 @@ schema = Joi.object({
 		  appearance: homeopathysession.appearance,
 		  appearanceNote: homeopathysession.appearanceNote,
 		  faceColorLustre: homeopathysession.faceColorLustre,
-		  tongueShape: homeopathysession.tongueShape,
-		  tongueColor: homeopathysession.tongueColor,
-		  tongueQuality: homeopathysession.tongueQuality,
-		  tongueNote: homeopathysession.tongueNote,
 		  respiration: homeopathysession.respiration,
 		  speech: homeopathysession.speech,
 		  cough: homeopathysession.cough,
@@ -644,18 +1034,10 @@ schema = Joi.object({
 		  emotionalStatus: homeopathysession.emotionalStatus,		  
 		  emotionalNote: homeopathysession.emotionalNote,		  
 		  interviewNote: homeopathysession.interviewNote ,		  
-		  pulseSpeed: homeopathysession.pulseSpeed,
-		  pulseDepth: homeopathysession.pulseDepth,		  
-		  pulseStrength: homeopathysession.pulseStrength,		  
-		  pulseShape: homeopathysession.pulseShape,
-		  pulseTension: homeopathysession.pulseTension,
-		  pulseRhythm: homeopathysession.pulseRhythm,
-		  pulseNote: homeopathysession.pulseNote,		  
 		  physicalAppearance: homeopathysession.physicalAppearance,
 		  physicalPalpationEpigastrium: homeopathysession.physicalPalpationEpigastrium,
 		  physicalPalpationEpigastriumNote: homeopathysession.physicalPalpationEpigastriumNote,		  
 		  physicalPalpationAbdomen: homeopathysession.physicalPalpationAbdomen,
-		  physicalPalpationAcupoint: homeopathysession.physicalPalpationAcupoint,
 		  rangeMotion: homeopathysession.rangeMotion,
 		  painLevel: homeopathysession.painLevel,		  		  
 		  physicalExaminationNote: homeopathysession.physicalExaminationNote,		  
@@ -693,7 +1075,7 @@ schema = Joi.object({
 									<form className="form-horizontal form-bordered" onSubmit={this.handleSubmit} >
 
 										<div className="form-group row">
-											<label className="col-lg-4 col-form-label" htmlFor="profile" >Select Account-type</label>
+											<label className="col-lg-4 col-form-label" htmlFor="profile" >Account-type</label>
 											<div className="col-lg-8">
 												<select name="profile" id="profile" value={data.profile} onChange={this.handleChange} className="form-control" >
 													<option value="">Select Account-type</option>
@@ -705,7 +1087,7 @@ schema = Joi.object({
 
 
 										<div className="form-group row">
-											<label className="col-lg-4 col-form-label" htmlFor="prefix" >Select Prefix</label>
+											<label className="col-lg-4 col-form-label" htmlFor="prefix" >Prefix</label>
 											<div className="col-lg-8">
 												<select name="prefix" id="prefix" value={data.prefix} onChange={this.handleChange} className="form-control" >
 													<option value="">Select Prefix</option>

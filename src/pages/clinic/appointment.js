@@ -222,6 +222,7 @@ this.selectClinics = this.state.clinics.map(option => (
   };
 
   doSubmit = async (appointment) => {
+    
     try {
 	const data = { ...this.state.data };
 	console.log(this.state.data);
@@ -517,7 +518,7 @@ this.selectClinics = this.state.clinics.map(option => (
                       <div className="col-lg-8">
                         <button
                           type="submit"
-                          disabled={this.validate()}
+                          disabled={this.validate}
                           className="btn btn-primary btn-block btn-lg"
                         >
                           Submit
