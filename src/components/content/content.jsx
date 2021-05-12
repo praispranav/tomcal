@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, withRouter, Switch } from "react-router-dom";
+import { Route, withRouter, Switch } from "react-router";
 //import routes from './../../config/page-route.jsx';
 import { PageSettings } from "./../../config/page-settings.js";
 import auth from "./../../services/authservice";
@@ -194,9 +194,9 @@ class Content extends React.Component {
 							<Switch>
 								<ProtectedRoute path="/dashboard/" title="Clinic Dashboard" component={DashboardV2} />
 
-							{/* <Route>	
+							<Route>	
 								<Redirect from="/" exact to="/dashboard/" />
-							</Route> */}
+							</Route> 
 
 								{/* <Route
 									path="/user/login"

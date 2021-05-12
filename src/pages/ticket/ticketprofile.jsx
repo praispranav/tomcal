@@ -9,7 +9,17 @@ import {
 // import SpreadSheet from "./SpreadSheet";
 import ReusableTabNavs from "./ReusableTabNavs";
 import ReusableTab from "./ReusableTab";
-import { TabContent } from "reactstrap";
+import {
+  TabContent,
+  Button,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  Table,
+  Row,
+  Col,
+} from "reactstrap";
 import Spreadsheet from "./Spreadsheet/SpreadSheet";
 import "./index.css";
 import Fishbone from "./Fishbone/Fishbone";
@@ -154,15 +164,317 @@ class Ticketprofile extends React.Component {
                   </ReusableTab>
                   <ReusableTab id={5}>
                     <>
-                      <h4>Sharing</h4>
-                      <p>
-                        {" "}
-                        task nr 10 tab “sharing”. There is a file with info or
-                        part of code for supporting this task. It is on
-                        github/src/page/clinic With a button to copy
-                        sharing-link to clipboard. Further there are 3
-                        accordions.
-                      </p>
+                      <div className="p-3">
+                        <h1>Sharing with others</h1>
+                        <Form>
+                          <FormGroup row>
+                            <Label for="exampleEmail" md={4}>
+                              <strong> Email for sharing</strong>
+                            </Label>
+                            <Col sm={6}>
+                              <Input
+                                type="email"
+                                name="email"
+                                placeholder="Enter email for sharing"
+                              />
+                            </Col>
+                          </FormGroup>
+                          <FormGroup row>
+                            <Label for="exampleEmail" md={4}>
+                              <strong> Usernames for sharing</strong>
+                            </Label>
+                            <Col sm={6}>
+                              <Input
+                                type="text"
+                                name="username"
+                                placeholder="Enter the usernames for sharing"
+                              />
+                            </Col>
+                          </FormGroup>
+                          <FormGroup className="d-flex align-items-center" row>
+                            <Col md={4}>
+                              <Label for="exampleEmail">
+                                <strong>Rights &amp; permission</strong>
+                              </Label>
+                            </Col>
+                            <Col md={6}>
+                              <FormGroup check inline>
+                                <Label check>
+                                  <Input type="checkbox" checked />
+                                  <strong>View</strong>
+                                </Label>
+                              </FormGroup>
+                              <FormGroup check inline>
+                                <Label check>
+                                  <Input type="checkbox" />
+                                  <strong>Comment</strong>
+                                </Label>
+                              </FormGroup>
+                              <FormGroup check inline>
+                                <Label check>
+                                  <Input type="checkbox" />
+                                  <strong>Edit</strong>
+                                </Label>
+                              </FormGroup>
+                            </Col>
+                          </FormGroup>
+                          <FormGroup row>
+                            <Col md={4}>
+                              <Label for="exampleEmail">
+                                <strong>Share Till</strong>
+                              </Label>
+                            </Col>
+                            <Col sm={3}>
+                              <Input
+                                type="text"
+                                name="date"
+                                placeholder="Select End-Date for sharing"
+                              />
+                            </Col>
+                            <Col sm={3}>
+                              <Button
+                                type="submit"
+                                className="btn btn-sm btn-primary "
+                              >
+                                Send invitation
+                              </Button>
+                            </Col>
+                          </FormGroup>
+                        </Form>
+                        <Form>
+                          <button
+                            type="createlink"
+                            className="btn btn-sm btn-info m-r-5"
+                          >
+                            Create sharing-link
+                          </button>
+                          <button
+                            type="linkclipboard"
+                            className="btn btn-sm btn-green m-r-5"
+                          >
+                            Copy link to clipboard
+                          </button>
+                        </Form>
+
+                        {/* <!-- begin #accordion --> */}
+                        <div id="accordion" className="accordion ">
+                          {/* <!-- begin card --> */}
+                          <div className="card pointer-cursor my-1">
+                            <div
+                              className="card-header bg-dark text-white pointer-cursor collapsed"
+                              data-toggle="collapse"
+                              data-target="#acl"
+                            >
+                              Access Control List
+                            </div>
+                            <div
+                              id="acl"
+                              className="collapse"
+                              data-parent="#accordion"
+                            >
+                              <div className="card-body">
+                                {/* <!-- begin panel-body --> */}
+                                <div
+                                  className="panel-body table-responsive"
+                                  id="mycustomtable"
+                                >
+                                  <Table bordered striped>
+                                    <thead>
+                                      <tr>
+                                        <th className="text-nowrap">User</th>
+                                        <th
+                                          width="1%"
+                                          data-orderable="false"
+                                        ></th>
+                                        <th className="text-nowrap">email</th>
+                                        <th className="text-nowrap">Actions</th>
+                                        <th className="text-nowrap">
+                                          Share till
+                                        </th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr className="odd gradeX">
+                                        <td>Dr. No</td>
+                                        <td width="1%" className="with-img">
+                                          <img
+                                            src="../assets/img/user/user-1.jpg"
+                                            className="img-rounded height-30"
+                                          />
+                                        </td>
+                                        <td>info@gmail.com</td>
+                                        <td>
+                                          <div className="btn-group">
+                                            <Link className="btn btn-default">
+                                              Actions
+                                            </Link>
+                                            <Link
+                                              type="button"
+                                              className="btn btn-default dropdown-toggle dropdown-toggle-split"
+                                              data-toggle="dropdown"
+                                              // aria-haspopup="true"
+                                              // aria-expanded="false"
+                                            >
+                                              <span className="sr-only">
+                                                Toggle Dropdown
+                                              </span>
+                                            </Link>
+
+                                            <ul
+                                              className="dropdown-menu pull-right "
+                                              style={{
+                                                position: "absolute",
+                                                transform:
+                                                  "translate3d(67px,-87px,0px)",
+                                                top: "0px",
+                                                left: "0px",
+                                                willChange: "transform",
+                                              }}
+                                            >
+                                              <div className="checkbox checkbox-css">
+                                                <Input
+                                                  type="checkbox"
+                                                  id="cssCheckbox1"
+                                                  value=""
+                                                />
+                                                <label for="cssCheckbox1">
+                                                  View
+                                                </label>
+                                              </div>
+                                              <div className="checkbox checkbox-css is-valid">
+                                                <Input
+                                                  type="checkbox"
+                                                  id="cssCheckbox3"
+                                                  value=""
+                                                />
+                                                <label for="cssCheckbox3">
+                                                  Comment
+                                                </label>
+                                              </div>
+                                              <div className="checkbox checkbox-css is-invalid">
+                                                <Input
+                                                  type="checkbox"
+                                                  id="cssCheckbox5"
+                                                  value=""
+                                                />
+                                                <label for="cssCheckbox5">
+                                                  Edit
+                                                </label>
+                                              </div>
+                                            </ul>
+                                          </div>
+                                        </td>
+                                        <td></td>
+                                      </tr>
+                                    </tbody>
+                                  </Table>
+                                </div>
+                                {/* <!-- end panel-body --> */}
+                              </div>
+                            </div>
+                          </div>
+                          {/*  end card 
+											< begin card  */}
+                          <div
+                            className="card accordian"
+                            id="accordionforpublicity"
+                          >
+                            <div
+                              className="card-header pointer-cursor bg-dark text-white pointer-cursor collapsed"
+                              data-toggle="collapse"
+                              data-target="#publicity"
+                            >
+                              Publicity
+                            </div>
+                            <div
+                              id="publicity"
+                              className="collapse p-20"
+                              data-parent="#accordionforpublicity"
+                            >
+                              <div className="col-md-9">
+                                <div className="radio radio-css ">
+                                  <input
+                                    type="radio"
+                                    name="radio_css"
+                                    id="cssRadio1"
+                                    value=""
+                                  />
+                                  <label for="cssRadio1">
+                                    Only users listed in Access Control List
+                                    have access.
+                                  </label>
+                                </div>
+                                <div className="radio radio-css is-valid">
+                                  <input
+                                    type="radio"
+                                    name="radio_css"
+                                    id="cssRadio2"
+                                    value=""
+                                  />
+                                  <label for="cssRadio2">
+                                    Publish over the world.
+                                  </label>
+                                </div>
+                                <div className="radio radio-css is-invalid">
+                                  <input
+                                    type="radio"
+                                    name="radio_css"
+                                    id="cssRadio3"
+                                    value=""
+                                  />
+                                  <label for="cssRadio3">
+                                    Access by having link for everyone.
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          {/* <!-- end card -->
+                            
+											<!-- begin card --> */}
+                          <div
+                            className="card accordian my-1"
+                            id="accordionforsetting"
+                          >
+                            <div
+                              className="card-header pointer-cursor bg-dark text-white pointer-cursor collapsed"
+                              data-toggle="collapse"
+                              data-target="#settings"
+                            >
+                              Settings
+                            </div>
+                            <div
+                              id="settings"
+                              className="collapse p-10"
+                              data-parent="#accordionforsetting"
+                            >
+                              <Form row>
+                                <FormGroup check inline>
+                                  <Label
+                                    className=" checkbox-css"
+                                    check
+                                  >
+                                    <Input type="checkbox" invalid/>
+                                    <strong>
+                                      Allow viewers to download, save, copy
+                                    </strong>
+                                  </Label>
+                                </FormGroup>
+                                <FormGroup
+                                  className=" checkbox-css"
+                                  check
+                                  inline
+                                >
+                                  <Label check>
+                                    <Input type="checkbox" valid/>{" "}
+                                    <strong>checkbox level 2</strong>
+                                  </Label>
+                                </FormGroup>
+                              </Form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </>
                   </ReusableTab>
                   <ReusableTab id={6}>
