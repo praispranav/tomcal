@@ -351,6 +351,11 @@ select.filterbtn {
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
+#mycustomtable.table-responsive {
+  overflow-x: visible !important;
+  overflow-y: visible !important;
+}
+
 @media screen and (max-width: 567px) {
   .search {
     flex-wrap: wrap;

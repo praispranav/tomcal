@@ -4,7 +4,7 @@ import { Route, withRouter, Switch } from "react-router-dom";
 import { PageSettings } from "./../../config/page-settings.js";
 import auth from "./../../services/authservice";
 import { getUser } from "./../../services/users";
-import { Redirect } from "react-router";
+import { Redirect } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import configureStore from "./../../store/configureStore";
@@ -83,8 +83,8 @@ import Ticket from "./../../pages/clinic/ticket.js";
 import TicketsTable from "./../../pages/clinic/tickets.js";
 import ClinicSolo from "./../../pages/clinic/clinicsolo.js";
 import ClinicSoloTable from "./../../pages/clinic/clinicsolos.js";
-import Salon from "./../../pages/salon/salon.js";
-import SalonTable from "./../../pages/salon/salons.js";
+import Salon from "./../../pages/salon/salons";
+import SalonTable from "./../../pages/salon/salons";
 import Appointment from './../../pages/clinic/appointment.js';
 import AppointmentTable from "./../../pages/clinic/appointments.js";
 import reqForAppointment from "./../../pages/clinic/reqforappointment.js";
@@ -194,16 +194,18 @@ class Content extends React.Component {
 							<Switch>
 								<ProtectedRoute path="/dashboard/" title="Clinic Dashboard" component={DashboardV2} />
 
+							{/* <Route>	
 								<Redirect from="/" exact to="/dashboard/" />
+							</Route> */}
 
-								<Route
+								{/* <Route
 									path="/user/login"
 									title="Login"
 									render={(props) => {
 										if (this.state.user) return <Redirect to="/dashboard" />;
 										return <LoginV2 {...props} />;
 									}}
-								/>
+								/> */}
 
 								<Route path="/logout" title="Logout" component={Logout} />
 								<Route path="/register" title="Register" component={RegisterV3} />
@@ -231,7 +233,7 @@ class Content extends React.Component {
 								<Route path="/kanban/scrumboard" title="Scrumboard" component={Scrumboard} />
 
 								<Route path="/kanban/card" title="Card" component={Card} />								
-								<ProtectedRoute path="/kanban/cards" title="Cards" component={CardTable} />								
+								{/* <ProtectedRoute path="/kanban/cards" title="Cards" component={CardTable} />								 */}
 								<Route path="/kanban/listkanban" title="Listkanban" component={Listkanban} />																
 								<Route path="/kanban/kanban" title="Kanban" component={Kanban} />																
 								<Route path='/clinic/tickets' title="GridTicket" component={GridTicket}   /> 
