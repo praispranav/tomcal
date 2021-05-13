@@ -57,7 +57,7 @@ class Card extends Form {
 				narrative    : '',	  
 				category     : '',	  
 				businessName : '',
-				username     : '',		  
+				userID     : '',		  
 				priority     : '',
 				department   : '',
 				subDepartment: '',	  
@@ -153,7 +153,7 @@ class Card extends Form {
 	
 		  const { data: card } = await getCard(cardId);
 
-			 card.username = card.username;		  
+			 card.userID = card.userID;		  
 			 card.name = card.name;
 			 card.narrative = card.narrative;
 			 card.category = card.category;
@@ -186,7 +186,7 @@ class Card extends Form {
 
 schema = Joi.object({
 		name: Joi.string(),
-		username: Joi.string(),
+		userID: Joi.string(),
 		businessName: Joi.any().optional(),
 		narrative: Joi.string().optional(),
 		priority: Joi.string().optional(),
