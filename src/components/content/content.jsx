@@ -1,10 +1,10 @@
 import React from "react";
-import { Route, withRouter, Switch } from "react-router";
+import { Route, withRouter, Switch,Redirect } from "react-router-dom";
 //import routes from './../../config/page-route.jsx';
 import { PageSettings } from "./../../config/page-settings.js";
 import auth from "./../../services/authservice";
 import { getUser } from "./../../services/users";
-import { Redirect } from "react-router-dom";
+//import { Redirect } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import configureStore from "./../../store/configureStore";
