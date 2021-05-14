@@ -221,8 +221,8 @@ class Content extends React.Component {
 								<ProtectedRoute path="/clinic/doctors" title="Doctors" component={DoctorTable} />
 
 
-								<ProtectedRoute path="/clinic/doctors/:id" title="Doctor" component={Doctor} />
-								<ProtectedRoute path="/clinic/doctors" title="Doctors" component={DoctorTable} />								
+								<ProtectedRoute path="/salon/salons/:id" title="Salon" component={Salon} />
+								<ProtectedRoute path="/salon/salons" title="Salons" component={SalonTable} />								
 
 								
 								<Route path="/clinic/yourdrive/" title="Your Drive" component={YourDrive} />
