@@ -226,7 +226,7 @@ class Ticketprofile extends React.Component {
                             </Col>
                             <Col sm={3}>
                               <Input
-                                type="text"
+                                type="date"
                                 name="date"
                                 placeholder="Select End-Date for sharing"
                               />
