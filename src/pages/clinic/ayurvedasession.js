@@ -48,7 +48,6 @@ class AyurvedaSession extends Form {
 			profiles: [],
 			data: {
 				username: '',
-				password: '',
 				email: '',
 				firstName: '',
 				lastName: '',
@@ -244,7 +243,7 @@ class AyurvedaSession extends Form {
 			{ value: 'watery', label: 'Watery' },			
 		];
 
-		this.earOptions = [
+		this.earsOptions = [
 			{ value: 'normal', label: 'normal' },
 			{ value: 'earringing', label: 'ear ringing' },
 			{ value: 'poorhearing', label: 'poor hearing' },			
@@ -503,13 +502,13 @@ class AyurvedaSession extends Form {
 		this.onChangeImgHandler = this.onChangeImgHandler.bind(this);
 	}
 
-
 	async populateCountries() {
 		const { data: countries } = await http.get(apiUrl+"/countries");
 		this.setState({ countries: countries });
 		//this.selectCountries = this.state.countries.map((country)=>({label: country.name, value: country.name}) );
 		this.selectCountries = this.state.countries.map((country) => ({ _id: country._id,label: country.name, value: country.name }));
 	}
+	
 	async populateAccounType() {
 	const { data: profiles } = await http.get(apiUrl+"/profiles");
 	this.setState({ profiles });
@@ -679,8 +678,8 @@ class AyurvedaSession extends Form {
 		));
 	}
 	
-	async populateEarOptions(){
-		this.earoptions = this.earOptions.map(option => (
+	async populateEarsOptions(){
+		this.earsoptions = this.earsOptions.map(option => (
 			<option key={option.label} value={option.value}>
 				{option.value}
 			</option>
@@ -850,8 +849,8 @@ class AyurvedaSession extends Form {
 		await this.populateUrinationColorOptions();		
 		await this.populateSleepOptions();
 		await this.populateHeadOptions();		
-		await this.populateEyeOptions();		
-		await this.populateEarOptions();
+		await this.populateEyesOptions();		
+		await this.populateEarsOptions();
 		await this.populateNoseOptions();
 		await this.populateThroatOptions();
 		await this.populateMenstruationOptions();
@@ -993,18 +992,18 @@ schema = Joi.object({
 	}
 
 
-	doSubmit = async (user) => {
+	doSubmit = async (ayurvedasession) => {
 		//console.log('working');
 	    try{
 	
 			await saveUser(this.state.data,this.state.imageSrc);
 			//console.log(this.state.data);
-			this.props.history.push("/clinic/users");
+			this.props.history.push("/clinic/ayurvedasessions");
 		}catch(ex){
 			//if(ex.response && ex.response.status === 404){
 			if(ex.response){
 				const errors = {...this.state.errors};
-				errors.username = ex.response.data;
+				errors.ayurvedasessionname = ex.response.data;
 				this.setState({errors});
 				//console.log(this.state.errors);
 			}
@@ -1013,118 +1012,119 @@ schema = Joi.object({
 	};
 	
 	
-	mapToViewModel(user) {
+	mapToViewModel(ayurvedasession) {
 		return {
-		  _id: user._id,
-		  username: user.username,
-		  profile: user.profile,
-		  email: user.email,
-		  createdOn: new Date(user.date),
-		  firstName: user.firstName,
-		  lastName: user.firstName,
-		  initials: user.initials,
-		  prefix: user.prefix,
-		  country: user.country,
-		  appointmentType: user.appointmentType,
-		  sessionType: user.sessionType,
-		  chiefComplaint: user.chiefComplaint,
-		  symptoms: user.symptoms,
-		  WesternDisease: user.WesternDisease,
-		  currentTreatment: user.currentTreatment,
-		  diseasesIllnesses: user.diseasesIllnesses,
-		  surgeries: user.surgeries,
-		  medicamentsSupplements: user.medicamentsSupplements,
-		  allergies: user.allergies,
-		  pregnancies: user.pregnancies,
-		  familyRole: user.familyRole,
-		  familyDisease: user.familyDisease,
-		  familyDiseaseYear: user.familyDiseaseYear,
-		  familyDiseaseState: user.familyDiseaseState,
-		  medicalHistoryNote: user.medicalHistoryNote,
-		  socialRelationship: user.socialRelationship,
-		  habits: user.habits,
-		  occupation: user.occupation,
-		  occupationState: user.occupationState,
-		  sport: user.sport,
-		  sportFrequency: user.sportFrequency,
-		  hobbies: user.hobbies,
-		  smoking: user.smoking,
-		  sugar: user.sugar,
-		  alcohol: user.alcohol,
-		  tea: user.tea,
-		  coffee: user.coffee,
-		  heroin: user.heroin,
-		  vitality: user.vitality,
-		  appearance: user.appearance,
-		  appearanceNote: user.appearanceNote,
-		  faceColorLustre: user.faceColorLustre,
-		  tongueShape: user.tongueShape,
-		  tongueColor: user.tongueColor,
-		  tongueQuality: user.tongueQuality,
-		  tongueNote: user.tongueNote,
-		  respiration: user.respiration,
-		  speech: user.speech,
-		  cough: user.cough,
-		  odor: user.odor,
-		  appetite: user.appetite,
-		  appetiteNote: user.appetiteNote,
-		  vomiting: user.vomiting,
-		  vomitingNote: user.vomitingNote,
-		  diet: user.diet,
-		  dietNote: user.dietNote,		  
-		  taste: user.taste,
-		  thirst: user.thirst,		  
-		  defecation: user.defecation,
-		  urination: user.urination,		  
-		  urineColor: user.urineColor,		  
-		  sleeping: user.sleeping,
-		  thermalFeeling: user.thermalFeeling,		  
-		  perspiration: user.perspiration,		  
-		  head: user.head,
-		  eyes: user.eyes,
-		  ears: user.ears,
-		  nose: user.nose,
-		  throat: user.throat,		  
-		  painLocation: user.painLocation,		  
-		  painNature: user.painNature,
-		  menstruationHistory: user.menstruationHistory,
-		  leukorrhea: user.leukorrhea,		  
-		  emotionalStatus: user.emotionalStatus,		  
-		  emotionalNote: user.emotionalNote,		  
-		  interviewNote: user.interviewNote ,		  
-		  pulseSpeed: user.pulseSpeed,
-		  pulseDepth: user.pulseDepth,		  
-		  pulseStrength: user.pulseStrength,		  
-		  pulseShape: user.pulseShape,
-		  pulseTension: user.pulseTension,
-		  pulseRhythm: user.pulseRhythm,
-		  pulseNote: user.pulseNote,		  
-		  physicalAppearance: user.physicalAppearance,
-		  physicalPalpationEpigastrium: user.physicalPalpationEpigastrium,
-		  physicalPalpationEpigastriumNote: user.physicalPalpationEpigastriumNote,		  
-		  physicalPalpationAbdomen: user.physicalPalpationAbdomen,
-		  physicalPalpationAcupoint: user.physicalPalpationAcupoint,
-		  rangeMotion: user.rangeMotion,
-		  painLevel: user.painLevel,		  		  
-		  physicalExaminationNote: user.physicalExaminationNote,		  
-		  AyurvedaDiagnosis: user.AyurvedaDiagnosis,
-		  principleTreatment: user.principleTreatment,		  
-		  acuPoints: user.acuPoints,		  
-		  acuTreatmentNote: user.acuTreatmentNote,		  
-		  TDP: user.TDP,		  
-		  TDPNote: user.TDPNote,				  
-		  moxibustion: user.moxibustion,		  
-		  tuina: user.tuina,		  		  
-		  herbalFormula1: user.herbalFormula1,		  
-		  materiaMedica1: user.materiaMedica1,
-		  mmDosage1: user.mmDosage1,
-		  mmUnit1: user.mmUnit1,
-		  herbalFormula2: user.herbalFormula2,		  
-		  materiaMedica2: user.materiaMedica2,
-		  mmDosage2: user.mmDosage2,
-		  mmUnit2: user.mmUnit2,		  
-		  dietTherapy: user.dietTherapy,		  
-		  recommendation: user.recommendation,		  		  
+		  _id: ayurvedasession._id,
+		  profile: ayurvedasession.profile,
+		  email: ayurvedasession.email,
+		  firstName: ayurvedasession.firstName,
+		  lastName: ayurvedasession.firstName,
+		  initials: ayurvedasession.initials,
+		  prefix: ayurvedasession.prefix,
+		  country: ayurvedasession.country,
+		  appointmentType: ayurvedasession.appointmentType,
+		  sessionType: ayurvedasession.sessionType,
+		  chiefComplaint: ayurvedasession.chiefComplaint,
+		  symptoms: ayurvedasession.symptoms,
+		  WesternDisease: ayurvedasession.WesternDisease,
+		  currentTreatment: ayurvedasession.currentTreatment,
+		  diseasesIllnesses: ayurvedasession.diseasesIllnesses,
+		  surgeries: ayurvedasession.surgeries,
+		  medicamentsSupplements: ayurvedasession.medicamentsSupplements,
+		  allergies: ayurvedasession.allergies,
+		  pregnancies: ayurvedasession.pregnancies,
+		  familyRole: ayurvedasession.familyRole,
+		  familyDisease: ayurvedasession.familyDisease,
+		  familyDiseaseYear: ayurvedasession.familyDiseaseYear,
+		  familyDiseaseState: ayurvedasession.familyDiseaseState,
+		  medicalHistoryNote: ayurvedasession.medicalHistoryNote,
+		  socialRelationship: ayurvedasession.socialRelationship,
+		  habits: ayurvedasession.habits,
+		  occupation: ayurvedasession.occupation,
+		  occupationState: ayurvedasession.occupationState,
+		  sport: ayurvedasession.sport,
+		  sportFrequency: ayurvedasession.sportFrequency,
+		  hobbies: ayurvedasession.hobbies,
+		  smoking: ayurvedasession.smoking,
+		  sugar: ayurvedasession.sugar,
+		  alcohol: ayurvedasession.alcohol,
+		  tea: ayurvedasession.tea,
+		  coffee: ayurvedasession.coffee,
+		  heroin: ayurvedasession.heroin,
+		  weight: physicalcondition.weight,
+		  height: physicalcondition.height,
+		  vitality: ayurvedasession.vitality,
+		  appearance: ayurvedasession.appearance,
+		  appearanceNote: ayurvedasession.appearanceNote,
+		  faceColorLustre: ayurvedasession.faceColorLustre,
+		  tongueShape: ayurvedasession.tongueShape,
+		  tongueColor: ayurvedasession.tongueColor,
+		  tongueQuality: ayurvedasession.tongueQuality,
+		  tongueNote: ayurvedasession.tongueNote,
+		  respiration: ayurvedasession.respiration,
+		  speech: ayurvedasession.speech,
+		  cough: ayurvedasession.cough,
+		  odor: ayurvedasession.odor,
+		  appetite: ayurvedasession.appetite,
+		  appetiteNote: ayurvedasession.appetiteNote,
+		  vomiting: ayurvedasession.vomiting,
+		  vomitingNote: ayurvedasession.vomitingNote,
+		  diet: ayurvedasession.diet,
+		  dietNote: ayurvedasession.dietNote,		  
+		  taste: ayurvedasession.taste,
+		  thirst: ayurvedasession.thirst,		  
+		  defecation: ayurvedasession.defecation,
+		  urination: ayurvedasession.urination,		  
+		  urineColor: ayurvedasession.urineColor,		  
+		  sleeping: ayurvedasession.sleeping,
+		  thermalFeeling: ayurvedasession.thermalFeeling,		  
+		  perspiration: ayurvedasession.perspiration,		  
+		  head: ayurvedasession.head,
+		  eyes: ayurvedasession.eyes,
+		  ears: ayurvedasession.ears,
+		  nose: ayurvedasession.nose,
+		  throat: ayurvedasession.throat,		  
+		  painLocation: ayurvedasession.painLocation,		  
+		  painNature: ayurvedasession.painNature,
+		  menstruationHistory: ayurvedasession.menstruationHistory,
+		  leukorrhea: ayurvedasession.leukorrhea,		  
+		  emotionalStatus: ayurvedasession.emotionalStatus,		  
+		  emotionalNote: ayurvedasession.emotionalNote,		  
+		  interviewNote: ayurvedasession.interviewNote ,		  
+		  pulseSpeed: ayurvedasession.pulseSpeed,
+		  pulseDepth: ayurvedasession.pulseDepth,		  
+		  pulseStrength: ayurvedasession.pulseStrength,		  
+		  pulseShape: ayurvedasession.pulseShape,
+		  pulseTension: ayurvedasession.pulseTension,
+		  pulseRhythm: ayurvedasession.pulseRhythm,
+		  pulseNote: ayurvedasession.pulseNote,		  
+		  physicalAppearance: ayurvedasession.physicalAppearance,
+		  physicalPalpationEpigastrium: ayurvedasession.physicalPalpationEpigastrium,
+		  physicalPalpationEpigastriumNote: ayurvedasession.physicalPalpationEpigastriumNote,		  
+		  physicalPalpationAbdomen: ayurvedasession.physicalPalpationAbdomen,
+		  physicalPalpationAcupoint: ayurvedasession.physicalPalpationAcupoint,
+		  rangeMotion: ayurvedasession.rangeMotion,
+		  painLevel: ayurvedasession.painLevel,		  		  
+		  physicalExaminationNote: ayurvedasession.physicalExaminationNote,		  
+		  AyurvedaDiagnosis: ayurvedasession.AyurvedaDiagnosis,
+		  principleTreatment: ayurvedasession.principleTreatment,		  
+		  acuPoints: ayurvedasession.acuPoints,		  
+		  acuTreatmentNote: ayurvedasession.acuTreatmentNote,		  
+		  TDP: ayurvedasession.TDP,		  
+		  TDPNote: ayurvedasession.TDPNote,				  
+		  moxibustion: ayurvedasession.moxibustion,		  
+		  tuina: ayurvedasession.tuina,		  		  
+		  herbalFormula1: ayurvedasession.herbalFormula1,		  
+		  materiaMedica1: ayurvedasession.materiaMedica1,
+		  mmDosage1: ayurvedasession.mmDosage1,
+		  mmUnit1: ayurvedasession.mmUnit1,
+		  herbalFormula2: ayurvedasession.herbalFormula2,		  
+		  materiaMedica2: ayurvedasession.materiaMedica2,
+		  mmDosage2: ayurvedasession.mmDosage2,
+		  mmUnit2: ayurvedasession.mmUnit2,		  
+		  dietTherapy: ayurvedasession.dietTherapy,		  
+		  recommendation: ayurvedasession.recommendation,		  		  
+		  createdOn: new Date(ayurvedasession.date),		  
 		};
 	  }
 
@@ -1152,26 +1152,501 @@ schema = Joi.object({
 									<form className="form-horizontal form-bordered" onSubmit={this.handleSubmit} >
 
 										<div className="form-group row">
-											<label className="col-lg-4 col-form-label" htmlFor="profile" >Select Account-type</label>
+											<label className="col-lg-4 col-form-label" htmlFor="familyRole" >Family Role</label>
 											<div className="col-lg-8">
-												<select name="profile" id="profile" value={data.profile} onChange={this.handleChange} className="form-control" >
-													<option value="">Select Account-type</option>
-													{this.selectProfiles}
+												<select name="familyRole" id="familyRole" value={data.familyRole} onChange={this.handleChange} className="form-control" >
+													<option value="">Select Family-Role</option>
+													{this.familyRoleoptions}
 												</select>
 											</div>
-											{errors.profile && (<div className="alert alert-danger">{errors.profile}</div>)}
+											{errors.familyRole && (<div className="alert alert-danger">{errors.familyRole}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="familyDiseaseStatus" >Family Disease Status</label>
+											<div className="col-lg-8">
+												<select name="familyDiseaseStatus" id="familyDiseaseStatus" value={data.familyDiseaseStatus} onChange={this.handleChange} className="form-control" >
+													<option value="">Select FamilyDiseaseStatus</option>
+													{this.familyDiseaseStatusoptions}
+												</select>
+											</div>
+											{errors.familyDiseaseStatus && (<div className="alert alert-danger">{errors.familyDiseaseStatus}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="currentTreatment" >Current Treatment</label>
+											<div className="col-lg-8">
+												<select name="currentTreatment" id="currentTreatment" value={data.currentTreatment} onChange={this.handleChange} className="form-control" >
+													<option value="">Select CurrentTreatment</option>
+													{this.currentTreatmentoptions}
+												</select>
+											</div>
+											{errors.currentTreatment && (<div className="alert alert-danger">{errors.currentTreatment}</div>)}
 										</div>
 
 
 										<div className="form-group row">
-											<label className="col-lg-4 col-form-label" htmlFor="prefix" >Select Prefix</label>
+											<label className="col-lg-4 col-form-label" htmlFor="socialRelationship" >Social Relationship</label>
 											<div className="col-lg-8">
-												<select name="prefix" id="prefix" value={data.prefix} onChange={this.handleChange} className="form-control" >
-													<option value="">Select Prefix</option>
-													{this.prefixoptions}
+												<select name="socialRelationship" id="socialRelationship" value={data.socialRelationship} onChange={this.handleChange} className="form-control" >
+													<option value="">Select Social Relationship</option>
+													{this.socialRelationshipoptions}
 												</select>
 											</div>
-											{errors.prefix && (<div className="alert alert-danger">{errors.prefix}</div>)}
+											{errors.socialRelationship && (<div className="alert alert-danger">{errors.socialRelationship}</div>)}
+										</div>
+
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="employmentStatus" >Employment Status</label>
+											<div className="col-lg-8">
+												<select name="employmentStatus" id="employmentStatus" value={data.employmentStatus} onChange={this.handleChange} className="form-control" >
+													<option value="">Select EmploymentStatus</option>
+													{this.employmentStatusoptions}
+												</select>
+											</div>
+											{errors.employmentStatus && (<div className="alert alert-danger">{errors.employmentStatus}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="thermalFeeling" >ThermalFeeling</label>
+											<div className="col-lg-8">
+												<select name="thermalFeeling" id="thermalFeeling" value={data.thermalFeeling} onChange={this.handleChange} className="form-control" >
+													<option value="">Select ThermalFeeling</option>
+													{this.thermalFeelingoptions}
+												</select>
+											</div>
+											{errors.thermalFeeling && (<div className="alert alert-danger">{errors.thermalFeeling}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="perspiration" >perspiration</label>
+											<div className="col-lg-8">
+												<select name="perspiration" id="perspiration" value={data.perspiration} onChange={this.handleChange} className="form-control" >
+													<option value="">Select perspiration</option>
+													{this.perspirationoptions}
+												</select>
+											</div>
+											{errors.perspiration && (<div className="alert alert-danger">{errors.perspiration}</div>)}
+										</div>
+
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="appetite" >appetite</label>
+											<div className="col-lg-8">
+												<select name="appetite" id="appetite" value={data.appetite} onChange={this.handleChange} className="form-control" >
+													<option value="">Select Appetite</option>
+													{this.appetiteoptions}
+												</select>
+											</div>
+											{errors.appetite && (<div className="alert alert-danger">{errors.appetite}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="vomitting" >vomitting</label>
+											<div className="col-lg-8">
+												<select name="vomitting" id="vomitting" value={data.vomitting} onChange={this.handleChange} className="form-control" >
+													<option value="">Select vomitting</option>
+													{this.vomittingoptions}
+												</select>
+											</div>
+											{errors.vomitting && (<div className="alert alert-danger">{errors.vomitting}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="diet" >Diet</label>
+											<div className="col-lg-8">
+												<select name="diet" id="diet" value={data.diet} onChange={this.handleChange} className="form-control" >
+													<option value="">Select Diet</option>
+													{this.dietoptions}
+												</select>
+											</div>
+											{errors.diet && (<div className="alert alert-danger">{errors.diet}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="taste" >Current Taste</label>
+											<div className="col-lg-8">
+												<select name="taste" id="taste" value={data.taste} onChange={this.handleChange} className="form-control" >
+													<option value="">Select Taste</option>
+													{this.tasteoptions}
+												</select>
+											</div>
+											{errors.taste && (<div className="alert alert-danger">{errors.taste}</div>)}
+										</div>
+
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="thirst" >thirst</label>
+											<div className="col-lg-8">
+												<select name="thirst" id="thirst" value={data.thirst} onChange={this.handleChange} className="form-control" >
+													<option value="">Select Thirst</option>
+													{this.thirstoptions}
+												</select>
+											</div>
+											{errors.thirst && (<div className="alert alert-danger">{errors.thirst}</div>)}
+										</div>
+
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="defecation" >defecation</label>
+											<div className="col-lg-8">
+												<select name="defecation" id="defecation" value={data.profile} onChange={this.handleChange} className="form-control" >
+													<option value="">Select defecation</option>
+													{this.defecationoptions}
+												</select>
+											</div>
+											{errors.defecation && (<div className="alert alert-danger">{errors.defecation}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="urination" >urination</label>
+											<div className="col-lg-8">
+												<select name="urination" id="urination" value={data.urination} onChange={this.handleChange} className="form-control" >
+													<option value="">Select urination</option>
+													{this.urinationoptions}
+												</select>
+											</div>
+											{errors.urination && (<div className="alert alert-danger">{errors.urination}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="urinationColor" >urinationColor</label>
+											<div className="col-lg-8">
+												<select name="urinationColor" id="urinationColor" value={data.urinationColor} onChange={this.handleChange} className="form-control" >
+													<option value="">Select urinationColor</option>
+													{this.urinationColoroptions}
+												</select>
+											</div>
+											{errors.urinationColor && (<div className="alert alert-danger">{errors.urinationColor}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="sleep" >Sleep</label>
+											<div className="col-lg-8">
+												<select name="sleep" id="sleep" value={data.sleep} onChange={this.handleChange} className="form-control" >
+													<option value="">Select Sleep</option>
+													{this.sleepoptions}
+												</select>
+											</div>
+											{errors.sleep && (<div className="alert alert-danger">{errors.sleep}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="head" >Family Role</label>
+											<div className="col-lg-8">
+												<select name="head" id="head" value={data.head} onChange={this.handleChange} className="form-control" >
+													<option value="">SelectHead</option>
+													{this.headoptions}
+												</select>
+											</div>
+											{errors.head && (<div className="alert alert-danger">{errors.head}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="eyes" >Family Disease Status</label>
+											<div className="col-lg-8">
+												<select name="eyes" id="eyes" value={data.eyes} onChange={this.handleChange} className="form-control" >
+													<option value="">Select Eyes</option>
+													{this.eyesoptions}
+												</select>
+											</div>
+											{errors.eyes && (<div className="alert alert-danger">{errors.eyes}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="ears" >Current Treatment</label>
+											<div className="col-lg-8">
+												<select name="ears" id="ears" value={data.ears} onChange={this.handleChange} className="form-control" >
+													<option value="">Select Ears</option>
+													{this.earsoptions}
+												</select>
+											</div>
+											{errors.ears && (<div className="alert alert-danger">{errors.ears}</div>)}
+										</div>
+
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="nose" >Social Relationship</label>
+											<div className="col-lg-8">
+												<select name="nose" id="nose" value={data.nose} onChange={this.handleChange} className="form-control" >
+													<option value="">Select Nose</option>
+													{this.noseoptions}
+												</select>
+											</div>
+											{errors.nose && (<div className="alert alert-danger">{errors.nose}</div>)}
+										</div>
+
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="throat" >Employment Status</label>
+											<div className="col-lg-8">
+												<select name="throat" id="throat" value={data.throat} onChange={this.handleChange} className="form-control" >
+													<option value="">Select Throat</option>
+													{this.throatoptions}
+												</select>
+											</div>
+											{errors.throat && (<div className="alert alert-danger">{errors.throat}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="menstruation" >ThermalFeeling</label>
+											<div className="col-lg-8">
+												<select name="menstruation" id="menstruation" value={data.menstruation} onChange={this.handleChange} className="form-control" >
+													<option value="">Select menstruation</option>
+													{this.menstruationoptions}
+												</select>
+											</div>
+											{errors.menstruation && (<div className="alert alert-danger">{errors.menstruation}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="leukorrhea" >leukorrhea</label>
+											<div className="col-lg-8">
+												<select name="leukorrhea" id="leukorrhea" value={data.leukorrhea} onChange={this.handleChange} className="form-control" >
+													<option value="">Select leukorrhea</option>
+													{this.leukorrheaoptions}
+												</select>
+											</div>
+											{errors.leukorrhea && (<div className="alert alert-danger">{errors.leukorrhea}</div>)}
+										</div>
+
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="naturePain" >naturePain</label>
+											<div className="col-lg-8">
+												<select name="naturePain" id="naturePain" value={data.naturePain} onChange={this.handleChange} className="form-control" >
+													<option value="">Select Nature of Pain</option>
+													{this.naturePainoptions}
+												</select>
+											</div>
+											{errors.naturePain && (<div className="alert alert-danger">{errors.naturePain}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="emotionalStatus" >emotionalStatus</label>
+											<div className="col-lg-8">
+												<select name="emotionalStatus" id="emotionalStatus" value={data.emotionalStatus} onChange={this.handleChange} className="form-control" >
+													<option value="">Select Emotional Status</option>
+													{this.emotionalStatusoptions}
+												</select>
+											</div>
+											{errors.emotionalStatus && (<div className="alert alert-danger">{errors.emotionalStatus}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="respiration" >Diet</label>
+											<div className="col-lg-8">
+												<select name="respiration" id="respiration" value={data.respiration} onChange={this.handleChange} className="form-control" >
+													<option value="">Select Respiration</option>
+													{this.respirationoptions}
+												</select>
+											</div>
+											{errors.respiration && (<div className="alert alert-danger">{errors.respiration}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="speech" >Current Taste</label>
+											<div className="col-lg-8">
+												<select name="speech" id="speech" value={data.speech} onChange={this.handleChange} className="form-control" >
+													<option value="">Select Speech</option>
+													{this.speechoptions}
+												</select>
+											</div>
+											{errors.speech && (<div className="alert alert-danger">{errors.speech}</div>)}
+										</div>
+
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="cough" >cough</label>
+											<div className="col-lg-8">
+												<select name="cough" id="cough" value={data.cough} onChange={this.handleChange} className="form-control" >
+													<option value="">Select Cough</option>
+													{this.coughoptions}
+												</select>
+											</div>
+											{errors.cough && (<div className="alert alert-danger">{errors.cough}</div>)}
+										</div>
+
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="odor" >odor</label>
+											<div className="col-lg-8">
+												<select name="odor" id="odor" value={data.profile} onChange={this.handleChange} className="form-control" >
+													<option value="">Select odor</option>
+													{this.odoroptions}
+												</select>
+											</div>
+											{errors.odor && (<div className="alert alert-danger">{errors.odor}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="vitality" >vitality</label>
+											<div className="col-lg-8">
+												<select name="vitality" id="vitality" value={data.vitality} onChange={this.handleChange} className="form-control" >
+													<option value="">Select Vitality</option>
+													{this.vitalityoptions}
+												</select>
+											</div>
+											{errors.vitality && (<div className="alert alert-danger">{errors.vitality}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="appearance" >appearance</label>
+											<div className="col-lg-8">
+												<select name="appearance" id="appearance" value={data.appearance} onChange={this.handleChange} className="form-control" >
+													<option value="">Select appearance</option>
+													{this.appearanceoptions}
+												</select>
+											</div>
+											{errors.appearance && (<div className="alert alert-danger">{errors.appearance}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="colorLustreFace" >Sleep</label>
+											<div className="col-lg-8">
+												<select name="colorLustreFace" id="colorLustreFace" value={data.colorLustreFace} onChange={this.handleChange} className="form-control" >
+													<option value="">Select Sleep</option>
+													{this.colorLustreFaceoptions}
+												</select>
+											</div>
+											{errors.colorLustreFace && (<div className="alert alert-danger">{errors.colorLustreFace}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="tongueShape" >Tongue Shape</label>
+											<div className="col-lg-8">
+												<select name="tongueShape" id="tongueShape" value={data.tongueShape} onChange={this.handleChange} className="form-control" >
+													<option value="">Select Tongue-Shape</option>
+													{this.tongueShapeoptions}
+												</select>
+											</div>
+											{errors.tongueShape && (<div className="alert alert-danger">{errors.tongueShape}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="tongueColor" >Tongue Color</label>
+											<div className="col-lg-8">
+												<select name="tongueColor" id="tongueColor" value={data.tongueColor} onChange={this.handleChange} className="form-control" >
+													<option value="">Select tongueColor</option>
+													{this.tongueColoroptions}
+												</select>
+											</div>
+											{errors.tongueColor && (<div className="alert alert-danger">{errors.tongueColor}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="tongueQuality" >tongueQuality</label>
+											<div className="col-lg-8">
+												<select name="tongueQuality" id="tongueQuality" value={data.tongueQuality} onChange={this.handleChange} className="form-control" >
+													<option value="">Select tongueQuality</option>
+													{this.tongueQualityoptions}
+												</select>
+											</div>
+											{errors.tongueQuality && (<div className="alert alert-danger">{errors.tongueQuality}</div>)}
+										</div>
+
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="pulseQuality" >pulseQuality</label>
+											<div className="col-lg-8">
+												<select name="pulseQuality" id="pulseQuality" value={data.pulseQuality} onChange={this.handleChange} className="form-control" >
+													<option value="">Select pulseQuality</option>
+													{this.pulseQualityoptions}
+												</select>
+											</div>
+											{errors.pulseQuality && (<div className="alert alert-danger">{errors.pulseQuality}</div>)}
+										</div>
+
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="pulseDepth" >pulseDepth</label>
+											<div className="col-lg-8">
+												<select name="pulseDepth" id="pulseDepth" value={data.pulseDepth} onChange={this.handleChange} className="form-control" >
+													<option value="">Select pulseDepth</option>
+													{this.pulseDepthoptions}
+												</select>
+											</div>
+											{errors.pulseDepth && (<div className="alert alert-danger">{errors.pulseDepth}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="pulseStrength" >pulseStrength</label>
+											<div className="col-lg-8">
+												<select name="pulseStrength" id="pulseStrength" value={data.pulseStrength} onChange={this.handleChange} className="form-control" >
+													<option value="">Select pulseStrength</option>
+													{this.pulseStrengthoptions}
+												</select>
+											</div>
+											{errors.pulseStrength && (<div className="alert alert-danger">{errors.pulseStrength}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="pulseTension" >pulseTension</label>
+											<div className="col-lg-8">
+												<select name="pulseTension" id="pulseTension" value={data.pulseTension} onChange={this.handleChange} className="form-control" >
+													<option value="">Select pulseTension</option>
+													{this.pulseTensionoptions}
+												</select>
+											</div>
+											{errors.pulseTension && (<div className="alert alert-danger">{errors.pulseTension}</div>)}
+										</div>
+
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="pulseRhythm" >pulseRhythm</label>
+											<div className="col-lg-8">
+												<select name="pulseRhythm" id="pulseRhythm" value={data.pulseRhythm} onChange={this.handleChange} className="form-control" >
+													<option value="">Select pulseRhythm</option>
+													{this.pulseRhythmoptions}
+												</select>
+											</div>
+											{errors.pulseRhythm && (<div className="alert alert-danger">{errors.pulseRhythm}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="physicalAppearanceQuality" >physicalAppearanceQuality</label>
+											<div className="col-lg-8">
+												<select name="physicalAppearanceQuality" id="physicalAppearanceQuality" value={data.physicalAppearanceQuality} onChange={this.handleChange} className="form-control" >
+													<option value="">Select physicalAppearanceQuality</option>
+													{this.physicalAppearanceQualityoptions}
+												</select>
+											</div>
+											{errors.physicalAppearanceQuality && (<div className="alert alert-danger">{errors.physicalAppearanceQuality}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="palpationEpigastrium" >palpationEpigastriume</label>
+											<div className="col-lg-8">
+												<select name="palpationEpigastrium" id="palpationEpigastrium" value={data.palpationEpigastrium} onChange={this.handleChange} className="form-control" >
+													<option value="">Select palpationEpigastrium</option>
+													{this.palpationEpigastriumoptions}
+												</select>
+											</div>
+											{errors.palpationEpigastrium && (<div className="alert alert-danger">{errors.palpationEpigastrium}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="palpationAbdomen" >Current palpationAbdomen</label>
+											<div className="col-lg-8">
+												<select name="palpationAbdomen" id="palpationAbdomen" value={data.palpationAbdomen} onChange={this.handleChange} className="form-control" >
+													<option value="">Select palpationAbdomen</option>
+													{this.palpationAbdomenoptions}
+												</select>
+											</div>
+											{errors.palpationAbdomen && (<div className="alert alert-danger">{errors.palpationAbdomen}</div>)}
+										</div>
+
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="rangeMotion" >rangeMotion</label>
+											<div className="col-lg-8">
+												<select name="rangeMotion" id="rangeMotion" value={data.rangeMotion} onChange={this.handleChange} className="form-control" >
+													<option value="">Select rangeMotion</option>
+													{this.rangeMotionoptions}
+												</select>
+											</div>
+											{errors.rangeMotion && (<div className="alert alert-danger">{errors.rangeMotion}</div>)}
 										</div>
 
 										{this.renderInput(
@@ -1207,18 +1682,18 @@ schema = Joi.object({
 
 
 										<div className="form-group row">
-											<label className="col-lg-4 col-form-label" htmlFor="username">UserName</label>
+											<label className="col-lg-4 col-form-label" htmlFor="ayurvedasessionname">UserName</label>
 											<div className="col-lg-8">
 												<div className="row row-space-10">
-													<input type="text" id="username" name="username"
-														value={data.username}
+													<input type="text" id="ayurvedasessionname" name="ayurvedasessionname"
+														value={data.ayurvedasessionname}
 														className="form-control m-b-5"
-														placeholder="Enter username"
+														placeholder="Enter ayurvedasessionname"
 														onChange={this.handleChange}
 														autoFocus />
-													{errors.username && (
+													{errors.ayurvedasessionname && (
 														<div className="alert alert-danger">
-															{errors.username}
+															{errors.ayurvedasessionname}
 														</div>
 													)}
 												</div>

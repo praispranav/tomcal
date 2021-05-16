@@ -122,16 +122,15 @@ import KanbansDataTable from "./../../pages/kanban/kanbans.js";
 //import ServiceTable from './../../pages/accounting/services.js';
 
 import Card from './../../pages/kanban/card.js';
-//import CardTable from './../../pages/kanban/cards.js';
+import CardTable from './../../pages/kanban/cards.js';
 import Listkanban from './../../pages/kanban/listkanban.js';
-//import ListkanbanTable from './../../pages/kanban/listkanbans.js';
+import ListkanbanTable from './../../pages/kanban/listkanbans.js';
 import Kanban from './../../pages/kanban/kanban.js';
-//import KanbanTable from './../../pages/kanban/kanbans.js';
+import KanbanTable from './../../pages/kanban/kanbans.js';
 import Scrumboard from './../../pages/kanban/scrumboard.js';
 
 import FormPlugins from "./../../pages/form/form-plugins";
 import Logout from "./../../common/logout";
-
 
 import ticketProfile from "./../../pages/ticket/ticketprofile";
 
@@ -194,24 +193,23 @@ class Content extends React.Component {
 							<Switch>
 								<ProtectedRoute path="/dashboard/" title="Clinic Dashboard" component={DashboardV2} />
 
-							<Route>	
-								<Redirect from="/" exact to="/dashboard/" />
+							<Route path="/" exact>	
+								<Redirect to="/dashboard/" />
 							</Route> 
 
-								{/* <Route
+							<Route
 									path="/user/login"
 									title="Login"
 									render={(props) => {
 										if (this.state.user) return <Redirect to="/dashboard" />;
 										return <LoginV2 {...props} />;
 									}}
-								/> */}
-
+								/> 
 								<Route path="/logout" title="Logout" component={Logout} />
 								<Route path="/register" title="Register" component={RegisterV3} />
 								<ProtectedRoute path="/clinic/users/:id" title="User" component={User} />
+								<ProtectedRoute path="/clinic/users" title="Users" component={UserTable} />								
 								<ProtectedRoute path="/clinic/tickets/:id" title="Ticket" component={Ticket} />
-								<ProtectedRoute path="/clinic/users" title="Users" component={UserTable} />
 								<ProtectedRoute path="/clinic/tickets" title="Tickets" component={TicketsTable} />
 								<ProtectedRoute path="/clinic/clinicsolos/:id" title="ClinicSolo" component={ClinicSolo} />
 								<ProtectedRoute path="/clinic/clinicsolos" title="ClinicSolos" component={ClinicSoloTable} />
@@ -220,10 +218,8 @@ class Content extends React.Component {
 								<ProtectedRoute path="/clinic/doctors/:id" title="Doctor" component={Doctor} />
 								<ProtectedRoute path="/clinic/doctors" title="Doctors" component={DoctorTable} />
 
-
 								<ProtectedRoute path="/salon/salons/:id" title="Salon" component={Salon} />
 								<ProtectedRoute path="/salon/salons" title="Salons" component={SalonTable} />								
-
 								
 								<Route path="/clinic/yourdrive/" title="Your Drive" component={YourDrive} />
 								<Route path="/calendar" title="Calendar" component={Calendar} />
@@ -233,43 +229,22 @@ class Content extends React.Component {
 								<Route path="/kanban/scrumboard" title="Scrumboard" component={Scrumboard} />
 
 								<Route path="/kanban/card" title="Card" component={Card} />								
-								{/* <ProtectedRoute path="/kanban/cards" title="Cards" component={CardTable} />								 */}
+								<ProtectedRoute path="/kanban/cards" title="Cards" component={CardTable} />							 
 								<Route path="/kanban/listkanban" title="Listkanban" component={Listkanban} />																
+								<ProtectedRoute path="/kanban/listkanbans" title="Listkanbans" component={ListkanbanTable} />																								
 								<Route path="/kanban/kanban" title="Kanban" component={Kanban} />																
+								<ProtectedRoute path="/kanban/kanbans" title="Kanbans" component={KanbanTable} />																
 								<Route path='/clinic/tickets' title="GridTicket" component={GridTicket}   /> 
 
-								<ProtectedRoute
-									path="/clinic/reqforappointments/:id"
-									title="ReqForAppointment"
-									component={reqForAppointment}
-								/>
+								<ProtectedRoute path="/clinic/reqforappointments/:id" title="ReqForAppointment" component={reqForAppointment}/>
 
-								<ProtectedRoute
-									path="/clinic/reqforappointments"
-									title="ReqForAppointments"
-									component={reqforappointmentTable}
-								/>
+								<ProtectedRoute path="/clinic/reqforappointments" title="ReqForAppointments" component={reqforappointmentTable}	/>
 
-                                <ProtectedRoute
-									path="/clinic/appointments/:id"
-									title="Appointment"
-									component={Appointment}
-								/>
+                                <ProtectedRoute	path="/clinic/appointments/:id"	title="Appointment"	component={Appointment} />
 
-								<ProtectedRoute
-									path="/clinic/appointments"
-									title="ReqForAppointments"
-									component={AppointmentTable}
-								/>
+								<ProtectedRoute	path="/clinic/appointments"	title="ReqForAppointments" component={AppointmentTable}/>
 
-
-                                <ProtectedRoute
-									path="/ticket/ticketprofile"
-									title="ticketProfile"
-									component={ticketProfile}
-								/>
-
-
+                                <ProtectedRoute	path="/ticket/ticketprofile" title="ticketProfile" component={ticketProfile}/>
 								<ProtectedRoute path="/clinic/grid-tickets" title="grid-tickets" component={GridTicket} />
 
 								<Route path="/email/inbox" title="Email Inbox" component={EmailInbox} />

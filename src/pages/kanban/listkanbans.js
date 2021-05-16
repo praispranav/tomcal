@@ -8,7 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 //import FloatSubMenu from './../../components/float-sub-menu/float-sub-menu';
 import Pagination from '../../common/pagination';
 import {paginate} from '../../utils/paginate';
-import ListkanbansTable from '../../components/listkanbansTable.jsx';
+import ListkanbanTable from '../../components/listkanbansTable.jsx';
 import SearchBox from './../../common/searchBox';
 import _ from "lodash";
 import http from "./../../services/httpService";
@@ -172,7 +172,7 @@ class ListkanbansTable extends Component {
 				   <SearchBox value={searchQuery} onChange={this.handleSearch} />           
 						<p className="page-header float-xl-left" style={{marginBottom:5},{marginLeft:20},{marginTop:5}}>{count} entries</p> 
 
-						   <ListkanbansTable listkanbans={listkanbans} 
+						   <ListkanbanTable listkanbans={listkanbans} 
 						   onDelete={this.handleDelete}
 						   onSort={this.handleSort}
 						   sortColumn={sortColumn}
@@ -212,4 +212,4 @@ const iconStyles = {
 	marginRight: "0rem",
 };
 
-export default ListkanbansTable
+export default ListkanbanTable

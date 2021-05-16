@@ -2,13 +2,12 @@ import React,{Component} from 'react';
 import { Link } from 'react-router-dom';
 import { Panel, PanelHeader, PanelBody } from './../../components/panel/panel.jsx';
 import { UncontrolledButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-import axios from 'axios';
 import {getCards} from './../../services/cards';
 import 'bootstrap/dist/css/bootstrap.min.css';
 //import FloatSubMenu from './../../components/float-sub-menu/float-sub-menu';
 import Pagination from '../../common/pagination';
 import {paginate} from '../../utils/paginate';
-import CardsTable from '../../components/cardsTable.jsx';
+import CardTable from '../../components/cardsTable.jsx';
 import SearchBox from './../../common/searchBox';
 import _ from "lodash";
 import http from "./../../services/httpService";
@@ -42,7 +41,6 @@ class CardsTable extends Component {
     }
 
   async componentDidMount(){
-      //const {data:cards} = await axios.get("http://localhost:4500/api/cards");
       const data = await getCards();
       console.log(data.data);
       this.setState({cards:data.data});
@@ -101,7 +99,7 @@ class CardsTable extends Component {
 			<ol className="breadcrumb float-xl-right">
 				<li className="breadcrumb-item"><Link to="/">Home</Link></li>
 				<li className="breadcrumb-item"><Link to="kanbans/">Kanbans</Link></li>
-				<li className="breadcrumb-item active">Liskanbans</li>
+				<li className="breadcrumb-item active">Listkanbans</li>
 			</ol>
 			<h1 className="page-header">Cards </h1>
 			<Panel>
@@ -172,7 +170,7 @@ class CardsTable extends Component {
 				   <SearchBox value={searchQuery} onChange={this.handleSearch} />           
 						<p className="page-header float-xl-left" style={{marginBottom:5},{marginLeft:20},{marginTop:5}}>{count} entries</p> 
 
-						   <CardsTable cards={cards} 
+						   <CardTable cards={cards} 
 						   onDelete={this.handleDelete}
 						   onSort={this.handleSort}
 						   sortColumn={sortColumn}

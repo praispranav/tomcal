@@ -251,7 +251,7 @@ class HomeopathySession extends Form {
 			{ value: 'watery', label: 'Watery' },			
 		];
 
-		this.earOptions = [
+		this.earsOptions = [
 			{ value: 'normal', label: 'normal' },
 			{ value: 'earringing', label: 'ear ringing' },
 			{ value: 'poorhearing', label: 'poor hearing' },			
@@ -650,8 +650,8 @@ class HomeopathySession extends Form {
 		));
 	}
 	
-	async populateEarOptions(){
-		this.earoptions = this.earOptions.map(option => (
+	async populateEarsOptions(){
+		this.earsoptions = this.earsOptions.map(option => (
 			<option key={option.label} value={option.value}>
 				{option.value}
 			</option>
@@ -761,8 +761,6 @@ class HomeopathySession extends Form {
 	}
 
 
-
-	
 	}
 
 	async populateUser() { 
@@ -810,8 +808,8 @@ class HomeopathySession extends Form {
 		await this.populateUrinationColorOptions();		
 		await this.populateSleepOptions();
 		await this.populateHeadOptions();		
-		await this.populateEyeOptions();		
-		await this.populateEarOptions();
+		await this.populateEyesOptions();		
+		await this.populateEarsOptions();
 		await this.populateNoseOptions();
 		await this.populateThroatOptions();
 		await this.populateMenstruationOptions();
@@ -1000,6 +998,8 @@ schema = Joi.object({
 		  tea: homeopathysession.tea,
 		  coffee: homeopathysession.coffee,
 		  heroin: homeopathysession.heroin,
+		  weight: physicalcondition.weight,
+		  height: physicalcondition.height,
 		  vitality: homeopathysession.vitality,
 		  appearance: homeopathysession.appearance,
 		  appearanceNote: homeopathysession.appearanceNote,
@@ -1047,7 +1047,7 @@ schema = Joi.object({
 		  potency: homeopathysession.potency,
 		  dietTherapy: homeopathysession.dietTherapy,		  
 		  recommendation: homeopathysession.recommendation,		  		  
-		  createdOn: new Date(user.date),		  
+		  createdOn: new Date(homeopathysession.date),		  
 		};
 	  }
 
@@ -1075,28 +1075,503 @@ schema = Joi.object({
 									<form className="form-horizontal form-bordered" onSubmit={this.handleSubmit} >
 
 										<div className="form-group row">
-											<label className="col-lg-4 col-form-label" htmlFor="profile" >Account-type</label>
+											<label className="col-lg-4 col-form-label" htmlFor="familyRole" >Family Role</label>
 											<div className="col-lg-8">
-												<select name="profile" id="profile" value={data.profile} onChange={this.handleChange} className="form-control" >
-													<option value="">Select Account-type</option>
-													{this.selectProfiles}
+												<select name="familyRole" id="familyRole" value={data.familyRole} onChange={this.handleChange} className="form-control" >
+													<option value="">Select Family-Role</option>
+													{this.familyRoleoptions}
 												</select>
 											</div>
-											{errors.profile && (<div className="alert alert-danger">{errors.profile}</div>)}
+											{errors.familyRole && (<div className="alert alert-danger">{errors.familyRole}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="familyDiseaseStatus" >Family Disease Status</label>
+											<div className="col-lg-8">
+												<select name="familyDiseaseStatus" id="familyDiseaseStatus" value={data.familyDiseaseStatus} onChange={this.handleChange} className="form-control" >
+													<option value="">Select FamilyDiseaseStatus</option>
+													{this.familyDiseaseStatusoptions}
+												</select>
+											</div>
+											{errors.familyDiseaseStatus && (<div className="alert alert-danger">{errors.familyDiseaseStatus}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="currentTreatment" >Current Treatment</label>
+											<div className="col-lg-8">
+												<select name="currentTreatment" id="currentTreatment" value={data.currentTreatment} onChange={this.handleChange} className="form-control" >
+													<option value="">Select CurrentTreatment</option>
+													{this.currentTreatmentoptions}
+												</select>
+											</div>
+											{errors.currentTreatment && (<div className="alert alert-danger">{errors.currentTreatment}</div>)}
 										</div>
 
 
 										<div className="form-group row">
-											<label className="col-lg-4 col-form-label" htmlFor="prefix" >Prefix</label>
+											<label className="col-lg-4 col-form-label" htmlFor="socialRelationship" >Social Relationship</label>
 											<div className="col-lg-8">
-												<select name="prefix" id="prefix" value={data.prefix} onChange={this.handleChange} className="form-control" >
-													<option value="">Select Prefix</option>
-													{this.prefixoptions}
+												<select name="socialRelationship" id="socialRelationship" value={data.socialRelationship} onChange={this.handleChange} className="form-control" >
+													<option value="">Select Social Relationship</option>
+													{this.socialRelationshipoptions}
 												</select>
 											</div>
-											{errors.prefix && (<div className="alert alert-danger">{errors.prefix}</div>)}
+											{errors.socialRelationship && (<div className="alert alert-danger">{errors.socialRelationship}</div>)}
 										</div>
 
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="employmentStatus" >Employment Status</label>
+											<div className="col-lg-8">
+												<select name="employmentStatus" id="employmentStatus" value={data.employmentStatus} onChange={this.handleChange} className="form-control" >
+													<option value="">Select EmploymentStatus</option>
+													{this.employmentStatusoptions}
+												</select>
+											</div>
+											{errors.employmentStatus && (<div className="alert alert-danger">{errors.employmentStatus}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="thermalFeeling" >ThermalFeeling</label>
+											<div className="col-lg-8">
+												<select name="thermalFeeling" id="thermalFeeling" value={data.thermalFeeling} onChange={this.handleChange} className="form-control" >
+													<option value="">Select ThermalFeeling</option>
+													{this.thermalFeelingoptions}
+												</select>
+											</div>
+											{errors.thermalFeeling && (<div className="alert alert-danger">{errors.thermalFeeling}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="perspiration" >perspiration</label>
+											<div className="col-lg-8">
+												<select name="perspiration" id="perspiration" value={data.perspiration} onChange={this.handleChange} className="form-control" >
+													<option value="">Select perspiration</option>
+													{this.perspirationoptions}
+												</select>
+											</div>
+											{errors.perspiration && (<div className="alert alert-danger">{errors.perspiration}</div>)}
+										</div>
+
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="appetite" >appetite</label>
+											<div className="col-lg-8">
+												<select name="appetite" id="appetite" value={data.appetite} onChange={this.handleChange} className="form-control" >
+													<option value="">Select Appetite</option>
+													{this.appetiteoptions}
+												</select>
+											</div>
+											{errors.appetite && (<div className="alert alert-danger">{errors.appetite}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="vomitting" >vomitting</label>
+											<div className="col-lg-8">
+												<select name="vomitting" id="vomitting" value={data.vomitting} onChange={this.handleChange} className="form-control" >
+													<option value="">Select vomitting</option>
+													{this.vomittingoptions}
+												</select>
+											</div>
+											{errors.vomitting && (<div className="alert alert-danger">{errors.vomitting}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="diet" >Diet</label>
+											<div className="col-lg-8">
+												<select name="diet" id="diet" value={data.diet} onChange={this.handleChange} className="form-control" >
+													<option value="">Select Diet</option>
+													{this.dietoptions}
+												</select>
+											</div>
+											{errors.diet && (<div className="alert alert-danger">{errors.diet}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="taste" >Current Taste</label>
+											<div className="col-lg-8">
+												<select name="taste" id="taste" value={data.taste} onChange={this.handleChange} className="form-control" >
+													<option value="">Select Taste</option>
+													{this.tasteoptions}
+												</select>
+											</div>
+											{errors.taste && (<div className="alert alert-danger">{errors.taste}</div>)}
+										</div>
+
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="thirst" >thirst</label>
+											<div className="col-lg-8">
+												<select name="thirst" id="thirst" value={data.thirst} onChange={this.handleChange} className="form-control" >
+													<option value="">Select Thirst</option>
+													{this.thirstoptions}
+												</select>
+											</div>
+											{errors.thirst && (<div className="alert alert-danger">{errors.thirst}</div>)}
+										</div>
+
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="defecation" >defecation</label>
+											<div className="col-lg-8">
+												<select name="defecation" id="defecation" value={data.profile} onChange={this.handleChange} className="form-control" >
+													<option value="">Select defecation</option>
+													{this.defecationoptions}
+												</select>
+											</div>
+											{errors.defecation && (<div className="alert alert-danger">{errors.defecation}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="urination" >urination</label>
+											<div className="col-lg-8">
+												<select name="urination" id="urination" value={data.urination} onChange={this.handleChange} className="form-control" >
+													<option value="">Select urination</option>
+													{this.urinationoptions}
+												</select>
+											</div>
+											{errors.urination && (<div className="alert alert-danger">{errors.urination}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="urinationColor" >urinationColor</label>
+											<div className="col-lg-8">
+												<select name="urinationColor" id="urinationColor" value={data.urinationColor} onChange={this.handleChange} className="form-control" >
+													<option value="">Select urinationColor</option>
+													{this.urinationColoroptions}
+												</select>
+											</div>
+											{errors.urinationColor && (<div className="alert alert-danger">{errors.urinationColor}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="sleep" >Sleep</label>
+											<div className="col-lg-8">
+												<select name="sleep" id="sleep" value={data.sleep} onChange={this.handleChange} className="form-control" >
+													<option value="">Select Sleep</option>
+													{this.sleepoptions}
+												</select>
+											</div>
+											{errors.sleep && (<div className="alert alert-danger">{errors.sleep}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="head" >Family Role</label>
+											<div className="col-lg-8">
+												<select name="head" id="head" value={data.head} onChange={this.handleChange} className="form-control" >
+													<option value="">SelectHead</option>
+													{this.headoptions}
+												</select>
+											</div>
+											{errors.head && (<div className="alert alert-danger">{errors.head}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="eyes" >Family Disease Status</label>
+											<div className="col-lg-8">
+												<select name="eyes" id="eyes" value={data.eyes} onChange={this.handleChange} className="form-control" >
+													<option value="">Select Eyes</option>
+													{this.eyesoptions}
+												</select>
+											</div>
+											{errors.eyes && (<div className="alert alert-danger">{errors.eyes}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="ears" >Current Treatment</label>
+											<div className="col-lg-8">
+												<select name="ears" id="ears" value={data.ears} onChange={this.handleChange} className="form-control" >
+													<option value="">Select Ears</option>
+													{this.earsoptions}
+												</select>
+											</div>
+											{errors.ears && (<div className="alert alert-danger">{errors.ears}</div>)}
+										</div>
+
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="nose" >Social Relationship</label>
+											<div className="col-lg-8">
+												<select name="nose" id="nose" value={data.nose} onChange={this.handleChange} className="form-control" >
+													<option value="">Select Nose</option>
+													{this.noseoptions}
+												</select>
+											</div>
+											{errors.nose && (<div className="alert alert-danger">{errors.nose}</div>)}
+										</div>
+
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="throat" >Employment Status</label>
+											<div className="col-lg-8">
+												<select name="throat" id="throat" value={data.throat} onChange={this.handleChange} className="form-control" >
+													<option value="">Select Throat</option>
+													{this.throatoptions}
+												</select>
+											</div>
+											{errors.throat && (<div className="alert alert-danger">{errors.throat}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="menstruation" >ThermalFeeling</label>
+											<div className="col-lg-8">
+												<select name="menstruation" id="menstruation" value={data.menstruation} onChange={this.handleChange} className="form-control" >
+													<option value="">Select menstruation</option>
+													{this.menstruationoptions}
+												</select>
+											</div>
+											{errors.menstruation && (<div className="alert alert-danger">{errors.menstruation}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="leukorrhea" >leukorrhea</label>
+											<div className="col-lg-8">
+												<select name="leukorrhea" id="leukorrhea" value={data.leukorrhea} onChange={this.handleChange} className="form-control" >
+													<option value="">Select leukorrhea</option>
+													{this.leukorrheaoptions}
+												</select>
+											</div>
+											{errors.leukorrhea && (<div className="alert alert-danger">{errors.leukorrhea}</div>)}
+										</div>
+
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="naturePain" >naturePain</label>
+											<div className="col-lg-8">
+												<select name="naturePain" id="naturePain" value={data.naturePain} onChange={this.handleChange} className="form-control" >
+													<option value="">Select Nature of Pain</option>
+													{this.naturePainoptions}
+												</select>
+											</div>
+											{errors.naturePain && (<div className="alert alert-danger">{errors.naturePain}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="emotionalStatus" >emotionalStatus</label>
+											<div className="col-lg-8">
+												<select name="emotionalStatus" id="emotionalStatus" value={data.emotionalStatus} onChange={this.handleChange} className="form-control" >
+													<option value="">Select Emotional Status</option>
+													{this.emotionalStatusoptions}
+												</select>
+											</div>
+											{errors.emotionalStatus && (<div className="alert alert-danger">{errors.emotionalStatus}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="respiration" >Diet</label>
+											<div className="col-lg-8">
+												<select name="respiration" id="respiration" value={data.respiration} onChange={this.handleChange} className="form-control" >
+													<option value="">Select Respiration</option>
+													{this.respirationoptions}
+												</select>
+											</div>
+											{errors.respiration && (<div className="alert alert-danger">{errors.respiration}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="speech" >Current Taste</label>
+											<div className="col-lg-8">
+												<select name="speech" id="speech" value={data.speech} onChange={this.handleChange} className="form-control" >
+													<option value="">Select Speech</option>
+													{this.speechoptions}
+												</select>
+											</div>
+											{errors.speech && (<div className="alert alert-danger">{errors.speech}</div>)}
+										</div>
+
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="cough" >cough</label>
+											<div className="col-lg-8">
+												<select name="cough" id="cough" value={data.cough} onChange={this.handleChange} className="form-control" >
+													<option value="">Select Cough</option>
+													{this.coughoptions}
+												</select>
+											</div>
+											{errors.cough && (<div className="alert alert-danger">{errors.cough}</div>)}
+										</div>
+
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="odor" >odor</label>
+											<div className="col-lg-8">
+												<select name="odor" id="odor" value={data.profile} onChange={this.handleChange} className="form-control" >
+													<option value="">Select odor</option>
+													{this.odoroptions}
+												</select>
+											</div>
+											{errors.odor && (<div className="alert alert-danger">{errors.odor}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="vitality" >vitality</label>
+											<div className="col-lg-8">
+												<select name="vitality" id="vitality" value={data.vitality} onChange={this.handleChange} className="form-control" >
+													<option value="">Select Vitality</option>
+													{this.vitalityoptions}
+												</select>
+											</div>
+											{errors.vitality && (<div className="alert alert-danger">{errors.vitality}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="appearance" >appearance</label>
+											<div className="col-lg-8">
+												<select name="appearance" id="appearance" value={data.appearance} onChange={this.handleChange} className="form-control" >
+													<option value="">Select appearance</option>
+													{this.appearanceoptions}
+												</select>
+											</div>
+											{errors.appearance && (<div className="alert alert-danger">{errors.appearance}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="colorLustreFace" >Sleep</label>
+											<div className="col-lg-8">
+												<select name="colorLustreFace" id="colorLustreFace" value={data.colorLustreFace} onChange={this.handleChange} className="form-control" >
+													<option value="">Select Sleep</option>
+													{this.colorLustreFaceoptions}
+												</select>
+											</div>
+											{errors.colorLustreFace && (<div className="alert alert-danger">{errors.colorLustreFace}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="tongueShape" >Tongue Shape</label>
+											<div className="col-lg-8">
+												<select name="tongueShape" id="tongueShape" value={data.tongueShape} onChange={this.handleChange} className="form-control" >
+													<option value="">Select Tongue-Shape</option>
+													{this.tongueShapeoptions}
+												</select>
+											</div>
+											{errors.tongueShape && (<div className="alert alert-danger">{errors.tongueShape}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="tongueColor" >Tongue Color</label>
+											<div className="col-lg-8">
+												<select name="tongueColor" id="tongueColor" value={data.tongueColor} onChange={this.handleChange} className="form-control" >
+													<option value="">Select tongueColor</option>
+													{this.tongueColoroptions}
+												</select>
+											</div>
+											{errors.tongueColor && (<div className="alert alert-danger">{errors.tongueColor}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="tongueQuality" >tongueQuality</label>
+											<div className="col-lg-8">
+												<select name="tongueQuality" id="tongueQuality" value={data.tongueQuality} onChange={this.handleChange} className="form-control" >
+													<option value="">Select tongueQuality</option>
+													{this.tongueQualityoptions}
+												</select>
+											</div>
+											{errors.tongueQuality && (<div className="alert alert-danger">{errors.tongueQuality}</div>)}
+										</div>
+
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="pulseQuality" >pulseQuality</label>
+											<div className="col-lg-8">
+												<select name="pulseQuality" id="pulseQuality" value={data.pulseQuality} onChange={this.handleChange} className="form-control" >
+													<option value="">Select pulseQuality</option>
+													{this.pulseQualityoptions}
+												</select>
+											</div>
+											{errors.pulseQuality && (<div className="alert alert-danger">{errors.pulseQuality}</div>)}
+										</div>
+
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="pulseDepth" >pulseDepth</label>
+											<div className="col-lg-8">
+												<select name="pulseDepth" id="pulseDepth" value={data.pulseDepth} onChange={this.handleChange} className="form-control" >
+													<option value="">Select pulseDepth</option>
+													{this.pulseDepthoptions}
+												</select>
+											</div>
+											{errors.pulseDepth && (<div className="alert alert-danger">{errors.pulseDepth}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="pulseStrength" >pulseStrength</label>
+											<div className="col-lg-8">
+												<select name="pulseStrength" id="pulseStrength" value={data.pulseStrength} onChange={this.handleChange} className="form-control" >
+													<option value="">Select pulseStrength</option>
+													{this.pulseStrengthoptions}
+												</select>
+											</div>
+											{errors.pulseStrength && (<div className="alert alert-danger">{errors.pulseStrength}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="pulseTension" >pulseTension</label>
+											<div className="col-lg-8">
+												<select name="pulseTension" id="pulseTension" value={data.pulseTension} onChange={this.handleChange} className="form-control" >
+													<option value="">Select pulseTension</option>
+													{this.pulseTensionoptions}
+												</select>
+											</div>
+											{errors.pulseTension && (<div className="alert alert-danger">{errors.pulseTension}</div>)}
+										</div>
+
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="pulseRhythm" >pulseRhythm</label>
+											<div className="col-lg-8">
+												<select name="pulseRhythm" id="pulseRhythm" value={data.pulseRhythm} onChange={this.handleChange} className="form-control" >
+													<option value="">Select pulseRhythm</option>
+													{this.pulseRhythmoptions}
+												</select>
+											</div>
+											{errors.pulseRhythm && (<div className="alert alert-danger">{errors.pulseRhythm}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="physicalAppearanceQuality" >physicalAppearanceQuality</label>
+											<div className="col-lg-8">
+												<select name="physicalAppearanceQuality" id="physicalAppearanceQuality" value={data.physicalAppearanceQuality} onChange={this.handleChange} className="form-control" >
+													<option value="">Select physicalAppearanceQuality</option>
+													{this.physicalAppearanceQualityoptions}
+												</select>
+											</div>
+											{errors.physicalAppearanceQuality && (<div className="alert alert-danger">{errors.physicalAppearanceQuality}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="palpationEpigastrium" >palpationEpigastriume</label>
+											<div className="col-lg-8">
+												<select name="palpationEpigastrium" id="palpationEpigastrium" value={data.palpationEpigastrium} onChange={this.handleChange} className="form-control" >
+													<option value="">Select palpationEpigastrium</option>
+													{this.palpationEpigastriumoptions}
+												</select>
+											</div>
+											{errors.palpationEpigastrium && (<div className="alert alert-danger">{errors.palpationEpigastrium}</div>)}
+										</div>
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="palpationAbdomen" >Current palpationAbdomen</label>
+											<div className="col-lg-8">
+												<select name="palpationAbdomen" id="palpationAbdomen" value={data.palpationAbdomen} onChange={this.handleChange} className="form-control" >
+													<option value="">Select palpationAbdomen</option>
+													{this.palpationAbdomenoptions}
+												</select>
+											</div>
+											{errors.palpationAbdomen && (<div className="alert alert-danger">{errors.palpationAbdomen}</div>)}
+										</div>
+
+
+										<div className="form-group row">
+											<label className="col-lg-4 col-form-label" htmlFor="rangeMotion" >rangeMotion</label>
+											<div className="col-lg-8">
+												<select name="rangeMotion" id="rangeMotion" value={data.rangeMotion} onChange={this.handleChange} className="form-control" >
+													<option value="">Select rangeMotion</option>
+													{this.rangeMotionoptions}
+												</select>
+											</div>
+											{errors.rangeMotion && (<div className="alert alert-danger">{errors.rangeMotion}</div>)}
+										</div>
+										
 										{this.renderInput(
 											"firstName",
 											"First Name",
